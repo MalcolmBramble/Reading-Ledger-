@@ -4,1794 +4,873 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>The Reading Ledger</title>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ─── Reset ─── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: 'EB Garamond', Georgia, serif;
-  background: #0F0F0F;
-  color: #E8E4DF;
-  overflow-x: hidden;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  background:#0E0C0A;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  color:#EDE6D8;
+  overflow-x:hidden;
 }
-
-/* ─── Tokens ─── */
-:root {
-  --bg: #0F0F0F;
-  --surface: #1A1714;
-  --border: #2A2520;
-  --text: #E8E4DF;
-  --text-sec: #8A8580;
-  --text-muted: #6A6560;
-  --text-dim: #4A4540;
-  --accent: #D4A373;
-  --accent-light: #E8C9A0;
-  --green: #A3B18A;
-  --blue: #577590;
-  --red: #FF6B6B;
-  --purple: #9B5DE5;
-  --font-sans: 'DM Sans', -apple-system, sans-serif;
-  --font-serif: 'EB Garamond', Georgia, serif;
-  --max-w: 900px;
+:root{
+  --bg:#0E0C0A;--surface:#17140F;--surfaceH:#1E1A14;--border:#2A2419;--borderL:#352E24;
+  --accent:#C4956A;--accentDim:#9B7550;--accentGlow:#C4956A25;
+  --text:#EDE6D8;--textM:#A09888;--textD:#6A6258;--textDD:#4A4540;
+  --danger:#C45B5B;--gold:#D4A85A;--green:#7D8B6E;--blue:#5B8AB0;
+  --ui:'Outfit',sans-serif;--serif:'Cormorant Garamond',Georgia,serif;
+  --max:960px;
 }
-
-/* ─── Layout ─── */
-.app { min-height: 100vh; }
-.container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+.container{max-width:var(--max);margin:0 auto;padding:0 28px}
 
 /* ─── Header ─── */
-.header { padding: 32px 0 0; }
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 8px;
-}
-.header h1 {
-  font-size: 36px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin: 0;
-}
-.header-sub {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--text-sec);
-  margin: 6px 0 0;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.header-actions { display: flex; gap: 8px; }
-.btn-add {
-  background: var(--accent);
-  color: #0F0F0F;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 18px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: opacity 0.2s;
-}
-.btn-add:hover { opacity: 0.85; }
-.btn-icon {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: border-color 0.2s;
-}
-.btn-icon:hover { border-color: var(--text-sec); }
+header{padding:28px 0 0}
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-start}
+.hdr-label{font-family:var(--ui);font-size:11px;color:var(--textD);margin:0 0 4px;letter-spacing:0.12em;text-transform:uppercase;font-weight:500}
+.hdr-title{font-size:40px;font-weight:600;letter-spacing:-0.02em;line-height:1;margin:0}
+.hdr-pills{display:flex;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap}
+.goal-pill{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:100px;padding:5px 14px 5px 6px;border:1px solid var(--border)}
+.goal-pill-text{font-family:var(--ui);font-size:13px;font-weight:500}
+.goal-pill-text span{color:var(--textD)}
+.streak-pill{display:flex;align-items:center;gap:5px;font-family:var(--ui);font-size:12px;color:var(--gold)}
+.hdr-right{display:flex;gap:8px;align-items:center;margin-top:8px}
+.btn-search{background:none;border:1px solid transparent;border-radius:8px;padding:9px 10px;cursor:pointer;color:var(--textM);transition:all 0.2s}
+.btn-search.active{background:var(--surfaceH);border-color:var(--borderL)}
+.btn-add{background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:9px 18px;font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px}
+.btn-add:hover{opacity:0.85}
+.btn-settings{background:none;border:1px solid transparent;border-radius:8px;padding:9px 10px;cursor:pointer;color:var(--textM);font-size:16px}
+.search-bar{margin-top:16px}
+.search-bar input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px;color:var(--text);font-family:var(--ui);font-size:14px;outline:none}
+.search-bar input:focus{border-color:var(--accent)}
+.search-bar input::placeholder{color:var(--textD)}
 
-/* ─── Nav Tabs ─── */
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-  margin-top: 28px;
-  border-bottom: 1px solid var(--border);
-}
-.nav-tab {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 10px 16px;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.2s;
-}
-.nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-.nav-tab:hover:not(.active) { color: var(--text-sec); }
-.nav-tab svg { width: 15px; height: 15px; }
+/* Nav */
+nav.tabs{display:flex;gap:0;margin-top:24px;border-bottom:1px solid var(--border)}
+nav.tabs button{background:none;border:none;font-family:var(--ui);font-size:13px;font-weight:500;cursor:pointer;padding:11px 16px;display:flex;align-items:center;gap:7px;color:var(--textD);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s}
+nav.tabs button.active{color:var(--accent);border-bottom-color:var(--accent)}
+nav.tabs button:hover:not(.active){color:var(--textM)}
+nav.tabs button svg{width:15px;height:15px}
 
-/* ─── Content ─── */
-.content { padding: 28px 0 100px; }
-.view { display: none; }
-.view.active { display: block; }
+/* Content */
+.content{padding:24px 0 100px}
+.view{display:none}.view.active{display:block}
 
-/* ─── Stat Cards ─── */
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-.stat-grid.four { grid-template-columns: repeat(4, 1fr); }
-.stat-card {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 20px 22px;
-  border-left: 3px solid var(--accent);
-}
-.stat-card.small { padding: 16px 14px; }
-.stat-card-label {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 4px;
-}
-.stat-card.small .stat-card-label { font-size: 11px; }
-.stat-card-value {
-  font-size: 30px;
-  font-weight: 600;
-  color: var(--text);
-  line-height: 1;
-}
-.stat-card.small .stat-card-value { font-size: 22px; }
-.stat-card-sub {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--text-sec);
-  margin-top: 2px;
-}
+/* ─── Shelf ─── */
+.shelf-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.shelf-count{font-family:var(--ui);font-size:12px;color:var(--textD)}
+.group-btns{display:flex;align-items:center;gap:6px}
+.group-btns span{font-family:var(--ui);font-size:11px;color:var(--textD)}
+.group-btn{background:none;border:1px solid transparent;border-radius:6px;padding:4px 10px;font-family:var(--ui);font-size:11px;color:var(--textD);cursor:pointer;font-weight:500;text-transform:capitalize}
+.group-btn.active{background:var(--surfaceH);border-color:var(--borderL);color:var(--text)}
+.shelf-group{margin-bottom:36px}
+.shelf-group-header{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.shelf-group-title{font-size:20px;font-weight:500;font-style:italic;margin:0}
+.shelf-group-count{font-family:var(--ui);font-size:12px;color:var(--textD)}
+.shelf-row-wrap{position:relative}
+.shelf-ambient{position:absolute;bottom:0;left:10%;right:10%;height:60px;background:radial-gradient(ellipse at center bottom,var(--accentGlow) 0%,transparent 70%);pointer-events:none;z-index:0}
+.shelf-spines{display:flex;align-items:flex-end;gap:3px;padding:12px 16px 0;min-height:165px;position:relative;z-index:1}
+.spine{position:relative;border-radius:3px 4px 2px 2px;cursor:pointer;overflow:hidden;flex-shrink:0;transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.25s}
+.spine-hl{position:absolute;left:5px;top:0;bottom:0;width:1px}
+.spine-hr{position:absolute;right:5px;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.15)}
+.spine-top{position:absolute;top:0;left:0;right:0;height:6px}
+.spine-bot{position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(0deg,rgba(0,0,0,0.2),transparent)}
+.spine-title{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);white-space:nowrap;font-family:var(--ui);font-size:7.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis}
+.spine-dot{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 4px rgba(212,168,90,0.5)}
+.shelf-plank{height:12px;background:linear-gradient(180deg,#342B20 0%,#251E16 40%,#1C170F 100%);border-radius:0 0 3px 3px;box-shadow:0 6px 16px rgba(0,0,0,0.5),0 2px 4px rgba(0,0,0,0.3),inset 0 1px 0 rgba(64,53,40,0.5);margin:0 4px;position:relative;z-index:2}
+.shelf-plank::after{content:'';position:absolute;inset:0;border-radius:0 0 3px 3px;opacity:0.1;background:repeating-linear-gradient(90deg,transparent 0px,transparent 12px,rgba(255,255,255,0.03) 12px,rgba(255,255,255,0.03) 13px)}
+.shelf-shadow{height:20px;margin:0 8px -2px;background:radial-gradient(ellipse at center top,rgba(0,0,0,0.25) 0%,transparent 70%);pointer-events:none}
 
-/* ─── Card Section ─── */
-.card {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
-}
-.card-title {
-  font-size: 18px;
-  font-weight: 500;
-  margin: 0 0 16px;
-}
+/* ─── Milestones ─── */
+.milestones{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.milestone{font-family:var(--ui);font-size:12px;padding:5px 12px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--textM);display:flex;align-items:center;gap:6px}
 
-/* ─── Goal Progress ─── */
-.goal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 16px;
-}
-.goal-pct {
-  font-family: var(--font-sans);
-  font-size: 28px;
-  font-weight: 600;
-  color: var(--accent);
-}
-.goal-bar {
-  background: var(--border);
-  border-radius: 100px;
-  height: 14px;
-  overflow: hidden;
-}
-.goal-bar-fill {
-  background: linear-gradient(90deg, var(--accent), var(--accent-light));
-  height: 100%;
-  border-radius: 100px;
-  transition: width 0.8s ease;
-}
-.goal-footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--text-muted);
-}
+/* ─── Quote Banner ─── */
+.quote-banner{background:linear-gradient(135deg,var(--surface) 0%,var(--bg) 100%);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:24px;display:flex;gap:14px;align-items:flex-start}
+.quote-banner-text{flex:1;font-size:17px;font-style:italic;line-height:1.6;color:var(--textM)}
+.quote-banner-src{font-family:var(--ui);font-size:12px;color:var(--textD);margin-top:8px;font-style:normal}
+.quote-refresh{background:none;border:none;color:var(--textD);cursor:pointer;padding:4px;flex-shrink:0}
 
-/* ─── Currently Reading ─── */
-.reading-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: #222018;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  transition: border-color 0.2s;
-  margin-bottom: 8px;
-}
-.reading-item:last-child { margin-bottom: 0; }
-.reading-item:hover { border-color: var(--text-muted); }
-.reading-item-info p { margin: 0; }
-.reading-item-title { font-size: 16px; font-weight: 500; }
-.reading-item-author {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--text-sec);
-  margin-top: 2px;
-}
-.reading-item-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-/* ─── Category Pill ─── */
-.cat-pill {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 100px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-/* ─── Status Badge ─── */
-.status-badge {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 100px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.status-badge.completed { background: rgba(163,177,138,0.13); color: #A3B18A; }
-.status-badge.reading { background: rgba(87,117,144,0.13); color: #577590; }
-.status-badge.want-to-read { background: rgba(141,153,174,0.13); color: #8D99AE; }
-.status-badge.abandoned { background: rgba(255,107,107,0.13); color: #FF6B6B; }
-
-/* ─── Chevron ─── */
-.chevron {
-  color: var(--text-muted);
-  font-size: 14px;
-  font-family: var(--font-sans);
-}
-
-/* ─── Library View ─── */
-.library-controls {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.search-input {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 14px;
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  flex: 1 1 180px;
-  min-width: 150px;
-  outline: none;
-}
-.search-input:focus { border-color: var(--accent); }
-.search-input::placeholder { color: var(--text-muted); }
-.filter-pill {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 6px 14px;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-sec);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.filter-pill.active {
-  background: var(--border);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-/* ─── Book List Item ─── */
-.book-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  background: var(--surface);
-  border-radius: 10px;
-  cursor: pointer;
-  border: 1px solid var(--surface);
-  transition: border-color 0.2s;
-  margin-bottom: 8px;
-}
-.book-item:hover { border-color: var(--border); }
-.book-item-info { flex: 1; min-width: 0; }
-.book-item-title {
-  font-size: 16px;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin: 0;
-}
-.book-item-sub {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-top: 3px;
-}
-.book-item-author {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--text-sec);
-}
-.book-item-date {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  color: var(--text-muted);
-}
-.book-item-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-.has-notes { color: var(--text-muted); font-size: 14px; }
-
-/* ─── Empty State ─── */
-.empty-state {
-  text-align: center;
-  padding: 60px 0;
-  color: var(--text-muted);
-}
-.empty-state svg { margin-bottom: 12px; opacity: 0.4; }
-.empty-state p {
-  font-family: var(--font-sans);
-  font-size: 14px;
-}
+/* ─── Timeline ─── */
+.timeline-info{font-family:var(--ui);font-size:12px;color:var(--textD);margin-bottom:20px}
+.tl-months{position:relative;height:24px;margin-bottom:4px}
+.tl-month{position:absolute;transform:translateX(-50%);font-family:var(--ui);font-size:10px;color:var(--textD);font-weight:500}
+.tl-row{display:flex;align-items:center;height:32px;cursor:pointer;margin-bottom:4px}
+.tl-label{width:176px;flex-shrink:0;padding-right:12px;overflow:hidden}
+.tl-label p{margin:0;font-family:var(--ui);font-size:12px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tl-bar-area{flex:1;position:relative;height:100%}
+.tl-grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--border);opacity:0.4}
+.tl-bar{position:absolute;top:4px;bottom:4px;min-width:6px;border-radius:4px;transition:opacity 0.2s}
+.tl-bar:hover{opacity:0.8!important}
+.tl-bar-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--ui);font-size:9px;font-weight:600;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.5);letter-spacing:0.02em}
+.tl-legend{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap}
+.tl-legend-item{display:flex;align-items:center;gap:6px}
+.tl-legend-color{width:12px;height:6px;border-radius:2px}
+.tl-legend-label{font-family:var(--ui);font-size:11px;color:var(--textD)}
 
 /* ─── Analytics ─── */
-.chart-canvas {
-  width: 100%;
-  height: 220px;
-  display: block;
-}
-.chart-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  flex: 1;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 120px;
-}
-.legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-.legend-label {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: #B0ABA5;
-}
-.legend-count { color: var(--text-muted); }
-.pie-row {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.pie-wrap {
-  width: 180px;
-  height: 180px;
-  flex-shrink: 0;
-}
-.pie-wrap canvas { width: 100%; height: 100%; }
+.mini-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:12px;margin-bottom:20px}
+.mini-stat{background:var(--surface);border-radius:10px;padding:14px 16px;border:1px solid var(--border)}
+.mini-stat-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-bottom:4px}
+.mini-stat-value{font-size:24px;font-weight:600;line-height:1}
+.mini-stat-value.sm{font-size:15px}
+.mini-stat-sub{font-family:var(--ui);font-size:11px;color:var(--textD);margin-top:2px}
+.panel{background:var(--surface);border-radius:12px;padding:24px;border:1px solid var(--border);margin-bottom:20px}
+.panel-title{font-size:19px;font-weight:500;font-style:italic;margin:0 0 16px}
+.panel-empty{font-family:var(--ui);font-size:13px;color:var(--textD);text-align:center;padding:30px 0}
+.progress-row{display:flex;align-items:center;gap:16px}
+.progress-track{flex:1;background:var(--border);border-radius:100px;height:12px;overflow:hidden}
+.progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--accentDim),var(--accent));transition:width 1s}
+.progress-pct{font-family:var(--ui);font-size:22px;font-weight:600;color:var(--accent);min-width:50px;text-align:right}
+.pie-row{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.pie-wrap{width:170px;height:170px;flex-shrink:0}
+.pie-wrap canvas{width:100%;height:100%}
+.cat-legend{display:flex;flex-direction:column;gap:6px;flex:1}
+.cat-legend-item{display:flex;align-items:center;gap:10px}
+.cat-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.cat-legend-name{font-family:var(--ui);font-size:13px;color:var(--textM);flex:1}
+.cat-legend-count{font-family:var(--ui);font-size:13px;color:var(--textD);font-weight:500}
+.cat-legend-bar{width:60px;height:4px;border-radius:2px;background:var(--border);overflow:hidden}
+.cat-legend-bar-fill{height:100%;border-radius:2px}
+canvas.pace-chart{width:100%;height:200px;display:block}
 
-/* ─── Book Detail (full page) ─── */
-.detail-view {
-  display: none;
-  min-height: 100vh;
-}
-.detail-view.active { display: block; }
-.detail-back {
-  background: none;
-  border: none;
-  color: var(--text-sec);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  padding: 0;
-  margin-bottom: 28px;
-}
-.detail-back:hover { color: var(--text); }
-.detail-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-}
-.detail-title {
-  font-size: 30px;
-  font-weight: 600;
-  line-height: 1.2;
-  margin: 0;
-}
-.detail-author {
-  font-family: var(--font-sans);
-  font-size: 15px;
-  color: var(--text-sec);
-  margin: 6px 0 0;
-}
-.detail-meta {
-  display: flex;
-  gap: 20px;
-  margin-top: 24px;
-  padding: 16px 20px;
-  background: var(--surface);
-  border-radius: 10px;
-  flex-wrap: wrap;
-}
-.meta-item-label {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  margin: 0;
-}
-.meta-item-value {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  color: #B0ABA5;
-  margin: 2px 0 0;
-  font-weight: 500;
-}
-.detail-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-.detail-btn {
-  border-radius: 8px;
-  padding: 10px 18px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.15s;
-}
-.detail-btn.green { background: var(--green); color: #0F0F0F; border: none; }
-.detail-btn.blue { background: var(--blue); color: var(--text); border: none; }
-.detail-btn.blue-outline { background: none; color: var(--blue); border: 1px solid var(--blue); }
-.detail-btn.ghost { background: none; color: var(--text-muted); border: 1px solid var(--border); }
-.detail-btn.danger-confirm { background: rgba(255,107,107,0.13); color: var(--red); border: 1px solid rgba(255,107,107,0.27); font-weight: 600; }
+/* ─── Year in Review ─── */
+.yr-hero{background:linear-gradient(135deg,var(--surface) 0%,#1A1510 100%);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;position:relative;overflow:hidden;margin-bottom:20px}
+.yr-hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,var(--accentGlow) 0%,transparent 60%);pointer-events:none}
+.yr-hero-label{font-family:var(--ui);font-size:11px;color:var(--textD);letter-spacing:0.12em;text-transform:uppercase;font-weight:500;position:relative}
+.yr-hero-num{font-size:64px;font-weight:700;color:var(--accent);line-height:1;position:relative;margin-top:8px}
+.yr-hero-sub{font-family:var(--ui);font-size:14px;color:var(--textM);margin-top:4px;position:relative}
+.yr-hero-pages{font-family:var(--ui);font-size:13px;color:var(--textD);margin-top:8px;position:relative}
+.yr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.yr-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.yr-card-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500}
+.yr-card-value{font-size:22px;font-weight:600;margin-top:6px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.yr-card-value.sm{font-size:16px}
+.yr-card-sub{font-family:var(--ui);font-size:12px;color:var(--textD);margin-top:3px}
+.yr-milestones{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.yr-milestone{background:var(--bg);border-radius:10px;padding:14px 12px;text-align:center;border:1px solid var(--border)}
+.yr-milestone-icon{font-size:24px}
+.yr-milestone-label{font-family:var(--ui);font-size:12px;font-weight:600;margin-top:6px}
+.yr-themes{display:flex;gap:8px;flex-wrap:wrap}
+.yr-theme{font-family:var(--ui);font-size:13px;padding:6px 14px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--textM)}
+.yr-theme span{color:var(--textD);font-size:11px}
+.yr-quote-stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 24px;display:flex;align-items:center;gap:14px}
+.yr-quote-stat p{font-family:var(--ui);font-size:13px;color:var(--textM);margin:0}
+.yr-quote-stat strong{color:var(--text);font-weight:600}
 
-/* Rating boxes */
-.rating-row { display: flex; gap: 6px; margin-top: 28px; }
-.rating-section-label {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 8px;
-}
-.rating-box {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.15s;
-}
-.rating-box.filled { background: var(--accent); color: #0F0F0F; }
-.rating-box.empty { background: var(--border); color: var(--text-muted); }
-
-/* Notes */
-.notes-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  margin-top: 28px;
-}
-.notes-edit-btn {
-  background: none;
-  border: none;
-  color: var(--accent);
-  cursor: pointer;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.notes-display {
-  background: var(--surface);
-  border-radius: 10px;
-  padding: 20px;
-  font-size: 16px;
-  line-height: 1.7;
-  color: #B0ABA5;
-  white-space: pre-wrap;
-}
-.notes-empty {
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--text-dim);
-  font-style: italic;
-}
-.notes-textarea {
-  width: 100%;
-  min-height: 180px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 16px;
-  color: var(--text);
-  font-family: var(--font-serif);
-  font-size: 16px;
-  line-height: 1.7;
-  resize: vertical;
-  outline: none;
-}
-.notes-textarea:focus { border-color: var(--accent); }
-.notes-actions { display: flex; gap: 8px; margin-top: 10px; }
-.notes-save {
-  background: var(--accent);
-  color: #0F0F0F;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.notes-cancel {
-  background: none;
-  color: var(--text-sec);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  cursor: pointer;
-}
-
-/* ─── Progress section in detail ─── */
-.progress-section {
-  margin-top: 24px;
-  padding: 16px 20px;
-  background: var(--surface);
-  border-radius: 10px;
-}
-.progress-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.progress-bar {
-  height: 8px;
-  background: var(--border);
-  border-radius: 100px;
-  overflow: hidden;
-}
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 100px;
-  transition: width 0.3s;
-}
-.progress-input-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--text-sec);
-}
-.progress-input {
-  width: 70px;
-  padding: 6px 8px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: #222018;
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  text-align: center;
-  outline: none;
-}
-.progress-input:focus { border-color: var(--accent); }
+/* ─── Book Detail ─── */
+.detail-view{display:none;min-height:100vh;background:var(--bg);background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
+.detail-view.active{display:block}
+.detail-back{background:none;border:none;color:var(--textD);cursor:pointer;font-family:var(--ui);font-size:13px;display:flex;align-items:center;gap:6px;padding:0;margin-bottom:32px}
+.detail-back:hover{color:var(--text)}
+.detail-hero{display:flex;gap:24px;align-items:flex-start}
+.detail-spine-big{width:48px;min-height:180px;flex-shrink:0;border-radius:4px 6px 4px 4px;display:flex;align-items:center;justify-content:center}
+.detail-spine-title{transform:rotate(-90deg);white-space:nowrap;font-family:var(--ui);font-size:9px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.detail-pills{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cat-pill{font-family:var(--ui);font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+.status-badge{font-family:var(--ui);font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+.status-badge.completed{background:rgba(85,107,74,0.13);color:#7D8B6E}
+.status-badge.reading{background:rgba(46,68,96,0.13);color:#5B8AB0}
+.status-badge.want-to-read{background:rgba(122,118,112,0.13);color:#7A7670}
+.status-badge.abandoned{background:rgba(196,91,91,0.13);color:#C45B5B}
+.detail-title{font-size:32px;font-weight:600;line-height:1.15;margin:0 0 4px}
+.detail-author{font-family:var(--ui);font-size:15px;color:var(--textM);margin:0}
+.detail-meta{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap}
+.meta-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.04em;margin:0}
+.meta-value{font-family:var(--ui);font-size:14px;color:var(--textM);margin:1px 0 0;font-weight:500}
+.detail-actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.dbtn{border-radius:8px;padding:9px 16px;font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all 0.2s;border:none}
+.dbtn.green{background:#556B4A;color:#EDE6D8}
+.dbtn.blue{background:#2E4460;color:#EDE6D8}
+.dbtn.blue-o{background:none;border:1px solid var(--border);color:#5B8AB0}
+.dbtn.ghost{background:none;border:none;color:var(--textD)}
+.dbtn.danger{background:rgba(196,91,91,0.19);color:var(--danger);border:1px solid rgba(196,91,91,0.27)}
+.sec-label{display:flex;align-items:center;gap:7px;font-family:var(--ui);font-size:11px;color:var(--textD);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin:0}
+.rating-row{display:flex;gap:5px;margin-top:6px}
+.rbox{width:34px;height:34px;border-radius:6px;border:none;cursor:pointer;font-family:var(--ui);font-size:14px;font-weight:600;transition:all 0.15s}
+.rbox.on{background:var(--accent);color:var(--bg)}
+.rbox.off{background:var(--border);color:var(--textD)}
+.themes-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.theme-tag{font-family:var(--ui);font-size:12px;padding:4px 12px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--textM);display:flex;align-items:center;gap:6px}
+.theme-tag button{background:none;border:none;color:var(--textD);cursor:pointer;padding:0;line-height:1;font-size:11px}
+.theme-input{background:none;border:1px solid var(--border);border-radius:100px;padding:4px 12px;color:var(--text);font-family:var(--ui);font-size:12px;outline:none;width:110px}
+.reflection{margin-top:28px}
+.refl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.refl-edit{background:none;border:none;color:var(--accent);cursor:pointer;font-family:var(--ui);font-size:12px;display:flex;align-items:center;gap:4px}
+.refl-display{background:var(--surface);border-radius:10px;padding:16px 20px;font-size:16px;line-height:1.7;color:var(--textM);white-space:pre-wrap;border-left:3px solid var(--border)}
+.refl-empty{font-family:var(--ui);font-size:12px;color:var(--textD);font-style:italic}
+.refl-ta{width:100%;min-height:100px;background:var(--surface);border:1px solid var(--borderL);border-radius:10px;padding:16px;color:var(--text);font-family:var(--serif);font-size:16px;line-height:1.7;resize:vertical;outline:none}
+.refl-ta:focus{border-color:var(--accent)}
+.refl-ta.tall{min-height:160px}
+.refl-btns{display:flex;gap:8px;margin-top:8px}
+.rbtn{border-radius:8px;font-family:var(--ui);font-size:12px;font-weight:600;cursor:pointer;padding:6px 14px;border:none;transition:all 0.2s}
+.rbtn.save{background:var(--accentDim);color:var(--bg)}
+.rbtn.cancel{background:none;color:var(--textM);border:1px solid var(--border)}
+.quotes-section{margin-top:28px}
+.quote-item{background:var(--surface);border-radius:10px;padding:14px 18px;border-left:3px solid var(--accentDim);margin-bottom:8px}
+.quote-text{font-size:15px;font-style:italic;line-height:1.6;color:var(--textM);margin:0}
+.quote-footer{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.quote-page{font-family:var(--ui);font-size:11px;color:var(--textD)}
+.quote-del{background:none;border:none;color:var(--textD);cursor:pointer;padding:0}
+.quote-form{background:var(--surface);border:1px solid var(--borderL);border-radius:10px;padding:16px;margin-bottom:12px}
+.quote-form textarea{width:100%;min-height:70px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-family:var(--serif);font-size:15px;line-height:1.6;resize:vertical;outline:none}
+.quote-form-row{display:flex;gap:8px;margin-top:8px;align-items:center}
+.quote-form-row input{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);font-family:var(--ui);font-size:13px;outline:none;width:70px}
+.conn-section{margin-top:28px}
+.conn-picker{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px;max-height:200px;overflow-y:auto}
+.conn-picker-item{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:6px;cursor:pointer}
+.conn-picker-item.linked{background:rgba(196,149,106,0.07)}
+.conn-check{width:16px;height:16px;border-radius:4px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.conn-check.on{border-color:var(--accent);background:var(--accent)}
+.conn-book{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface);border-radius:8px;cursor:pointer;border:1px solid var(--border);transition:border-color 0.2s;margin-bottom:6px}
+.conn-book:hover{border-color:var(--borderL)}
+.conn-spine{width:8px;height:32px;border-radius:2px;flex-shrink:0}
 
 /* ─── Modal ─── */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  padding: 20px;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: #151310;
-  border-radius: 16px;
-  padding: 28px;
-  width: 100%;
-  max-width: 480px;
-  max-height: 85vh;
-  overflow-y: auto;
-  border: 1px solid var(--border);
-  animation: fadeIn 0.2s ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-.modal-header h2 {
-  margin: 0;
-  font-size: 22px;
-  font-family: var(--font-serif);
-}
-.modal-close {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 4px;
-  font-size: 20px;
-}
-.form-stack { display: flex; flex-direction: column; gap: 16px; }
-.form-label {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin: 0 0 5px;
-}
-.form-input {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 14px;
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  outline: none;
-  width: 100%;
-}
-.form-input:focus { border-color: var(--accent); }
-.form-input::placeholder { color: var(--text-muted); }
-select.form-input { appearance: auto; }
-textarea.form-input {
-  font-family: var(--font-serif);
-  min-height: 80px;
-  resize: vertical;
-}
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.form-row.three { grid-template-columns: 1fr 1fr 1fr; }
-.form-submit {
-  width: 100%;
-  margin-top: 24px;
-  background: var(--accent);
-  color: #0F0F0F;
-  border: none;
-  border-radius: 10px;
-  padding: 12px;
-  font-family: var(--font-sans);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.form-submit:disabled { background: var(--border); color: var(--text-muted); cursor: default; }
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:999;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:460px;max-height:85vh;overflow-y:auto;animation:fadeIn 0.2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.modal-header h2{margin:0;font-size:24px}
+.modal-close{background:none;border:none;color:var(--textD);cursor:pointer;font-size:20px}
+.form-stack{display:flex;flex-direction:column;gap:14px}
+.form-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin:0 0 4px}
+.form-input{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:var(--ui);font-size:14px;outline:none;width:100%}
+.form-input:focus{border-color:var(--accent)}
+.form-input::placeholder{color:var(--textD)}
+select.form-input{appearance:auto}
+textarea.form-input{font-family:var(--serif);min-height:80px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row.three{grid-template-columns:1fr 1fr 1fr}
+.form-submit{width:100%;margin-top:24px;background:var(--accent);color:var(--bg);border:none;border-radius:10px;padding:13px;font-family:var(--ui);font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s}
+.form-submit:disabled{background:var(--border);color:var(--textD);cursor:default}
 
-/* ─── Settings Modal ─── */
-.settings-item {
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border);
-}
-.settings-item:last-child { border-bottom: none; }
-.settings-label {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-.settings-desc {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-.settings-input {
-  width: 80px;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 15px;
-  outline: none;
-}
-.settings-btn {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  text-align: center;
-  transition: border-color 0.2s;
-}
-.settings-btn:hover { border-color: var(--text-sec); }
-.settings-btn.danger { border-color: var(--red); color: var(--red); }
+/* Settings */
+.settings-item{padding:16px 0;border-bottom:1px solid var(--border)}
+.settings-item:last-child{border-bottom:none}
+.settings-label{font-family:var(--ui);font-size:14px;font-weight:600;margin-bottom:4px}
+.settings-desc{font-family:var(--ui);font-size:12px;color:var(--textD);margin-bottom:8px}
+.settings-num{width:80px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font-family:var(--ui);font-size:15px;outline:none}
+.settings-btn{display:block;width:100%;padding:12px;border-radius:10px;font-family:var(--ui);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);text-align:center;transition:border-color 0.2s}
+.settings-btn:hover{border-color:var(--textM)}
+.settings-btn.danger{border-color:var(--danger);color:var(--danger)}
 
-/* ─── Confirm Dialog ─── */
-.confirm-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 1000;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-.confirm-overlay.open { display: flex; }
-.confirm-box {
-  background: #151310;
-  border-radius: 16px;
-  padding: 24px;
-  max-width: 340px;
-  width: 100%;
-  text-align: center;
-  border: 1px solid var(--border);
-}
-.confirm-box h3 { font-size: 18px; margin-bottom: 8px; }
-.confirm-box p { font-family: var(--font-sans); font-size: 14px; color: var(--text-sec); margin-bottom: 20px; }
-.confirm-btns { display: flex; gap: 10px; }
-.confirm-btns button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-.confirm-cancel { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
-.confirm-ok { background: var(--red); border: none; color: #fff; }
+/* Confirm */
+.confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;justify-content:center;align-items:center;padding:20px}
+.confirm-overlay.open{display:flex}
+.confirm-box{background:#151310;border-radius:16px;padding:24px;max-width:340px;width:100%;text-align:center;border:1px solid var(--border)}
+.confirm-box h3{font-size:18px;margin-bottom:8px}
+.confirm-box p{font-family:var(--ui);font-size:14px;color:var(--textM);margin-bottom:20px}
+.confirm-btns{display:flex;gap:10px}
+.confirm-btns button{flex:1;padding:10px;border-radius:8px;font-family:var(--ui);font-size:14px;font-weight:600;cursor:pointer}
+.cbtn-cancel{background:var(--surface);border:1px solid var(--border);color:var(--text)}
+.cbtn-ok{background:var(--danger);border:none;color:#fff}
 
-/* ─── Responsive ─── */
-@media (max-width: 600px) {
-  .header h1 { font-size: 28px; }
-  .stat-grid { grid-template-columns: 1fr; }
-  .stat-grid.four { grid-template-columns: repeat(2, 1fr); }
-  .form-row, .form-row.three { grid-template-columns: 1fr; }
-  .pie-row { flex-direction: column; align-items: center; }
+/* Empty state */
+.empty{text-align:center;padding:80px 20px}
+.empty p.title{font-size:20px;font-style:italic;color:var(--textD)}
+.empty p.sub{font-family:var(--ui);font-size:13px;color:var(--textD);margin-top:4px}
+
+/* Responsive */
+@media(max-width:600px){
+  .hdr-title{font-size:30px}
+  .mini-stats{grid-template-columns:repeat(2,1fr)}
+  .form-row,.form-row.three{grid-template-columns:1fr}
+  .pie-row{flex-direction:column;align-items:center}
+  .yr-grid{grid-template-columns:1fr}
+  .detail-hero{flex-direction:column}
+  .tl-label{width:120px}
 }
 </style>
 </head>
 <body>
 
-<div class="app" id="app">
-  <div class="container">
-
-    <!-- ═══ Header ═══ -->
-    <div class="header">
-      <div class="header-row">
-        <div>
-          <h1>Reading Ledger</h1>
-          <p class="header-sub" id="headerSub">0 of 50 books &middot; 2026</p>
-        </div>
-        <div class="header-actions">
-          <button class="btn-icon" id="btnSettings" title="Settings">&#9881;</button>
-          <button class="btn-add" id="btnAdd">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Book
-          </button>
-        </div>
+<div id="app">
+<div class="container">
+  <header>
+    <div class="hdr-row">
+      <div>
+        <p class="hdr-label">Personal Library</p>
+        <h1 class="hdr-title">The Reading Ledger</h1>
+        <div class="hdr-pills" id="hdrPills"></div>
       </div>
-
-      <!-- Nav -->
-      <div class="nav-tabs">
-        <button class="nav-tab active" data-tab="dashboard">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          Dashboard
+      <div class="hdr-right">
+        <button class="btn-search" id="btnSearch" title="Search">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </button>
-        <button class="nav-tab" data-tab="library">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-          Library
-        </button>
-        <button class="nav-tab" data-tab="analytics">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Analytics
+        <button class="btn-settings" id="btnSettings" title="Settings">&#9881;</button>
+        <button class="btn-add" id="btnAdd">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Book
         </button>
       </div>
     </div>
-
-    <!-- ═══ Dashboard ═══ -->
-    <div class="content">
-      <div class="view active" id="viewDashboard"></div>
-      <div class="view" id="viewLibrary"></div>
-      <div class="view" id="viewAnalytics"></div>
+    <div class="search-bar" id="searchBar" style="display:none">
+      <input id="searchInput" placeholder="Search titles, authors, categories...">
     </div>
+    <nav class="tabs" id="navTabs">
+      <button class="active" data-tab="shelf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l4-4 4 4"/><path d="M7 5v14"/><path d="M11 18l4 4 4-4"/><path d="M15 5v14"/></svg>
+        Shelf
+      </button>
+      <button data-tab="timeline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Timeline
+      </button>
+      <button data-tab="analytics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Analytics
+      </button>
+      <button data-tab="review">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 9 8 9 8s2-4 4.5-4a2.5 2.5 0 010 5H12"/><path d="M12 8v13"/><path d="M3 18h18"/></svg>
+        Year in Review
+      </button>
+    </nav>
+  </header>
+  <div class="content">
+    <div class="view active" id="viewShelf"></div>
+    <div class="view" id="viewTimeline"></div>
+    <div class="view" id="viewAnalytics"></div>
+    <div class="view" id="viewReview"></div>
   </div>
 </div>
+</div>
 
-<!-- ═══ Book Detail ═══ -->
 <div class="detail-view" id="detailView">
-  <div class="container" style="padding-top:32px;padding-bottom:60px" id="detailContent"></div>
+  <div class="container" style="padding-top:28px;padding-bottom:80px" id="detailContent"></div>
 </div>
 
-<!-- ═══ Add/Edit Modal ═══ -->
-<div class="modal-overlay" id="formModal">
-  <div class="modal" id="formPanel"></div>
-</div>
-
-<!-- ═══ Settings Modal ═══ -->
-<div class="modal-overlay" id="settingsModal">
-  <div class="modal" id="settingsPanel"></div>
-</div>
-
-<!-- ═══ Confirm Dialog ═══ -->
+<div class="modal-overlay" id="formModal"><div class="modal" id="formPanel"></div></div>
+<div class="modal-overlay" id="settingsModal"><div class="modal" id="settingsPanel"></div></div>
 <div class="confirm-overlay" id="confirmOverlay">
-  <div class="confirm-box">
-    <h3 id="confirmTitle">Are you sure?</h3>
-    <p id="confirmMsg">This cannot be undone.</p>
-    <div class="confirm-btns">
-      <button class="confirm-cancel" id="confirmCancel">Cancel</button>
-      <button class="confirm-ok" id="confirmOk">Delete</button>
-    </div>
-  </div>
+  <div class="confirm-box"><h3 id="confirmTitle"></h3><p id="confirmMsg"></p><div class="confirm-btns"><button class="cbtn-cancel" id="confirmCancel">Cancel</button><button class="cbtn-ok" id="confirmOk">Delete</button></div></div>
 </div>
-
-<!-- ═══ Import Mode Dialog ═══ -->
 <div class="confirm-overlay" id="importOverlay">
-  <div class="confirm-box">
-    <h3>Import Library</h3>
-    <p>How would you like to import?</p>
-    <div class="confirm-btns">
-      <button class="confirm-cancel" id="importMerge">Merge</button>
-      <button class="confirm-ok" id="importReplace" style="background:var(--accent);color:#0F0F0F">Replace</button>
-    </div>
-  </div>
+  <div class="confirm-box"><h3>Import Library</h3><p>How would you like to import?</p><div class="confirm-btns"><button class="cbtn-cancel" id="importMerge">Merge</button><button class="cbtn-ok" id="importReplace" style="background:var(--accent);color:#0E0C0A">Replace</button></div></div>
 </div>
-
 <input type="file" id="importFile" accept=".json" style="display:none">
 
 <script>
 /* ═══════════════════════════════════════════
    THE READING LEDGER
    ═══════════════════════════════════════════ */
+const CATEGORIES=["Self-Awareness","Current America","Economics & Money","Technology","American History","Science","World History","Philosophy & Ethics","Religion","Fiction","Other"];
+const CAT_COLORS={"Self-Awareness":"#C4956A","Current America":"#7D8B6E","Economics & Money":"#3D5A80","Technology":"#C46B5B","American History":"#C45B72","Science":"#8B6AAC","World History":"#5B9EAD","Philosophy & Ethics":"#6EC4A7","Religion":"#9B7EC4","Fiction":"#BBA14F","Other":"#7A7670"};
+const CAT_SPINE={"Self-Awareness":"#8B6540","Current America":"#556B4A","Economics & Money":"#2E4460","Technology":"#8B4B3B","American History":"#8B3B4E","Science":"#5E4570","World History":"#3B7080","Philosophy & Ethics":"#408060","Religion":"#6B5090","Fiction":"#8B7530","Other":"#5A5650"};
+const STATUS_LABELS={"want-to-read":"To Read","reading":"Reading","completed":"Completed","abandoned":"Dropped"};
+const STORAGE_KEY="reading-ledger-v1";
+const YEAR_GOAL_DEFAULT=50;
 
-const CATEGORIES = [
-  'Self-Awareness', 'Current America', 'Economics & Money', 'Technology',
-  'American History', 'Science', 'World History', 'Philosophy & Ethics',
-  'Religion', 'Fiction', 'Other'
-];
+let data=loadData();
+let currentTab="shelf";
+let shelfGroup="status";
+let searchOpen=false;
+let searchQuery="";
+let confirmCb=null;
+let pendingImport=null;
+let randomQuote=null;
 
-const CAT_COLORS = {
-  'Self-Awareness':      '#D4A373',
-  'Current America':     '#A3B18A',
-  'Economics & Money':   '#577590',
-  'Technology':          '#FF6B6B',
-  'American History':    '#F15BB5',
-  'Science':             '#9B5DE5',
-  'World History':       '#00BBF9',
-  'Philosophy & Ethics': '#00F5D4',
-  'Religion':            '#C77DFF',
-  'Fiction':             '#FEE440',
-  'Other':               '#8D99AE'
-};
+function loadData(){try{const r=localStorage.getItem(STORAGE_KEY);if(r)return JSON.parse(r)}catch(e){}return{books:[],settings:{goal:YEAR_GOAL_DEFAULT,lastExport:null}}}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function esc(s){const d=document.createElement("div");d.textContent=s||"";return d.innerHTML}
+function fmtDate(iso){if(!iso)return"";return new Date(iso).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}
+function fmtShort(iso){if(!iso)return"";return new Date(iso).toLocaleDateString("en-US",{month:"short",day:"numeric"})}
+function daysBetween(a,b){if(!a||!b)return null;return Math.max(1,Math.round((new Date(b)-new Date(a))/86400000))}
+function seededRand(seed){let x=Math.sin(seed)*10000;return x-Math.floor(x)}
+function getGoal(){return data.settings.goal||YEAR_GOAL_DEFAULT}
+function getCompleted(){return data.books.filter(b=>b.status==="completed")}
+function getReading(){return data.books.filter(b=>b.status==="reading")}
 
-const STATUS_LABELS = {
-  'want-to-read': 'To Read',
-  'reading':      'Reading',
-  'completed':    'Done',
-  'abandoned':    'Dropped'
-};
-
-const STORAGE_KEY = 'reading-ledger-v1';
-
-// ─── State ───
-let data = loadData();
-let currentTab = 'dashboard';
-let currentFilter = 'all';
-let searchQuery = '';
-let confirmCallback = null;
-let pendingImport = null;
-
-function loadData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
-  return { books: [], settings: { goal: 50, lastExport: null } };
+// ─── Milestones ───
+function getMilestones(){
+  const c=getCompleted(),ms=[];
+  [1,5,10,15,20,25,30,40,50].forEach(t=>{if(c.length>=t)ms.push({label:t===1?"First Book":t===50?"Goal Reached!":t+" Books",icon:t===50?"\u{1F3C6}":t>=25?"\u2B50":"\u{1F4D6}"})});
+  const cats=new Set(c.map(b=>b.category));
+  if(cats.size>=5)ms.push({label:cats.size+" Categories",icon:"\u{1F308}"});
+  if(cats.size>=8)ms.push({label:"Renaissance Reader",icon:"\u{1F3AD}"});
+  const ann=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
+  if(ann>=10)ms.push({label:"Deep Annotator",icon:"\u270D\uFE0F"});
+  const conn=data.books.filter(b=>b.connections&&b.connections.length>0).length;
+  if(conn>=5)ms.push({label:"Web Weaver",icon:"\u{1F578}\uFE0F"});
+  return ms;
 }
 
-function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+// ─── Streak ───
+function getStreak(){
+  const reading=getReading(),completed=getCompleted().filter(b=>b.endDate);
+  if(!reading.length&&!completed.length)return{weeks:0,active:false};
+  const now=Date.now(),weeks=new Set();
+  completed.forEach(b=>{if(b.endDate){const s=new Date(b.startDate||b.endDate).getTime(),e=new Date(b.endDate).getTime();for(let t=s;t<=e;t+=7*86400000)weeks.add(Math.floor(t/(7*86400000)))}});
+  reading.forEach(b=>{if(b.startDate){const s=new Date(b.startDate).getTime();for(let t=s;t<=now;t+=7*86400000)weeks.add(Math.floor(t/(7*86400000)))}});
+  const cw=Math.floor(now/(7*86400000));let streak=0;
+  for(let w=cw;w>=cw-52;w--){if(weeks.has(w))streak++;else break}
+  return{weeks:streak,active:reading.length>0};
 }
 
-function genId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+// ─── Random Quote ───
+function pickRandomQuote(){
+  const qs=[];
+  data.books.forEach(b=>(b.quotes||[]).forEach(q=>qs.push({text:q.text,page:q.page,bookTitle:b.title,bookAuthor:b.author,bookId:b.id})));
+  randomQuote=qs.length?qs[Math.floor(Math.random()*qs.length)]:null;
 }
-
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s || '';
-  return d.innerHTML;
-}
-
-function fmtDate(iso) {
-  if (!iso) return '';
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-}
-
-// ─── Computed ───
-function getCompleted() { return data.books.filter(b => b.status === 'completed'); }
-function getReading() { return data.books.filter(b => b.status === 'reading'); }
-
-function getAvgDays() {
-  const ds = getCompleted().filter(b => b.startDate && b.endDate).map(b => {
-    return Math.max(1, Math.round((new Date(b.endDate) - new Date(b.startDate)) / 86400000));
-  });
-  return ds.length ? Math.round(ds.reduce((a,b) => a+b, 0) / ds.length) : 0;
-}
+pickRandomQuote();
 
 // ─── Header ───
-function updateHeader() {
-  const n = getCompleted().length;
-  const g = data.settings.goal || 50;
-  document.getElementById('headerSub').textContent = `${n} of ${g} books \u00B7 2026`;
+function updateHeader(){
+  const c=getCompleted().length,g=getGoal(),pct=Math.min(100,Math.round(c/g*100)),streak=getStreak(),reading=getReading().length;
+  const circR=11,circC=2*Math.PI*circR;
+  let html=`<div class="goal-pill"><svg width="28" height="28" viewBox="0 0 28 28" style="transform:rotate(-90deg)"><circle cx="14" cy="14" r="${circR}" fill="none" stroke="#2A2419" stroke-width="3"/><circle cx="14" cy="14" r="${circR}" fill="none" stroke="#C4956A" stroke-width="3" stroke-dasharray="${(pct/100)*circC} ${circC}" stroke-linecap="round"/></svg><span class="goal-pill-text">${c}<span>/${g}</span></span></div>`;
+  if(streak.weeks>0)html+=`<div class="streak-pill">\u{1F525} ${streak.weeks}w streak</div>`;
+  if(reading>0)html+=`<span style="font-family:var(--ui);font-size:12px;color:var(--textD)">${reading} in progress</span>`;
+  document.getElementById("hdrPills").innerHTML=html;
 }
 
-// ─── Dashboard ───
-function renderDashboard() {
-  const completed = getCompleted();
-  const reading = getReading();
-  const goal = data.settings.goal || 50;
-  const pct = Math.round((completed.length / goal) * 100);
-  const avgDays = getAvgDays();
+// ══════════════════ SHELF VIEW ══════════════════
+function renderShelf(){
+  const books=searchQuery?data.books.filter(b=>{const q=searchQuery.toLowerCase();return(b.title||"").toLowerCase().includes(q)||(b.author||"").toLowerCase().includes(q)||(b.category||"").toLowerCase().includes(q)}):data.books;
+  const ms=getMilestones();
 
-  let html = `
-    <div class="stat-grid">
-      <div class="stat-card" style="border-left-color:#A3B18A">
-        <p class="stat-card-label">Completed</p>
-        <p class="stat-card-value">${completed.length}</p>
-        <p class="stat-card-sub">of ${goal}</p>
-      </div>
-      <div class="stat-card" style="border-left-color:#577590">
-        <p class="stat-card-label">Reading</p>
-        <p class="stat-card-value">${reading.length}</p>
-        <p class="stat-card-sub">in progress</p>
-      </div>
-      <div class="stat-card" style="border-left-color:var(--accent)">
-        <p class="stat-card-label">Avg Pace</p>
-        <p class="stat-card-value">${avgDays ? avgDays + 'd' : '\u2014'}</p>
-        <p class="stat-card-sub">per book</p>
-      </div>
-    </div>
+  let html="";
+  // Quote banner
+  if(randomQuote){
+    html+=`<div class="quote-banner"><div style="flex-shrink:0;color:var(--accentDim);margin-top:2px">\u201C</div><div style="flex:1"><p class="quote-banner-text">${esc(randomQuote.text)}</p><p class="quote-banner-src">\u2014 ${esc(randomQuote.bookTitle)}${randomQuote.bookAuthor?", "+esc(randomQuote.bookAuthor):""}${randomQuote.page?" \u00B7 p. "+esc(randomQuote.page):""}</p></div><button class="quote-refresh" id="quoteRefresh" title="Another quote">\u21BB</button></div>`;
+  }
+  // Milestones
+  if(ms.length){
+    html+=`<div class="milestones">${ms.slice(-4).map(m=>`<div class="milestone"><span>${m.icon}</span> ${m.label}</div>`).join("")}</div>`;
+  }
+  // Shelf header
+  html+=`<div class="shelf-header"><p class="shelf-count">${books.length} book${books.length!==1?"s":""}</p><div class="group-btns"><span>Group</span><button class="group-btn ${shelfGroup==="status"?"active":""}" data-group="status">Status</button><button class="group-btn ${shelfGroup==="category"?"active":""}" data-group="category">Category</button></div></div>`;
 
-    <div class="card">
-      <div class="goal-header">
-        <h3 class="card-title" style="margin:0">Annual Goal</h3>
-        <span class="goal-pct">${pct}%</span>
-      </div>
-      <div class="goal-bar"><div class="goal-bar-fill" style="width:${Math.min(100,pct)}%"></div></div>
-      <div class="goal-footer">
-        <span>${completed.length} completed</span>
-        <span>${Math.max(0, goal - completed.length)} remaining</span>
-      </div>
-    </div>`;
-
-  if (reading.length) {
-    html += `<div class="card"><h3 class="card-title">Currently Reading</h3>`;
-    reading.forEach(b => {
-      const color = CAT_COLORS[b.category] || '#8D99AE';
-      html += `<div class="reading-item" data-id="${b.id}">
-        <div class="reading-item-info">
-          <p class="reading-item-title">${esc(b.title)}</p>
-          <p class="reading-item-author">${esc(b.author)}</p>
-        </div>
-        <div class="reading-item-right">
-          <span class="cat-pill" style="background:${color}22;color:${color}">${esc(b.category)}</span>
-          <span class="chevron">&#8250;</span>
-        </div>
-      </div>`;
+  if(!books.length){
+    html+=`<div class="empty"><p class="title">Your shelves are empty.</p><p class="sub">Add your first book to begin.</p></div>`;
+  }else{
+    const groups={};
+    if(shelfGroup==="status"){
+      const order=["reading","completed","want-to-read","abandoned"];
+      order.forEach(s=>{const items=books.filter(b=>b.status===s);if(items.length)groups[s]=items});
+    }else{
+      CATEGORIES.forEach(c=>{const items=books.filter(b=>b.category===c);if(items.length)groups[c]=items});
+    }
+    const groupLabels={reading:"Currently Reading",completed:"Completed","want-to-read":"Up Next",abandoned:"Dropped"};
+    Object.entries(groups).forEach(([key,items])=>{
+      html+=`<div class="shelf-group"><div class="shelf-group-header"><h3 class="shelf-group-title">${groupLabels[key]||key}</h3><span class="shelf-group-count">${items.length}</span></div>`;
+      const sorted=[...items].sort((a,b)=>{if(a.status==="reading"&&b.status!=="reading")return -1;if(b.status==="reading"&&a.status!=="reading")return 1;return new Date(b.addedAt||0)-new Date(a.addedAt||0)});
+      const perRow=18;
+      for(let i=0;i<sorted.length;i+=perRow){
+        const row=sorted.slice(i,i+perRow);
+        html+=`<div class="shelf-row-wrap"><div class="shelf-ambient"></div><div class="shelf-spines">`;
+        row.forEach((book,bi)=>{
+          const pages=book.pages||250;
+          const h=Math.max(85,Math.min(145,85+(pages/800)*60));
+          const sc=CAT_SPINE[book.category]||CAT_SPINE.Other;
+          const lc=CAT_COLORS[book.category]||CAT_COLORS.Other;
+          const seed=book.id?(book.id.charCodeAt(0)+(book.id.charCodeAt(1)||0)*7):bi;
+          const tilt=(seededRand(seed)-0.5)*3.5;
+          const w=36+Math.round((seededRand(seed+99)-0.5)*8);
+          html+=`<div class="spine" data-id="${book.id}" style="width:${w}px;height:${h}px;background:linear-gradient(135deg,${lc}18 0%,${sc} 12%,${sc} 50%,${lc}08 80%,${sc} 100%);border:1px solid ${lc}25;transform:rotate(${tilt}deg);transform-origin:bottom center;box-shadow:1px 2px 6px rgba(0,0,0,0.5),inset -3px 0 6px rgba(0,0,0,0.25),inset 3px 0 6px ${lc}12" data-tilt="${tilt}" data-lc="${lc}" title="${esc(book.title)} \u2014 ${esc(book.author)}">
+            <div class="spine-hl" style="background:${lc}15"></div><div class="spine-hr"></div>
+            <div class="spine-top" style="background:linear-gradient(180deg,${lc}20,transparent)"></div><div class="spine-bot"></div>
+            <div class="spine-title" style="color:${lc}BB;max-width:${h-24}px">${esc(book.title)}</div>
+            ${book.rating>=4?`<div class="spine-dot"></div>`:""}
+          </div>`;
+        });
+        html+=`</div><div class="shelf-plank"></div><div class="shelf-shadow"></div></div>`;
+      }
+      html+=`</div>`;
     });
-    html += '</div>';
   }
-
-  if (!data.books.length) {
-    html += `<div class="empty-state">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-      <p>Your library is empty. Add your first book!</p>
-    </div>`;
-  }
-
-  document.getElementById('viewDashboard').innerHTML = html;
-
-  // Bind reading items
-  document.querySelectorAll('#viewDashboard .reading-item').forEach(el => {
-    el.addEventListener('click', () => openDetail(el.dataset.id));
-  });
+  document.getElementById("viewShelf").innerHTML=html;
+  bindShelfEvents();
 }
 
-// ─── Library ───
-function renderLibrary() {
-  let filtered = data.books
-    .filter(b => currentFilter === 'all' || b.status === currentFilter)
-    .filter(b => {
-      if (!searchQuery) return true;
-      const q = searchQuery.toLowerCase();
-      return (b.title||'').toLowerCase().includes(q) || (b.author||'').toLowerCase().includes(q);
-    })
-    .sort((a,b) => new Date(b.updatedAt || b.addedAt) - new Date(a.updatedAt || a.addedAt));
+function bindShelfEvents(){
+  document.querySelectorAll("#viewShelf .group-btn").forEach(b=>b.addEventListener("click",()=>{shelfGroup=b.dataset.group;renderShelf()}));
+  document.querySelectorAll("#viewShelf .spine").forEach(s=>{
+    s.addEventListener("mouseenter",()=>{const lc=s.dataset.lc;s.style.transform="rotate(0deg) translateY(-10px)";s.style.boxShadow=`2px 10px 24px rgba(0,0,0,0.6),inset -3px 0 6px rgba(0,0,0,0.25),inset 3px 0 6px ${lc}20`});
+    s.addEventListener("mouseleave",()=>{const lc=s.dataset.lc,t=s.dataset.tilt;s.style.transform=`rotate(${t}deg)`;s.style.boxShadow=`1px 2px 6px rgba(0,0,0,0.5),inset -3px 0 6px rgba(0,0,0,0.25),inset 3px 0 6px ${lc}12`});
+    s.addEventListener("click",()=>openDetail(s.dataset.id));
+  });
+  const qr=document.getElementById("quoteRefresh");
+  if(qr)qr.addEventListener("click",()=>{pickRandomQuote();renderShelf()});
+}
 
-  let html = `<div class="library-controls">
-    <input class="search-input" id="searchInput" placeholder="Search title or author\u2026" value="${esc(searchQuery)}">
-    <button class="filter-pill ${currentFilter==='all'?'active':''}" data-filter="all">All</button>
-    <button class="filter-pill ${currentFilter==='reading'?'active':''}" data-filter="reading">Reading</button>
-    <button class="filter-pill ${currentFilter==='completed'?'active':''}" data-filter="completed">Done</button>
-    <button class="filter-pill ${currentFilter==='want-to-read'?'active':''}" data-filter="want-to-read">To Read</button>
+// ══════════════════ TIMELINE VIEW ══════════════════
+function renderTimeline(){
+  const dated=data.books.filter(b=>b.startDate).sort((a,b)=>new Date(a.startDate)-new Date(b.startDate));
+  if(!dated.length){document.getElementById("viewTimeline").innerHTML=`<div class="empty"><p class="title">No reading dates recorded yet.</p><p class="sub">Add start/end dates to see your reading timeline.</p></div>`;return}
+  const starts=dated.map(b=>new Date(b.startDate).getTime());
+  const ends=dated.filter(b=>b.endDate).map(b=>new Date(b.endDate).getTime());
+  const now=Date.now();
+  const minD=Math.min(...starts),maxD=Math.max(...ends,now,...starts);
+  const range=maxD-minD||1;
+
+  // Month markers
+  const months=[];
+  const ms=new Date(minD);ms.setDate(1);
+  for(let d=new Date(ms);d.getTime()<=maxD;d.setMonth(d.getMonth()+1)){
+    const off=(d.getTime()-minD)/range*100;
+    if(off>=0&&off<=100)months.push({label:d.toLocaleDateString("en-US",{month:"short"}),off});
+  }
+
+  let html=`<p class="timeline-info">${dated.length} book${dated.length!==1?"s":""} with reading dates</p>`;
+  html+=`<div class="tl-months" style="margin-left:180px">${months.map(m=>`<div class="tl-month" style="left:${m.off}%">${m.label}</div>`).join("")}</div>`;
+
+  dated.forEach(book=>{
+    const start=new Date(book.startDate).getTime();
+    const end=book.endDate?new Date(book.endDate).getTime():now;
+    const left=((start-minD)/range)*100;
+    const width=Math.max(0.8,((end-start)/range)*100);
+    const color=CAT_COLORS[book.category]||CAT_COLORS.Other;
+    const isReading=book.status==="reading";
+    const bg=isReading?`repeating-linear-gradient(90deg,${color}CC 0px,${color}CC 6px,${color}66 6px,${color}66 12px)`:`linear-gradient(90deg,${color}DD,${color}99)`;
+    const dur=daysBetween(book.startDate,book.endDate);
+    const label=isReading?"reading":dur?dur+"d":"";
+    html+=`<div class="tl-row" data-id="${book.id}"><div class="tl-label"><p>${esc(book.title)}</p></div><div class="tl-bar-area">${months.map(m=>`<div class="tl-grid-line" style="left:${m.off}%"></div>`).join("")}<div class="tl-bar" style="left:${left}%;width:${width}%;background:${bg};box-shadow:0 1px 4px ${color}40">${width>8?`<div class="tl-bar-label">${label}</div>`:""}</div></div></div>`;
+  });
+
+  const usedCats=CATEGORIES.filter(c=>dated.some(b=>b.category===c));
+  html+=`<div class="tl-legend">${usedCats.map(c=>`<div class="tl-legend-item"><div class="tl-legend-color" style="background:${CAT_COLORS[c]}"></div><span class="tl-legend-label">${c}</span></div>`).join("")}</div>`;
+
+  document.getElementById("viewTimeline").innerHTML=html;
+  document.querySelectorAll("#viewTimeline .tl-row").forEach(r=>r.addEventListener("click",()=>openDetail(r.dataset.id)));
+}
+
+// ══════════════════ ANALYTICS VIEW ══════════════════
+function renderAnalytics(){
+  const completed=getCompleted(),goal=getGoal(),pct=Math.min(100,Math.round(completed.length/goal*100));
+  const totalPages=completed.reduce((s,b)=>s+(b.pages||0),0);
+  const streak=getStreak();
+  const avgDays=(()=>{const ds=completed.filter(b=>b.startDate&&b.endDate).map(b=>daysBetween(b.startDate,b.endDate));return ds.length?Math.round(ds.reduce((a,b)=>a+b,0)/ds.length):0})();
+  const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.push(q)));
+  const annotated=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
+  const catData=CATEGORIES.map(c=>({name:c,value:completed.filter(b=>b.category===c).length})).filter(c=>c.value>0);
+
+  // Pace data
+  const mm={};completed.forEach(b=>{if(b.endDate){const d=new Date(b.endDate),k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;mm[k]=(mm[k]||0)+1}});
+  const sortedMonths=Object.keys(mm).sort();
+
+  let html=`<div class="mini-stats">
+    <div class="mini-stat"><p class="mini-stat-label">Completed</p><p class="mini-stat-value">${completed.length}</p><p class="mini-stat-sub">of ${goal}</p></div>
+    <div class="mini-stat"><p class="mini-stat-label">Avg Pace</p><p class="mini-stat-value">${avgDays?avgDays+"d":"\u2014"}</p><p class="mini-stat-sub">per book</p></div>
+    <div class="mini-stat"><p class="mini-stat-label">Pages</p><p class="mini-stat-value">${totalPages||"\u2014"}</p></div>
+    <div class="mini-stat"><p class="mini-stat-label">Streak</p><p class="mini-stat-value">${streak.weeks?streak.weeks+"w":"\u2014"}</p>${streak.active?`<p class="mini-stat-sub">active</p>`:""}</div>
+    <div class="mini-stat"><p class="mini-stat-label">Annotated</p><p class="mini-stat-value">${annotated}</p></div>
+    <div class="mini-stat"><p class="mini-stat-label">Quotes</p><p class="mini-stat-value">${allQuotes.length}</p></div>
   </div>`;
 
-  if (!filtered.length) {
-    html += `<div class="empty-state">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-      <p>${data.books.length === 0 ? 'Your library is empty. Add your first book!' : 'No books match this filter.'}</p>
-    </div>`;
-  } else {
-    filtered.forEach(b => {
-      const color = CAT_COLORS[b.category] || '#8D99AE';
-      html += `<div class="book-item" data-id="${b.id}">
-        <div class="book-item-info">
-          <p class="book-item-title">${esc(b.title)}</p>
-          <div class="book-item-sub">
-            <span class="book-item-author">${esc(b.author)}</span>
-            ${b.endDate ? `<span class="book-item-date">&middot; ${fmtDate(b.endDate)}</span>` : ''}
-          </div>
-        </div>
-        <div class="book-item-right">
-          <span class="cat-pill" style="background:${color}22;color:${color}">${esc(b.category)}</span>
-          <span class="status-badge ${b.status}">${STATUS_LABELS[b.status]}</span>
-          ${b.notes ? '<span class="has-notes">&#9998;</span>' : ''}
-          <span class="chevron">&#8250;</span>
-        </div>
-      </div>`;
-    });
-  }
+  html+=`<div class="panel"><div class="panel-title" style="margin-bottom:12px">Annual Progress</div><div class="progress-row"><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div><span class="progress-pct">${pct}%</span></div></div>`;
 
-  document.getElementById('viewLibrary').innerHTML = html;
+  html+=`<div class="panel"><div class="panel-title">Category Breakdown</div>${catData.length===0?`<p class="panel-empty">Complete books to see categories.</p>`:`<div class="pie-row"><div class="pie-wrap"><canvas id="pieChart"></canvas></div><div class="cat-legend">${catData.sort((a,b)=>b.value-a.value).map(c=>`<div class="cat-legend-item"><div class="cat-legend-dot" style="background:${CAT_COLORS[c.name]}"></div><span class="cat-legend-name">${c.name}</span><span class="cat-legend-count">${c.value}</span><div class="cat-legend-bar"><div class="cat-legend-bar-fill" style="width:${(c.value/completed.length)*100}%;background:${CAT_COLORS[c.name]}"></div></div></div>`).join("")}</div></div>`}</div>`;
 
-  // Bind events
-  document.getElementById('searchInput')?.addEventListener('input', e => {
-    searchQuery = e.target.value;
-    renderLibrary();
-  });
-  document.querySelectorAll('#viewLibrary .filter-pill').forEach(p => {
-    p.addEventListener('click', () => {
-      currentFilter = p.dataset.filter;
-      renderLibrary();
-    });
-  });
-  document.querySelectorAll('#viewLibrary .book-item').forEach(el => {
-    el.addEventListener('click', () => openDetail(el.dataset.id));
+  html+=`<div class="panel"><div class="panel-title">Reading Pace</div>${sortedMonths.length===0?`<p class="panel-empty">Finish books with dates to track pace.</p>`:`<canvas class="pace-chart" id="paceChart"></canvas>`}</div>`;
+
+  document.getElementById("viewAnalytics").innerHTML=html;
+  requestAnimationFrame(()=>{
+    if(catData.length)drawPie(catData,completed.length);
+    if(sortedMonths.length)drawPace(mm,sortedMonths);
   });
 }
 
-// ─── Analytics ───
-function renderAnalytics() {
-  const completed = getCompleted();
-  const catData = CATEGORIES.map(c => ({
-    name: c, value: completed.filter(b => b.category === c).length
-  })).filter(c => c.value > 0);
-
-  const totalPages = completed.reduce((s,b) => s + (b.pages || 0), 0);
-  const withNotes = data.books.filter(b => b.notes).length;
-
-  // Monthly pace
-  const monthMap = {};
-  completed.forEach(b => {
-    if (b.endDate) {
-      const d = new Date(b.endDate);
-      const mk = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-      monthMap[mk] = (monthMap[mk] || 0) + 1;
-    }
-  });
-  const sortedMonths = Object.keys(monthMap).sort();
-
-  let html = `
-    <div class="card">
-      <h3 class="card-title">Category Breakdown</h3>
-      ${catData.length === 0
-        ? '<p style="font-family:var(--font-sans);font-size:13px;color:var(--text-muted);text-align:center;padding:30px 0">Complete some books to see your category distribution.</p>'
-        : `<div class="pie-row">
-            <div class="pie-wrap"><canvas id="pieChart"></canvas></div>
-            <div class="chart-legend" id="pieLegend"></div>
-          </div>`
-      }
-    </div>
-
-    <div class="card">
-      <h3 class="card-title">Reading Pace</h3>
-      ${sortedMonths.length === 0
-        ? '<p style="font-family:var(--font-sans);font-size:13px;color:var(--text-muted);text-align:center;padding:30px 0">Finish books with dates to see your pace over time.</p>'
-        : '<canvas class="chart-canvas" id="paceChart"></canvas>'
-      }
-    </div>
-
-    <div class="stat-grid four">
-      <div class="stat-card small" style="border-left-color:#8D99AE">
-        <p class="stat-card-label">Total Books</p>
-        <p class="stat-card-value">${data.books.length}</p>
-      </div>
-      <div class="stat-card small" style="border-left-color:#9B5DE5">
-        <p class="stat-card-label">Categories</p>
-        <p class="stat-card-value">${catData.length}</p>
-      </div>
-      <div class="stat-card small" style="border-left-color:#577590">
-        <p class="stat-card-label">Pages Read</p>
-        <p class="stat-card-value">${totalPages ? totalPages.toLocaleString() : '\u2014'}</p>
-      </div>
-      <div class="stat-card small" style="border-left-color:#A3B18A">
-        <p class="stat-card-label">With Notes</p>
-        <p class="stat-card-value">${withNotes}</p>
-      </div>
-    </div>`;
-
-  document.getElementById('viewAnalytics').innerHTML = html;
-
-  requestAnimationFrame(() => {
-    if (catData.length) drawPieChart(catData);
-    if (sortedMonths.length) drawPaceChart(monthMap, sortedMonths);
-  });
+function drawPie(catData,total){
+  const c=document.getElementById("pieChart");if(!c)return;
+  const dpr=window.devicePixelRatio||1;c.width=170*dpr;c.height=170*dpr;
+  const ctx=c.getContext("2d");ctx.scale(dpr,dpr);
+  const cx=85,cy=85,outer=75,inner=42;let start=-Math.PI/2;
+  catData.forEach(d=>{const sweep=(d.value/total)*Math.PI*2;ctx.beginPath();ctx.arc(cx,cy,outer,start,start+sweep);ctx.arc(cx,cy,inner,start+sweep,start,true);ctx.closePath();ctx.fillStyle=CAT_COLORS[d.name]||"#7A7670";ctx.fill();start+=sweep});
 }
 
-function drawPieChart(catData) {
-  const canvas = document.getElementById('pieChart');
-  if (!canvas) return;
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = 180 * dpr;
-  canvas.height = 180 * dpr;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  const cx = 90, cy = 90, outer = 80, inner = 45;
-  const total = catData.reduce((s,c) => s + c.value, 0);
-  let start = -Math.PI / 2;
+function drawPace(mm,sortedMonths){
+  const c=document.getElementById("paceChart");if(!c)return;
+  const dpr=window.devicePixelRatio||1;const rect=c.getBoundingClientRect();c.width=rect.width*dpr;c.height=rect.height*dpr;
+  const ctx=c.getContext("2d");ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;
+  let cum=0;const pts=sortedMonths.map(k=>{cum+=mm[k];const[y,m]=k.split("-");return{label:new Date(parseInt(y),parseInt(m)-1).toLocaleDateString("en-US",{month:"short",year:"2-digit"}),books:mm[k],cum}});
+  const maxC=Math.max(...pts.map(p=>p.cum),1);
+  const pL=36,pR=20,pT=20,pB=30,cw=w-pL-pR,ch=h-pT-pB;
 
-  catData.forEach(c => {
-    const sweep = (c.value / total) * Math.PI * 2;
-    ctx.beginPath();
-    ctx.arc(cx, cy, outer, start, start + sweep);
-    ctx.arc(cx, cy, inner, start + sweep, start, true);
-    ctx.closePath();
-    ctx.fillStyle = CAT_COLORS[c.name] || '#8D99AE';
-    ctx.fill();
-    start += sweep;
-  });
+  ctx.strokeStyle="#2A2419";ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=pT+(ch/4)*i;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke()}
 
-  // Legend
-  const legend = document.getElementById('pieLegend');
-  if (legend) {
-    legend.innerHTML = catData.sort((a,b) => b.value - a.value).map(c => `
-      <div class="legend-item">
-        <div class="legend-dot" style="background:${CAT_COLORS[c.name]||'#8D99AE'}"></div>
-        <span class="legend-label">${c.name} <span class="legend-count">(${c.value})</span></span>
-      </div>
-    `).join('');
-  }
+  const grad=ctx.createLinearGradient(0,pT,0,h-pB);grad.addColorStop(0,"rgba(196,149,106,0.25)");grad.addColorStop(1,"rgba(196,149,106,0)");
+  ctx.beginPath();pts.forEach((p,i)=>{const x=pL+(i/(pts.length-1||1))*cw,y=pT+ch-(p.cum/maxC)*ch;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.lineTo(pL+cw,pT+ch);ctx.lineTo(pL,pT+ch);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+
+  ctx.beginPath();pts.forEach((p,i)=>{const x=pL+(i/(pts.length-1||1))*cw,y=pT+ch-(p.cum/maxC)*ch;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.strokeStyle="#C4956A";ctx.lineWidth=2;ctx.stroke();
+
+  pts.forEach((p,i)=>{const x=pL+(i/(pts.length-1||1))*cw,y=pT+ch-(p.cum/maxC)*ch;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle="#C4956A";ctx.fill()});
+
+  ctx.setLineDash([4,4]);ctx.beginPath();pts.forEach((p,i)=>{const x=pL+(i/(pts.length-1||1))*cw,y=pT+ch-(p.books/maxC)*ch;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.strokeStyle="#5B9EAD";ctx.lineWidth=1.5;ctx.stroke();ctx.setLineDash([]);
+
+  ctx.font="11px Outfit,sans-serif";ctx.fillStyle="#6A6258";ctx.textAlign="center";
+  pts.forEach((p,i)=>{ctx.fillText(p.label,pL+(i/(pts.length-1||1))*cw,h-6)});
+  ctx.textAlign="right";for(let i=0;i<=4;i++){ctx.fillText(Math.round((maxC/4)*(4-i)),pL-8,pT+(ch/4)*i+4)}
 }
 
-function drawPaceChart(monthMap, sortedMonths) {
-  const canvas = document.getElementById('paceChart');
-  if (!canvas) return;
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  const w = rect.width, h = rect.height;
+// ══════════════════ YEAR IN REVIEW ══════════════════
+function renderReview(){
+  const completed=getCompleted(),books=data.books;
+  if(completed.length<3){document.getElementById("viewReview").innerHTML=`<div class="empty"><p class="title">Complete at least 3 books to unlock your Year in Review.</p></div>`;return}
 
-  let cumulative = 0;
-  const points = sortedMonths.map(mk => {
-    cumulative += monthMap[mk];
-    const [y,m] = mk.split('-');
-    const label = new Date(parseInt(y), parseInt(m)-1).toLocaleDateString('en-US',{month:'short',year:'2-digit'});
-    return { label, books: monthMap[mk], cum: cumulative };
-  });
+  const totalPages=completed.reduce((s,b)=>s+(b.pages||0),0);
+  const catCounts={};completed.forEach(b=>{catCounts[b.category]=(catCounts[b.category]||0)+1});
+  const topCat=Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];
+  const rated=completed.filter(b=>b.rating);
+  const avgRating=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
+  const durations=completed.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:daysBetween(b.startDate,b.endDate)}));
+  const fastest=durations.length?durations.reduce((a,b)=>a.days<b.days?a:b):null;
+  const longest=completed.reduce((a,b)=>(b.pages||0)>(a.pages||0)?b:a,completed[0]);
+  const topRated=[...completed].filter(b=>b.rating).sort((a,b)=>b.rating-a.rating)[0];
+  const allThemes={};books.forEach(b=>(b.themes||[]).forEach(t=>{allThemes[t]=(allThemes[t]||0)+1}));
+  const topThemes=Object.entries(allThemes).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const totalQuotes=books.reduce((s,b)=>s+(b.quotes?.length||0),0);
+  const ms=getMilestones();
+  const pct=Math.min(100,Math.round(completed.length/getGoal()*100));
 
-  const maxCum = Math.max(...points.map(p => p.cum), 1);
-  const padL = 36, padR = 20, padT = 20, padB = 30;
-  const cw = w - padL - padR, ch = h - padT - padB;
+  let html=`<div class="yr-hero"><div class="yr-hero-glow"></div><p class="yr-hero-label">Year in Review</p><p class="yr-hero-num">${completed.length}</p><p class="yr-hero-sub">books completed \u00B7 ${pct}% of goal</p>${totalPages?`<p class="yr-hero-pages">${totalPages.toLocaleString()} pages read</p>`:""}</div>`;
 
-  // Grid
-  ctx.strokeStyle = '#2A2520';
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= 4; i++) {
-    const y = padT + (ch / 4) * i;
-    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke();
-  }
+  html+=`<div class="yr-grid">`;
+  if(topCat)html+=`<div class="yr-card"><p class="yr-card-label">Top Category</p><p class="yr-card-value">${topCat[0]}</p><p class="yr-card-sub">${topCat[1]} books</p></div>`;
+  if(avgRating)html+=`<div class="yr-card"><p class="yr-card-label">Avg Rating</p><p class="yr-card-value">${avgRating} / 5</p></div>`;
+  if(fastest)html+=`<div class="yr-card"><p class="yr-card-label">Fastest Read</p><p class="yr-card-value sm">${esc(fastest.title)}</p><p class="yr-card-sub">${fastest.days} days</p></div>`;
+  if(longest&&longest.pages)html+=`<div class="yr-card"><p class="yr-card-label">Longest Book</p><p class="yr-card-value sm">${esc(longest.title)}</p><p class="yr-card-sub">${longest.pages} pages</p></div>`;
+  if(topRated)html+=`<div class="yr-card"><p class="yr-card-label">Highest Rated</p><p class="yr-card-value sm">${esc(topRated.title)}</p><p class="yr-card-sub">${topRated.rating}/5</p></div>`;
+  html+=`</div>`;
 
-  // Area fill
-  const grad = ctx.createLinearGradient(0, padT, 0, h - padB);
-  grad.addColorStop(0, 'rgba(212,163,115,0.3)');
-  grad.addColorStop(1, 'rgba(212,163,115,0)');
+  if(topThemes.length)html+=`<div class="panel"><div class="panel-title">Recurring Themes</div><div class="yr-themes">${topThemes.map(([t,c])=>`<div class="yr-theme">${esc(t)} <span>\u00D7${c}</span></div>`).join("")}</div></div>`;
+  if(ms.length)html+=`<div class="panel"><div class="panel-title">Milestones Unlocked</div><div class="yr-milestones">${ms.map(m=>`<div class="yr-milestone"><span class="yr-milestone-icon">${m.icon}</span><p class="yr-milestone-label">${m.label}</p></div>`).join("")}</div></div>`;
+  if(totalQuotes)html+=`<div class="yr-quote-stat"><span style="color:var(--accentDim);font-size:20px">\u201C</span><p>You saved <strong>${totalQuotes}</strong> passage${totalQuotes!==1?"s":""} across your readings.</p></div>`;
 
-  ctx.beginPath();
-  points.forEach((p, i) => {
-    const x = padL + (i / (points.length - 1 || 1)) * cw;
-    const y = padT + ch - (p.cum / maxCum) * ch;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  const lastX = padL + cw;
-  ctx.lineTo(lastX, padT + ch);
-  ctx.lineTo(padL, padT + ch);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Line
-  ctx.beginPath();
-  points.forEach((p, i) => {
-    const x = padL + (i / (points.length - 1 || 1)) * cw;
-    const y = padT + ch - (p.cum / maxCum) * ch;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.strokeStyle = '#D4A373';
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // Dots
-  points.forEach((p, i) => {
-    const x = padL + (i / (points.length - 1 || 1)) * cw;
-    const y = padT + ch - (p.cum / maxCum) * ch;
-    ctx.beginPath();
-    ctx.arc(x, y, 3, 0, Math.PI * 2);
-    ctx.fillStyle = '#D4A373';
-    ctx.fill();
-  });
-
-  // Monthly bars (dashed)
-  ctx.setLineDash([4, 4]);
-  const maxBooks = Math.max(...points.map(p => p.books), 1);
-  ctx.beginPath();
-  points.forEach((p, i) => {
-    const x = padL + (i / (points.length - 1 || 1)) * cw;
-    const y = padT + ch - (p.books / maxCum) * ch;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.strokeStyle = '#577590';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-  ctx.setLineDash([]);
-
-  // Labels
-  ctx.font = '11px DM Sans, sans-serif';
-  ctx.fillStyle = '#6A6560';
-  ctx.textAlign = 'center';
-  points.forEach((p, i) => {
-    const x = padL + (i / (points.length - 1 || 1)) * cw;
-    ctx.fillText(p.label, x, h - 6);
-  });
-
-  // Y-axis labels
-  ctx.textAlign = 'right';
-  for (let i = 0; i <= 4; i++) {
-    const val = Math.round((maxCum / 4) * (4 - i));
-    const y = padT + (ch / 4) * i + 4;
-    ctx.fillText(val, padL - 8, y);
-  }
+  document.getElementById("viewReview").innerHTML=html;
 }
 
-// ─── Book Detail ───
-function openDetail(id) {
-  const book = data.books.find(b => b.id === id);
-  if (!book) return;
-  renderDetail(book);
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('detailView').classList.add('active');
-  window.scrollTo(0, 0);
+// ══════════════════ BOOK DETAIL ══════════════════
+let detailBook=null;
+function openDetail(id){
+  detailBook=data.books.find(b=>b.id===id);
+  if(!detailBook)return;
+  renderDetail();
+  document.getElementById("app").style.display="none";
+  document.getElementById("detailView").classList.add("active");
+  window.scrollTo(0,0);
 }
-
-function closeDetail() {
-  document.getElementById('detailView').classList.remove('active');
-  document.getElementById('app').style.display = '';
+function closeDetail(){
+  document.getElementById("detailView").classList.remove("active");
+  document.getElementById("app").style.display="";
   renderAll();
 }
 
-function renderDetail(book) {
-  const color = CAT_COLORS[book.category] || '#8D99AE';
-  const pct = book.pages ? Math.round((book.currentPage / book.pages) * 100) : 0;
-  const dur = (book.startDate && book.endDate)
-    ? Math.max(1, Math.round((new Date(book.endDate) - new Date(book.startDate)) / 86400000)) + ' days'
-    : '';
+function renderDetail(){
+  const book=detailBook;if(!book)return;
+  const sc=CAT_SPINE[book.category]||CAT_SPINE.Other;
+  const lc=CAT_COLORS[book.category]||CAT_COLORS.Other;
+  const dur=daysBetween(book.startDate,book.endDate);
+  const quotes=book.quotes||[];
+  const themes=book.themes||[];
+  const connections=(book.connections||[]).map(id=>data.books.find(b=>b.id===id)).filter(Boolean);
 
-  let progressHTML = '';
-  if (book.status === 'reading' && book.pages) {
-    progressHTML = `<div class="progress-section">
-      <div class="progress-top">
-        <span class="rating-section-label" style="margin:0">Progress</span>
-        <span style="font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent)">${pct}%</span>
+  let actHTML="";
+  if(book.status==="reading")actHTML+=`<button class="dbtn green" data-action="complete">&#10003; Mark Complete</button>`;
+  if(book.status==="want-to-read")actHTML+=`<button class="dbtn blue" data-action="start">&#9654; Start Reading</button>`;
+  if(book.status==="completed")actHTML+=`<button class="dbtn blue-o" data-action="reread">&#9654; Re-read</button>`;
+  actHTML+=`<button class="dbtn ghost" data-action="edit">&#9998; Edit</button>`;
+  actHTML+=`<button class="dbtn ghost" data-action="delete">&#128465; Delete</button>`;
+
+  document.getElementById("detailContent").innerHTML=`
+    <button class="detail-back" id="detailBack">&larr; Back</button>
+    <div class="detail-hero">
+      <div class="detail-spine-big" style="background:linear-gradient(135deg,${lc}30 0%,${sc} 20%,${sc} 80%,${lc}15 100%);border:1px solid ${lc}35;box-shadow:2px 2px 12px rgba(0,0,0,0.3),inset -3px 0 6px rgba(0,0,0,0.2),inset 3px 0 6px ${lc}20">
+        <div class="detail-spine-title" style="color:${lc}BB">${esc(book.title)}</div>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-      <div class="progress-input-row">
-        <span>Page</span>
-        <input class="progress-input" type="number" id="detailPageInput" value="${book.currentPage}" min="0" max="${book.pages}">
-        <span>of ${book.pages}</span>
-      </div>
-    </div>`;
-  }
-
-  let actionsHTML = '';
-  if (book.status === 'reading') {
-    actionsHTML += `<button class="detail-btn green" data-action="complete">&#10003; Mark Complete</button>`;
-  }
-  if (book.status === 'want-to-read') {
-    actionsHTML += `<button class="detail-btn blue" data-action="start-reading">&#9654; Start Reading</button>`;
-  }
-  if (book.status === 'completed') {
-    actionsHTML += `<button class="detail-btn blue-outline" data-action="reread">&#9654; Re-read</button>`;
-  }
-  actionsHTML += `<button class="detail-btn ghost" data-action="edit">&#9998; Edit</button>`;
-  actionsHTML += `<button class="detail-btn ghost" id="detailDeleteBtn" data-action="delete">&#128465; Delete</button>`;
-
-  let ratingHTML = [1,2,3,4,5].map(s =>
-    `<button class="rating-box ${s <= (book.rating||0) ? 'filled' : 'empty'}" data-star="${s}">${s}</button>`
-  ).join('');
-
-  document.getElementById('detailContent').innerHTML = `
-    <button class="detail-back" id="detailBack">&larr; Back to Library</button>
-    <div class="detail-top">
-      <div>
+      <div style="flex:1">
+        <div class="detail-pills">
+          <span class="cat-pill" style="background:${lc}22;color:${lc}">${esc(book.category)}</span>
+          <span class="status-badge ${book.status}">${STATUS_LABELS[book.status]}</span>
+        </div>
         <h1 class="detail-title">${esc(book.title)}</h1>
         <p class="detail-author">${esc(book.author)}</p>
-      </div>
-      <span class="status-badge ${book.status}">${STATUS_LABELS[book.status]}</span>
-    </div>
-
-    <div class="detail-meta">
-      <div><p class="meta-item-label">Category</p><p class="meta-item-value" style="color:${color}">${esc(book.category)}</p></div>
-      ${book.pages ? `<div><p class="meta-item-label">Pages</p><p class="meta-item-value">${book.pages}</p></div>` : ''}
-      ${book.startDate ? `<div><p class="meta-item-label">Started</p><p class="meta-item-value">${fmtDate(book.startDate)}</p></div>` : ''}
-      ${book.endDate ? `<div><p class="meta-item-label">Finished</p><p class="meta-item-value">${fmtDate(book.endDate)}</p></div>` : ''}
-      ${dur ? `<div><p class="meta-item-label">Duration</p><p class="meta-item-value">${dur}</p></div>` : ''}
-    </div>
-
-    <div class="detail-actions">${actionsHTML}</div>
-
-    ${progressHTML}
-
-    <div style="margin-top:28px">
-      <p class="rating-section-label">Rating</p>
-      <div class="rating-row" id="detailRating">${ratingHTML}</div>
-    </div>
-
-    <div>
-      <div class="notes-header">
-        <p class="rating-section-label" style="margin:0">Notes &amp; Reflections</p>
-        <button class="notes-edit-btn" id="notesEditBtn">&#9998; ${book.notes ? 'Edit' : 'Add Notes'}</button>
-      </div>
-      <div id="notesDisplay">
-        ${book.notes
-          ? `<div class="notes-display">${esc(book.notes)}</div>`
-          : `<p class="notes-empty">No notes yet.</p>`
-        }
-      </div>
-      <div id="notesEditor" style="display:none">
-        <textarea class="notes-textarea" id="notesTextarea" placeholder="Your thoughts, key passages, connections to other readings\u2026">${esc(book.notes||'')}</textarea>
-        <div class="notes-actions">
-          <button class="notes-save" id="notesSave">Save</button>
-          <button class="notes-cancel" id="notesCancel">Cancel</button>
+        <div class="detail-meta">
+          ${book.pages?`<div><p class="meta-label">Pages</p><p class="meta-value">${book.pages}</p></div>`:""}
+          ${book.startDate?`<div><p class="meta-label">Started</p><p class="meta-value">${fmtShort(book.startDate)}</p></div>`:""}
+          ${book.endDate?`<div><p class="meta-label">Finished</p><p class="meta-value">${fmtShort(book.endDate)}</p></div>`:""}
+          ${dur?`<div><p class="meta-label">Duration</p><p class="meta-value">${dur}d</p></div>`:""}
         </div>
+        <div class="detail-actions" id="detailActions">${actHTML}</div>
       </div>
+    </div>
+
+    <div style="margin-top:32px"><p class="sec-label">Rating</p>
+      <div class="rating-row" id="detailRating">${[1,2,3,4,5].map(s=>`<button class="rbox ${s<=(book.rating||0)?"on":"off"}" data-star="${s}">${s}</button>`).join("")}</div>
+    </div>
+
+    <div style="margin-top:28px"><p class="sec-label">&#127991; Themes</p>
+      <div class="themes-row" id="detailThemes">
+        ${themes.map(t=>`<span class="theme-tag">${esc(t)}<button data-theme="${esc(t)}">&times;</button></span>`).join("")}
+        <input class="theme-input" id="themeInput" placeholder="Add theme\u2026">
+      </div>
+    </div>
+
+    <div class="reflection" id="reflArg"><div class="refl-header"><p class="sec-label">&#128161; Core Argument</p><button class="refl-edit" data-field="argument">&#9998; ${book.coreArgument?"Edit":"Add"}</button></div><div class="refl-content">${book.coreArgument?`<div class="refl-display">${esc(book.coreArgument)}</div>`:`<p class="refl-empty">What's the central thesis or argument?</p>`}</div></div>
+
+    <div class="reflection" id="reflImpact"><div class="refl-header"><p class="sec-label">&#10024; How This Changed My Thinking</p><button class="refl-edit" data-field="impact">&#9998; ${book.impact?"Edit":"Add"}</button></div><div class="refl-content">${book.impact?`<div class="refl-display">${esc(book.impact)}</div>`:`<p class="refl-empty">What shifted in your understanding?</p>`}</div></div>
+
+    <div class="reflection" id="reflNotes"><div class="refl-header"><p class="sec-label">&#128278; Notes &amp; Passages</p><button class="refl-edit" data-field="notes">&#9998; ${book.notes?"Edit":"Add"}</button></div><div class="refl-content">${book.notes?`<div class="refl-display">${esc(book.notes)}</div>`:`<p class="refl-empty">Key passages, observations, questions\u2026</p>`}</div></div>
+
+    <div class="quotes-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><p class="sec-label">\u201C Saved Passages</p><button class="refl-edit" id="addQuoteBtn">+ Add Passage</button></div>
+      <div id="quoteForm" style="display:none"></div>
+      <div id="quotesList">${quotes.length?quotes.map(q=>`<div class="quote-item" data-qid="${q.id}"><p class="quote-text">\u201C${esc(q.text)}\u201D</p><div class="quote-footer">${q.page?`<span class="quote-page">p. ${esc(q.page)}</span>`:""}<button class="quote-del" data-qid="${q.id}">&times;</button></div></div>`).join(""):`<p class="refl-empty">Save memorable passages with page references.</p>`}</div>
+    </div>
+
+    <div class="conn-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><p class="sec-label">&#128279; Connections</p><button class="refl-edit" id="addConnBtn">+ Link</button></div>
+      <div id="connPicker" style="display:none"></div>
+      <div id="connList">${connections.length?connections.map(cb=>`<div class="conn-book" data-id="${cb.id}"><div class="conn-spine" style="background:${CAT_COLORS[cb.category]||CAT_COLORS.Other}"></div><div><p style="margin:0;font-size:15px;font-weight:500">${esc(cb.title)}</p><p style="margin:1px 0 0;font-family:var(--ui);font-size:12px;color:var(--textD)">${esc(cb.author)} \u00B7 ${esc(cb.category)}</p></div></div>`).join(""):`<p class="refl-empty">Link related readings.</p>`}</div>
     </div>`;
 
-  // ─── Bind detail events ───
-  document.getElementById('detailBack').addEventListener('click', closeDetail);
+  bindDetailEvents();
+}
+
+function bindDetailEvents(){
+  const book=detailBook;
+  document.getElementById("detailBack").addEventListener("click",closeDetail);
 
   // Actions
-  document.querySelectorAll('.detail-actions .detail-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const action = btn.dataset.action;
-      if (action === 'complete') {
-        book.status = 'completed';
-        book.endDate = new Date().toISOString().slice(0,10);
-        book.currentPage = book.pages || book.currentPage;
-        book.updatedAt = new Date().toISOString();
-        save(); renderDetail(book);
-      } else if (action === 'start-reading') {
-        book.status = 'reading';
-        book.startDate = book.startDate || new Date().toISOString().slice(0,10);
-        book.endDate = '';
-        book.updatedAt = new Date().toISOString();
-        save(); renderDetail(book);
-      } else if (action === 'reread') {
-        book.status = 'reading';
-        book.startDate = new Date().toISOString().slice(0,10);
-        book.endDate = '';
-        book.currentPage = 0;
-        book.updatedAt = new Date().toISOString();
-        save(); renderDetail(book);
-      } else if (action === 'edit') {
-        closeDetail();
-        openForm(book);
-      } else if (action === 'delete') {
-        showConfirm('Delete Book', 'This book will be permanently removed.', () => {
-          data.books = data.books.filter(b => b.id !== book.id);
-          save(); closeDetail();
-        });
-      }
-    });
-  });
+  document.querySelectorAll("#detailActions .dbtn").forEach(btn=>btn.addEventListener("click",()=>{
+    const a=btn.dataset.action;
+    if(a==="complete"){book.status="completed";book.endDate=new Date().toISOString().slice(0,10);book.currentPage=book.pages||book.currentPage;book.updatedAt=new Date().toISOString();save();renderDetail()}
+    else if(a==="start"){book.status="reading";book.startDate=book.startDate||new Date().toISOString().slice(0,10);book.endDate="";book.updatedAt=new Date().toISOString();save();renderDetail()}
+    else if(a==="reread"){book.status="reading";book.startDate=new Date().toISOString().slice(0,10);book.endDate="";book.currentPage=0;book.updatedAt=new Date().toISOString();save();renderDetail()}
+    else if(a==="edit"){closeDetail();openForm(book)}
+    else if(a==="delete"){showConfirm("Delete Book","This book will be permanently removed.",()=>{data.books=data.books.filter(b=>b.id!==book.id);save();closeDetail()})}
+  }));
 
   // Rating
-  document.querySelectorAll('#detailRating .rating-box').forEach(box => {
-    box.addEventListener('click', () => {
-      book.rating = parseInt(box.dataset.star);
-      book.updatedAt = new Date().toISOString();
-      save(); renderDetail(book);
-    });
-  });
+  document.querySelectorAll("#detailRating .rbox").forEach(b=>b.addEventListener("click",()=>{book.rating=parseInt(b.dataset.star);book.updatedAt=new Date().toISOString();save();renderDetail()}));
 
-  // Page input
-  const pageInput = document.getElementById('detailPageInput');
-  if (pageInput) {
-    pageInput.addEventListener('change', () => {
-      book.currentPage = Math.max(0, Math.min(book.pages||0, parseInt(pageInput.value)||0));
-      book.updatedAt = new Date().toISOString();
-      save(); renderDetail(book);
-    });
-  }
+  // Themes
+  document.querySelectorAll("#detailThemes .theme-tag button").forEach(b=>b.addEventListener("click",()=>{book.themes=(book.themes||[]).filter(t=>t!==b.dataset.theme);book.updatedAt=new Date().toISOString();save();renderDetail()}));
+  const ti=document.getElementById("themeInput");
+  if(ti)ti.addEventListener("keydown",e=>{if(e.key==="Enter"&&ti.value.trim()){if(!book.themes)book.themes=[];if(!book.themes.includes(ti.value.trim())){book.themes.push(ti.value.trim());book.updatedAt=new Date().toISOString();save();renderDetail()}}});
 
-  // Notes
-  document.getElementById('notesEditBtn').addEventListener('click', () => {
-    document.getElementById('notesDisplay').style.display = 'none';
-    document.getElementById('notesEditor').style.display = 'block';
-    document.getElementById('notesEditBtn').style.display = 'none';
+  // Reflections
+  document.querySelectorAll(".refl-edit[data-field]").forEach(btn=>btn.addEventListener("click",()=>{
+    const field=btn.dataset.field;
+    const map={argument:"coreArgument",impact:"impact",notes:"notes"};
+    const key=map[field];
+    const container=btn.closest(".reflection").querySelector(".refl-content");
+    container.innerHTML=`<textarea class="refl-ta${field==="notes"?" tall":""}" id="reflTA">${esc(book[key]||"")}</textarea><div class="refl-btns"><button class="rbtn save" id="reflSave">Save</button><button class="rbtn cancel" id="reflCancel">Cancel</button></div>`;
+    btn.style.display="none";
+    document.getElementById("reflSave").addEventListener("click",()=>{book[key]=document.getElementById("reflTA").value.trim();book.updatedAt=new Date().toISOString();save();renderDetail()});
+    document.getElementById("reflCancel").addEventListener("click",()=>renderDetail());
+  }));
+
+  // Quotes
+  document.getElementById("addQuoteBtn").addEventListener("click",()=>{
+    const qf=document.getElementById("quoteForm");
+    qf.style.display=qf.style.display==="none"?"block":"none";
+    qf.innerHTML=`<div class="quote-form"><textarea id="qText" placeholder="Enter passage or quote\u2026"></textarea><div class="quote-form-row"><input id="qPage" placeholder="Page #"><button class="rbtn save" id="qSave">Save</button><button class="rbtn cancel" id="qCancel">Cancel</button></div></div>`;
+    document.getElementById("qSave").addEventListener("click",()=>{const t=document.getElementById("qText").value.trim();if(!t)return;if(!book.quotes)book.quotes=[];book.quotes.push({id:uid(),text:t,page:document.getElementById("qPage").value.trim()||null});book.updatedAt=new Date().toISOString();save();renderDetail()});
+    document.getElementById("qCancel").addEventListener("click",()=>{qf.style.display="none"});
   });
-  document.getElementById('notesSave')?.addEventListener('click', () => {
-    book.notes = document.getElementById('notesTextarea').value.trim();
-    book.updatedAt = new Date().toISOString();
-    save(); renderDetail(book);
+  document.querySelectorAll(".quote-del").forEach(b=>b.addEventListener("click",e=>{e.stopPropagation();book.quotes=(book.quotes||[]).filter(q=>q.id!==b.dataset.qid);book.updatedAt=new Date().toISOString();save();renderDetail()}));
+
+  // Connections
+  document.getElementById("addConnBtn").addEventListener("click",()=>{
+    const cp=document.getElementById("connPicker");
+    cp.style.display=cp.style.display==="none"?"block":"none";
+    const others=data.books.filter(b=>b.id!==book.id);
+    cp.innerHTML=`<div class="conn-picker">${others.length?others.map(b=>{const linked=(book.connections||[]).includes(b.id);return`<div class="conn-picker-item${linked?" linked":""}" data-cid="${b.id}"><div class="conn-check${linked?" on":""}"></div><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(b.title)}</span><span style="font-family:var(--ui);font-size:11px;color:var(--textD);margin-left:auto">${esc(b.category)}</span></div>`}).join(""):`<p style="font-family:var(--ui);font-size:12px;color:var(--textD);text-align:center;padding:12px">Add more books to create connections.</p>`}</div>`;
+    cp.querySelectorAll(".conn-picker-item").forEach(item=>item.addEventListener("click",()=>{
+      if(!book.connections)book.connections=[];
+      const cid=item.dataset.cid;
+      if(book.connections.includes(cid))book.connections=book.connections.filter(x=>x!==cid);
+      else book.connections.push(cid);
+      book.updatedAt=new Date().toISOString();save();renderDetail();
+    }));
   });
-  document.getElementById('notesCancel')?.addEventListener('click', () => {
-    document.getElementById('notesDisplay').style.display = '';
-    document.getElementById('notesEditor').style.display = 'none';
-    document.getElementById('notesEditBtn').style.display = '';
-  });
+  document.querySelectorAll(".conn-book").forEach(b=>b.addEventListener("click",()=>{openDetail(b.dataset.id)}));
 }
 
-// ─── Add/Edit Form ───
-function openForm(book) {
-  const isEdit = !!book;
-  document.getElementById('formPanel').innerHTML = `
-    <div class="modal-header">
-      <h2>${isEdit ? 'Edit Book' : 'Add Book'}</h2>
-      <button class="modal-close" id="formClose">&times;</button>
-    </div>
+// ══════════════════ ADD/EDIT FORM ══════════════════
+function openForm(book){
+  const isEdit=!!book;
+  document.getElementById("formPanel").innerHTML=`
+    <div class="modal-header"><h2>${isEdit?"Edit Book":"Add Book"}</h2><button class="modal-close" id="formClose">&times;</button></div>
     <div class="form-stack">
-      <div>
-        <p class="form-label">Title *</p>
-        <input class="form-input" id="fTitle" placeholder="Book title" value="${esc(book?.title||'')}">
-      </div>
-      <div>
-        <p class="form-label">Author</p>
-        <input class="form-input" id="fAuthor" placeholder="Author name" value="${esc(book?.author||'')}">
-      </div>
-      <div class="form-row">
-        <div>
-          <p class="form-label">Category</p>
-          <select class="form-input" id="fCategory">
-            ${CATEGORIES.map(c => `<option value="${c}" ${book?.category===c?'selected':''}>${c}</option>`).join('')}
-          </select>
-        </div>
-        <div>
-          <p class="form-label">Status</p>
-          <select class="form-input" id="fStatus">
-            <option value="want-to-read" ${book?.status==='want-to-read'?'selected':''}>To Read</option>
-            <option value="reading" ${book?.status==='reading'?'selected':''}>Reading</option>
-            <option value="completed" ${book?.status==='completed'?'selected':''}>Completed</option>
-            <option value="abandoned" ${book?.status==='abandoned'?'selected':''}>Dropped</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row three">
-        <div>
-          <p class="form-label">Pages</p>
-          <input class="form-input" type="number" id="fPages" placeholder="\u2014" value="${book?.pages||''}">
-        </div>
-        <div>
-          <p class="form-label">Start Date</p>
-          <input class="form-input" type="date" id="fStart" value="${book?.startDate||''}">
-        </div>
-        <div>
-          <p class="form-label">End Date</p>
-          <input class="form-input" type="date" id="fEnd" value="${book?.endDate||''}">
-        </div>
-      </div>
-      <div>
-        <p class="form-label">Current Page</p>
-        <input class="form-input" type="number" id="fCurrentPage" placeholder="0" value="${book?.currentPage||0}">
-      </div>
-      <div>
-        <p class="form-label">Notes</p>
-        <textarea class="form-input" id="fNotes" placeholder="Optional notes or reflections\u2026">${esc(book?.notes||'')}</textarea>
-      </div>
+      <div><p class="form-label">Title *</p><input class="form-input" id="fTitle" placeholder="Book title" value="${esc(book?.title||"")}"></div>
+      <div><p class="form-label">Author</p><input class="form-input" id="fAuthor" placeholder="Author name" value="${esc(book?.author||"")}"></div>
+      <div class="form-row"><div><p class="form-label">Category</p><select class="form-input" id="fCategory">${CATEGORIES.map(c=>`<option value="${c}"${book?.category===c?" selected":""}>${c}</option>`).join("")}</select></div>
+      <div><p class="form-label">Status</p><select class="form-input" id="fStatus"><option value="want-to-read"${book?.status==="want-to-read"?" selected":""}>To Read</option><option value="reading"${book?.status==="reading"?" selected":""}>Reading</option><option value="completed"${book?.status==="completed"?" selected":""}>Completed</option><option value="abandoned"${book?.status==="abandoned"?" selected":""}>Dropped</option></select></div></div>
+      <div class="form-row three"><div><p class="form-label">Pages</p><input class="form-input" type="number" id="fPages" placeholder="\u2014" value="${book?.pages||""}"></div><div><p class="form-label">Started</p><input class="form-input" type="date" id="fStart" value="${book?.startDate||""}"></div><div><p class="form-label">Finished</p><input class="form-input" type="date" id="fEnd" value="${book?.endDate||""}"></div></div>
+      <div><p class="form-label">Current Page</p><input class="form-input" type="number" id="fCurPage" placeholder="0" value="${book?.currentPage||0}"></div>
+      <div><p class="form-label">Notes</p><textarea class="form-input" id="fNotes" placeholder="Optional notes or reflections\u2026">${esc(book?.notes||"")}</textarea></div>
     </div>
-    <button class="form-submit" id="formSave">${isEdit ? 'Save Changes' : 'Add to Library'}</button>`;
-
-  document.getElementById('formModal').classList.add('open');
-
-  document.getElementById('formClose').addEventListener('click', () => {
-    document.getElementById('formModal').classList.remove('open');
-  });
-
-  document.getElementById('formSave').addEventListener('click', () => {
-    const title = document.getElementById('fTitle').value.trim();
-    if (!title) { document.getElementById('fTitle').focus(); return; }
-
-    const now = new Date().toISOString();
-    const bookData = {
-      title,
-      author: document.getElementById('fAuthor').value.trim(),
-      category: document.getElementById('fCategory').value,
-      status: document.getElementById('fStatus').value,
-      pages: parseInt(document.getElementById('fPages').value) || null,
-      currentPage: parseInt(document.getElementById('fCurrentPage').value) || 0,
-      startDate: document.getElementById('fStart').value,
-      endDate: document.getElementById('fEnd').value,
-      notes: document.getElementById('fNotes').value.trim(),
-      updatedAt: now
-    };
-
-    if (isEdit) {
-      Object.assign(book, bookData);
-    } else {
-      bookData.id = genId();
-      bookData.addedAt = now;
-      bookData.rating = 0;
-      data.books.push(bookData);
-    }
-
-    save();
-    document.getElementById('formModal').classList.remove('open');
-    renderAll();
+    <button class="form-submit" id="formSave">${isEdit?"Save Changes":"Add to Library"}</button>`;
+  document.getElementById("formModal").classList.add("open");
+  document.getElementById("formClose").addEventListener("click",()=>document.getElementById("formModal").classList.remove("open"));
+  document.getElementById("formSave").addEventListener("click",()=>{
+    const title=document.getElementById("fTitle").value.trim();if(!title){document.getElementById("fTitle").focus();return}
+    const now=new Date().toISOString();
+    const bd={title,author:document.getElementById("fAuthor").value.trim(),category:document.getElementById("fCategory").value,status:document.getElementById("fStatus").value,pages:parseInt(document.getElementById("fPages").value)||null,currentPage:parseInt(document.getElementById("fCurPage").value)||0,startDate:document.getElementById("fStart").value,endDate:document.getElementById("fEnd").value,notes:document.getElementById("fNotes").value.trim(),updatedAt:now};
+    if(isEdit){Object.assign(book,bd)}else{bd.id=uid();bd.addedAt=now;bd.rating=0;bd.themes=[];bd.quotes=[];bd.connections=[];bd.coreArgument="";bd.impact="";data.books.push(bd)}
+    save();document.getElementById("formModal").classList.remove("open");renderAll();
   });
 }
 
-// ─── Settings ───
-function openSettings() {
-  document.getElementById('settingsPanel').innerHTML = `
-    <div class="modal-header">
-      <h2>Settings</h2>
-      <button class="modal-close" id="settingsClose">&times;</button>
-    </div>
-    <div>
-      <div class="settings-item">
-        <p class="settings-label">Annual Reading Goal</p>
-        <p class="settings-desc">How many books do you want to read this year?</p>
-        <input class="settings-input" type="number" id="sGoal" value="${data.settings.goal||50}" min="1" max="500">
-      </div>
-      <div class="settings-item">
-        <p class="settings-label">Export Library</p>
-        <p class="settings-desc">Download your library as a JSON backup file.</p>
-        <button class="settings-btn" id="sExport">Export as JSON</button>
-      </div>
-      <div class="settings-item">
-        <p class="settings-label">Import Library</p>
-        <p class="settings-desc">Restore from a JSON backup file.</p>
-        <button class="settings-btn" id="sImport">Import from JSON</button>
-      </div>
-      <div class="settings-item">
-        <p class="settings-label">Clear All Data</p>
-        <p class="settings-desc">Permanently delete your entire library.</p>
-        <button class="settings-btn danger" id="sClear">Clear Everything</button>
-      </div>
-    </div>`;
-
-  document.getElementById('settingsModal').classList.add('open');
-
-  document.getElementById('settingsClose').addEventListener('click', () => {
-    document.getElementById('settingsModal').classList.remove('open');
+// ══════════════════ SETTINGS ══════════════════
+function openSettings(){
+  document.getElementById("settingsPanel").innerHTML=`
+    <div class="modal-header"><h2>Settings</h2><button class="modal-close" id="settingsClose">&times;</button></div>
+    <div><div class="settings-item"><p class="settings-label">Annual Reading Goal</p><p class="settings-desc">How many books this year?</p><input class="settings-num" type="number" id="sGoal" value="${getGoal()}" min="1" max="500"></div>
+    <div class="settings-item"><p class="settings-label">Export Library</p><p class="settings-desc">Download as JSON backup.</p><button class="settings-btn" id="sExport">Export as JSON</button></div>
+    <div class="settings-item"><p class="settings-label">Import Library</p><p class="settings-desc">Restore from backup.</p><button class="settings-btn" id="sImport">Import from JSON</button></div>
+    <div class="settings-item"><p class="settings-label">Clear All Data</p><p class="settings-desc">Permanently delete everything.</p><button class="settings-btn danger" id="sClear">Clear Everything</button></div></div>`;
+  document.getElementById("settingsModal").classList.add("open");
+  document.getElementById("settingsClose").addEventListener("click",()=>document.getElementById("settingsModal").classList.remove("open"));
+  document.getElementById("sGoal").addEventListener("change",e=>{data.settings.goal=parseInt(e.target.value)||50;save();renderAll()});
+  document.getElementById("sExport").addEventListener("click",()=>{
+    const json=JSON.stringify(data,null,2);
+    if(typeof AndroidBridge!=="undefined"&&AndroidBridge.exportData){AndroidBridge.exportData(json)}
+    else{const b=new Blob([json],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`reading-ledger-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href)}
+    data.settings.lastExport=new Date().toISOString();save();
   });
-
-  document.getElementById('sGoal').addEventListener('change', e => {
-    data.settings.goal = parseInt(e.target.value) || 50;
-    save(); renderAll();
-  });
-
-  document.getElementById('sExport').addEventListener('click', () => {
-    const json = JSON.stringify(data, null, 2);
-    if (typeof AndroidBridge !== 'undefined' && AndroidBridge.exportData) {
-      AndroidBridge.exportData(json);
-    } else {
-      const blob = new Blob([json], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `reading-ledger-backup-${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-    data.settings.lastExport = new Date().toISOString();
-    save();
-  });
-
-  document.getElementById('sImport').addEventListener('click', () => {
-    if (typeof AndroidBridge !== 'undefined' && AndroidBridge.importData) {
-      AndroidBridge.importData();
-    } else {
-      document.getElementById('importFile').click();
-    }
-  });
-
-  document.getElementById('sClear').addEventListener('click', () => {
-    showConfirm('Clear All Data', 'This will permanently delete your entire library.', () => {
-      data = { books: [], settings: { goal: data.settings.goal || 50, lastExport: null } };
-      save();
-      document.getElementById('settingsModal').classList.remove('open');
-      renderAll();
-    });
-  });
+  document.getElementById("sImport").addEventListener("click",()=>{if(typeof AndroidBridge!=="undefined"&&AndroidBridge.importData){AndroidBridge.importData()}else{document.getElementById("importFile").click()}});
+  document.getElementById("sClear").addEventListener("click",()=>{showConfirm("Clear All Data","This will permanently delete your entire library.",()=>{data={books:[],settings:{goal:data.settings.goal||50,lastExport:null}};save();document.getElementById("settingsModal").classList.remove("open");renderAll()})});
 }
 
-// ─── Import handling ───
-document.getElementById('importFile').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => processImport(reader.result);
-  reader.readAsText(file);
-  e.target.value = '';
-});
+// Import
+document.getElementById("importFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{pendingImport=JSON.parse(r.result);if(!pendingImport.books)throw 0;document.getElementById("importOverlay").classList.add("open")}catch(e){alert("Invalid backup file.")}};r.readAsText(f);e.target.value=""});
+document.getElementById("importReplace").addEventListener("click",()=>{document.getElementById("importOverlay").classList.remove("open");if(pendingImport){data=pendingImport;save();pendingImport=null;renderAll()}});
+document.getElementById("importMerge").addEventListener("click",()=>{document.getElementById("importOverlay").classList.remove("open");if(pendingImport){const ex=new Set(data.books.map(b=>`${(b.title||"").toLowerCase()}|${(b.author||"").toLowerCase()}`));pendingImport.books.forEach(b=>{const k=`${(b.title||"").toLowerCase()}|${(b.author||"").toLowerCase()}`;if(!ex.has(k)){data.books.push(b);ex.add(k)}});save();pendingImport=null;renderAll()}});
+function onImportData(json){try{pendingImport=JSON.parse(json);if(!pendingImport.books)throw 0;document.getElementById("importOverlay").classList.add("open")}catch(e){alert("Invalid backup file.")}}
 
-function processImport(jsonStr) {
-  try {
-    pendingImport = JSON.parse(jsonStr);
-    if (!pendingImport.books || !Array.isArray(pendingImport.books)) throw new Error();
-    document.getElementById('importOverlay').classList.add('open');
-  } catch(e) { alert('Invalid backup file.'); }
-}
-
-function doImport(mode) {
-  document.getElementById('importOverlay').classList.remove('open');
-  if (!pendingImport) return;
-  if (mode === 'replace') {
-    data = pendingImport;
-  } else {
-    const existing = new Set(data.books.map(b => `${(b.title||'').toLowerCase()}|${(b.author||'').toLowerCase()}`));
-    pendingImport.books.forEach(b => {
-      const key = `${(b.title||'').toLowerCase()}|${(b.author||'').toLowerCase()}`;
-      if (!existing.has(key)) { data.books.push(b); existing.add(key); }
-    });
-  }
-  save(); pendingImport = null; renderAll();
-}
-
-// Called by Android bridge
-function onImportData(json) { processImport(json); }
-
-document.getElementById('importReplace').addEventListener('click', () => doImport('replace'));
-document.getElementById('importMerge').addEventListener('click', () => doImport('merge'));
-
-// ─── Confirm Dialog ───
-function showConfirm(title, msg, cb) {
-  document.getElementById('confirmTitle').textContent = title;
-  document.getElementById('confirmMsg').textContent = msg;
-  confirmCallback = cb;
-  document.getElementById('confirmOverlay').classList.add('open');
-}
-document.getElementById('confirmOk').addEventListener('click', () => {
-  document.getElementById('confirmOverlay').classList.remove('open');
-  if (confirmCallback) { confirmCallback(); confirmCallback = null; }
-});
-document.getElementById('confirmCancel').addEventListener('click', () => {
-  document.getElementById('confirmOverlay').classList.remove('open');
-  confirmCallback = null;
-});
+// Confirm
+function showConfirm(t,m,cb){document.getElementById("confirmTitle").textContent=t;document.getElementById("confirmMsg").textContent=m;confirmCb=cb;document.getElementById("confirmOverlay").classList.add("open")}
+document.getElementById("confirmOk").addEventListener("click",()=>{document.getElementById("confirmOverlay").classList.remove("open");if(confirmCb){confirmCb();confirmCb=null}});
+document.getElementById("confirmCancel").addEventListener("click",()=>{document.getElementById("confirmOverlay").classList.remove("open");confirmCb=null});
 
 // ─── Tabs ───
-document.querySelectorAll('.nav-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    currentTab = tab.dataset.tab;
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('view' + currentTab.charAt(0).toUpperCase() + currentTab.slice(1)).classList.add('active');
-    renderAll();
-  });
-});
+document.querySelectorAll("#navTabs button").forEach(tab=>tab.addEventListener("click",()=>{
+  document.querySelectorAll("#navTabs button").forEach(t=>t.classList.remove("active"));
+  tab.classList.add("active");currentTab=tab.dataset.tab;
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  const map={shelf:"viewShelf",timeline:"viewTimeline",analytics:"viewAnalytics",review:"viewReview"};
+  document.getElementById(map[currentTab]).classList.add("active");
+  renderAll();
+}));
 
-// ─── Buttons ───
-document.getElementById('btnAdd').addEventListener('click', () => openForm(null));
-document.getElementById('btnSettings').addEventListener('click', openSettings);
+// Search
+document.getElementById("btnSearch").addEventListener("click",()=>{searchOpen=!searchOpen;document.getElementById("searchBar").style.display=searchOpen?"block":"none";document.getElementById("btnSearch").classList.toggle("active",searchOpen);if(searchOpen)document.getElementById("searchInput").focus();else{searchQuery="";renderShelf()}});
+document.getElementById("searchInput").addEventListener("input",e=>{searchQuery=e.target.value;renderShelf()});
 
-// Close modals on overlay click
-['formModal', 'settingsModal'].forEach(id => {
-  document.getElementById(id).addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('open');
-  });
-});
+// Buttons
+document.getElementById("btnAdd").addEventListener("click",()=>openForm(null));
+document.getElementById("btnSettings").addEventListener("click",openSettings);
+["formModal","settingsModal"].forEach(id=>document.getElementById(id).addEventListener("click",function(e){if(e.target===this)this.classList.remove("open")}));
 
 // ─── Render All ───
-function renderAll() {
-  updateHeader();
-  renderDashboard();
-  renderLibrary();
-  if (currentTab === 'analytics') renderAnalytics();
-}
-
+function renderAll(){updateHeader();renderShelf();renderTimeline();if(currentTab==="analytics")renderAnalytics();if(currentTab==="review")renderReview()}
 renderAll();
 </script>
 </body>
