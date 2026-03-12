@@ -159,20 +159,6 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .onb-skip:hover{color:var(--textM)}
 .onb-demo{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 24px;font-family:var(--ui);font-size:14px;font-weight:600;color:var(--text);cursor:pointer;margin-top:12px;display:block;width:100%;text-align:center}
 
-/* Quick-add mode */
-.quick-add-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px}
-.quick-add-bar .qa-row{display:flex;gap:8px;align-items:center}
-.qa-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--ui);font-size:14px;outline:none}
-.qa-input:focus{border-color:var(--accent)}
-.qa-input::placeholder{color:var(--textD)}
-.qa-submit{background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:10px 16px;font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
-.qa-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.qa-fields select,.qa-fields input{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-family:var(--ui);font-size:12px;outline:none}
-.qa-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#EDE6D8;font-family:var(--ui);font-size:13px;font-weight:600;padding:10px 24px;border-radius:100px;opacity:0;transition:all 0.3s;z-index:100;pointer-events:none}
-.qa-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.qa-toggle{background:none;border:1px solid var(--border);border-radius:8px;padding:4px 12px;font-family:var(--ui);font-size:11px;color:var(--textD);cursor:pointer;margin-left:8px}
-.qa-toggle.active{background:var(--surfaceH);border-color:var(--borderL);color:var(--text)}
-
 /* Nudge banner */
 .nudge-banner{background:linear-gradient(135deg,rgba(46,68,96,0.15),rgba(125,139,110,0.1));border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color 0.2s}
 .nudge-banner:hover{border-color:var(--borderL)}
@@ -182,7 +168,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .nudge-sub{font-family:var(--ui);font-size:12px;color:var(--textD)}
 .nudge-dismiss{background:none;border:none;color:var(--textDD);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0}
 
-@media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.yr-grid{grid-template-columns:1fr}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}.tl-hm-days{display:none}.tl-row-label{width:80px;font-size:11px}.tl-row-dates{width:100px;font-size:9px}.tl-hm-streaks{flex-direction:column;gap:4px}.qa-fields{grid-template-columns:1fr}}
+@media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.yr-grid{grid-template-columns:1fr}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}.tl-hm-days{display:none}.tl-row-label{width:80px;font-size:11px}.tl-row-dates{width:100px;font-size:9px}.tl-hm-streaks{flex-direction:column;gap:4px}}
 </style>
 </head>
 <body>
@@ -410,7 +396,6 @@ function nrMovePage(bookId,newPage){
 }
 
 // ─── Onboarding ───
-let quickAddOpen=false;
 let nudgeDismissed=false;
 function checkOnboarding(){
   if(localStorage.getItem("rl-onboarded"))return;
@@ -447,11 +432,6 @@ function getNudge(){
 }
 
 // ─── Quick-add helper ───
-function quickAddBook(title,author,category,status){
-  if(!title.trim())return;const now=new Date().toISOString();
-  data.books.push({id:uid(),title:title.trim(),author:(author||"").trim(),category:category||"Other",status:status||"want-to-read",pages:null,currentPage:0,rating:0,startDate:status==="reading"?now.slice(0,10):"",endDate:"",notes:"",themes:[],quotes:[],connections:[],coreArgument:"",impact:"",sessions:[],recommendedBy:"",recommendationNote:"",recommendationSource:"",priority:0,addedAt:now,updatedAt:now});
-  save();showToast(`Added "${title.trim()}"`);renderShelf();updateHeader();
-}
 // ─── Header ───
 function updateHeader(){
   const c=getCompleted().length,g=getGoal(),pct=Math.min(100,Math.round(c/g*100)),streak=getStreak(),reading=getReading().length;
@@ -470,9 +450,6 @@ function renderShelf(){
   const nudge=getNudge();
   if(nudge&&!searchQuery)
     html+=`<div class="nudge-banner" id="nudgeBanner" data-id="${nudge.bookId}"><span class="nudge-icon">${nudge.icon}</span><div class="nudge-body"><p class="nudge-title">${esc(nudge.title)} \u2014 ${nudge.pct}%</p><p class="nudge-sub">${nudge.sub}</p></div><button class="nudge-dismiss" id="nudgeDismiss">\u2715</button></div>`;
-  // Quick-add bar
-  if(quickAddOpen&&!searchQuery)
-    html+=`<div class="quick-add-bar" id="quickAddBar"><div class="qa-row"><input class="qa-input" id="qaTitle" placeholder="Title"><input class="qa-input" id="qaAuthor" placeholder="Author" style="max-width:140px"><button class="qa-submit" id="qaSubmit">+ Add</button></div><div class="qa-fields"><select id="qaCat">${CATEGORIES.map(c=>`<option value="${c}">${c}</option>`).join("")}</select><select id="qaStatus"><option value="want-to-read">To Read</option><option value="reading">Reading</option><option value="completed">Completed</option></select></div></div>`;
   // Backup reminder
   const lastExp=data.settings.lastExport?new Date(data.settings.lastExport):null;
   const daysSinceExport=lastExp?Math.floor((Date.now()-lastExp.getTime())/86400000):999;
@@ -486,7 +463,7 @@ function renderShelf(){
   if(ms.length&&!searchQuery) html+=`<div class="milestones">${ms.slice(-4).map(m=>`<div class="milestone"><span>${m.icon}</span> ${m.label}</div>`).join("")}</div>`;
   // Sort bar
   const sorts=[["date","Date"],["category","Category"],["rating","Rating"],["length","Length"],["status","Status"],["title","Title"]];
-  html+=`<div class="shelf-header"><p class="shelf-count">${books.length} book${books.length!==1?"s":""}<button class="qa-toggle${quickAddOpen?" active":""}" id="qaToggle">${quickAddOpen?"\u2715 Close":"+ Quick Add"}</button></p><div class="sort-bar">${sorts.map(([k,l])=>`<button class="sort-pill${currentSort===k?" active":""}" data-sort="${k}">${l}</button>`).join("")}</div></div>`;
+  html+=`<div class="shelf-header"><p class="shelf-count">${books.length} book${books.length!==1?"s":""}</p><div class="sort-bar">${sorts.map(([k,l])=>`<button class="sort-pill${currentSort===k?" active":""}" data-sort="${k}">${l}</button>`).join("")}</div></div>`;
   if(!books.length){
     html+=`<div class="empty"><p class="title">Your shelves are empty.</p><p class="sub">Add your first book to begin.</p><button class="empty-cta" onclick="openForm(null)">+ Add a Book</button></div>`;
   } else {
@@ -540,12 +517,6 @@ function bindShelfEvents(){
   document.querySelectorAll("#viewShelf .nr-stepper button[data-inc]").forEach(btn=>{const stepper=btn.closest(".nr-stepper");const bookId=stepper.dataset.book;btn.onclick=()=>{const bk=data.books.find(b=>b.id===bookId);if(!bk)return;nrMovePage(bookId,bk.currentPage+parseInt(btn.dataset.inc))}});
   // Stepper direct input
   document.querySelectorAll("#viewShelf .nr-stepper .nr-val input").forEach(inp=>{inp.onfocus=()=>inp.select();inp.onblur=()=>{nrMovePage(inp.dataset.book,parseInt(inp.value)||0);inp.style.opacity="0";inp.nextElementSibling.style.opacity="1"};inp.onkeydown=e=>{if(e.key==="Enter")inp.blur()}});
-  // Quick-add toggle
-  const qaToggle=document.getElementById("qaToggle");if(qaToggle)qaToggle.onclick=e=>{e.stopPropagation();quickAddOpen=!quickAddOpen;renderShelf()};
-  // Quick-add submit
-  const qaSubmit=document.getElementById("qaSubmit");if(qaSubmit)qaSubmit.onclick=()=>{const title=document.getElementById("qaTitle")?.value;const author=document.getElementById("qaAuthor")?.value;const cat=document.getElementById("qaCat")?.value;const status=document.getElementById("qaStatus")?.value;quickAddBook(title,author,cat,status);document.getElementById("qaTitle").value="";document.getElementById("qaAuthor").value="";document.getElementById("qaTitle").focus()};
-  // Quick-add enter key
-  const qaTitle=document.getElementById("qaTitle");if(qaTitle)qaTitle.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();document.getElementById("qaSubmit")?.click()}};
   // Nudge banner
   const nudgeBanner=document.getElementById("nudgeBanner");if(nudgeBanner)nudgeBanner.onclick=e=>{if(e.target.id==="nudgeDismiss"){nudgeDismissed=true;renderShelf();return}openDetail(nudgeBanner.dataset.id)};
 }
