@@ -1,0 +1,11 @@
+# Build artifacts
+*.apk
+*.keystore
+build/
+.gradle/
+.idea/
+local.properties
+
+# OS
+.DS_Store
+Thumbs.db

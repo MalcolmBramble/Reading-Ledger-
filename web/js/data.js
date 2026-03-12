@@ -171,7 +171,7 @@ const books=[
 return{books,settings:{goal:50,lastExport:null,goals:{annual:50,categories:{},challenges:[]}}};
 }
 
-data=load()||makeDemoData();
+data=load()||{books:[],settings:{goal:50,lastExport:null,goals:{annual:50,categories:{},challenges:[]}}};
 if(!data.settings.goals)data.settings.goals={annual:data.settings.goal||50,categories:{},challenges:[]};
 if(!data.settings.goals.challenges)data.settings.goals.challenges=[];
 data.books.forEach(b=>{if(!b.sessions)b.sessions=[];if(!b.themes)b.themes=[];if(!b.quotes)b.quotes=[];if(!b.connections)b.connections=[];if(b.priority===undefined)b.priority=0;if(!b.recommendedBy)b.recommendedBy="";if(!b.recommendationNote)b.recommendationNote="";if(!b.recommendationSource)b.recommendationSource=""});

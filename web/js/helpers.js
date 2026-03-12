@@ -80,9 +80,10 @@ function checkOnboarding(){
   if(data.books.length>0){localStorage.setItem("rl-onboarded","1");return}
   // Inject onboarding overlay
   const ob=document.createElement("div");ob.id="onboarding";ob.className="onboarding-overlay";
-  ob.innerHTML=`<div class="onb-slide active"><div class="onb-icon">\u{1F4DA}</div><h2 class="onb-title">Your Personal Library</h2><p class="onb-desc">Book spines on wooden shelves, color-coded by category. Tap any spine to explore. Gold edges mark your favorites.</p><div class="onb-dots"><span class="onb-dot active"></span><span class="onb-dot"></span><span class="onb-dot"></span></div><button class="onb-btn" id="onbNext0">Next</button><button class="onb-skip" id="onbSkip">Skip intro</button></div><div class="onb-slide"><div class="onb-icon">\u23F1</div><h2 class="onb-title">Track Your Reading</h2><p class="onb-desc">Log sessions with a built-in timer. See your progress, pace, and streaks on the Timeline. Quick-update pages right from the shelf.</p><div class="onb-dots"><span class="onb-dot"></span><span class="onb-dot active"></span><span class="onb-dot"></span></div><button class="onb-btn" id="onbNext1">Next</button><button class="onb-skip" id="onbSkip1">Skip intro</button></div><div class="onb-slide"><div class="onb-icon">\u{1F31F}</div><h2 class="onb-title">Review Your Year</h2><p class="onb-desc">Analytics, category breakdowns, reading habits, and a Year in Review that celebrates your progress.</p><div class="onb-dots"><span class="onb-dot"></span><span class="onb-dot"></span><span class="onb-dot active"></span></div><button class="onb-btn" id="onbStart">Start Fresh</button><button class="onb-demo" id="onbDemo">Load Demo Library (12 books)</button></div>`;
+  ob.innerHTML=`<div class="onb-slide active"><div class="onb-icon">\u{1F4DA}</div><h2 class="onb-title">Your Personal Library</h2><p class="onb-desc">Book spines on wooden shelves, color-coded by category. Tap any spine to explore. Gold edges mark your favorites.</p><div class="onb-dots"><span class="onb-dot active"></span><span class="onb-dot"></span><span class="onb-dot"></span></div><button class="onb-btn" id="onbNext0">Next</button><button class="onb-skip" id="onbSkip">Skip intro</button></div><div class="onb-slide"><div class="onb-icon">\u23F1</div><h2 class="onb-title">Track Your Reading</h2><p class="onb-desc">Log sessions with a built-in timer. See your progress, pace, and streaks on the Timeline. Quick-update pages right from the shelf.</p><div class="onb-dots"><span class="onb-dot"></span><span class="onb-dot active"></span><span class="onb-dot"></span></div><button class="onb-btn" id="onbNext1">Next</button><button class="onb-skip" id="onbBack1">Back</button></div><div class="onb-slide"><div class="onb-icon">\u{1F31F}</div><h2 class="onb-title">Review Your Year</h2><p class="onb-desc">Analytics, category breakdowns, reading habits, and a Year in Review that celebrates your progress.</p><div class="onb-dots"><span class="onb-dot"></span><span class="onb-dot"></span><span class="onb-dot active"></span></div><button class="onb-btn" id="onbStart">Start Fresh</button><button class="onb-demo" id="onbDemo">Load Demo Library (12 books)</button><button class="onb-skip" id="onbBack2">Back</button></div>`;
   document.body.appendChild(ob);
-  function goSlide(n){ob.querySelectorAll(".onb-slide").forEach((s,i)=>{s.classList.toggle("active",i===n)})}
+  let curSlide=0;
+  function goSlide(n){curSlide=n;ob.querySelectorAll(".onb-slide").forEach((s,i)=>{s.classList.toggle("active",i===n)})}
   function finish(loadDemo){
     if(loadDemo){data=makeDemoData();save();pickRandomQuote()}
     localStorage.setItem("rl-onboarded","1");ob.remove();renderAll();
@@ -90,9 +91,14 @@ function checkOnboarding(){
   document.getElementById("onbNext0").onclick=()=>goSlide(1);
   document.getElementById("onbNext1").onclick=()=>goSlide(2);
   document.getElementById("onbSkip").onclick=()=>finish(false);
-  document.getElementById("onbSkip1").onclick=()=>finish(false);
+  document.getElementById("onbBack1").onclick=()=>goSlide(0);
+  document.getElementById("onbBack2").onclick=()=>goSlide(1);
   document.getElementById("onbStart").onclick=()=>finish(false);
   document.getElementById("onbDemo").onclick=()=>finish(true);
+  // Swipe gestures
+  let _tx=0,_ty=0;
+  ob.addEventListener("touchstart",e=>{_tx=e.changedTouches[0].screenX;_ty=e.changedTouches[0].screenY});
+  ob.addEventListener("touchend",e=>{const dx=e.changedTouches[0].screenX-_tx,dy=e.changedTouches[0].screenY-_ty;if(Math.abs(dx)>50&&Math.abs(dx)>1.5*Math.abs(dy)){if(dx<0&&curSlide<2)goSlide(curSlide+1);else if(dx>0&&curSlide>0)goSlide(curSlide-1)}});
 }
 
 // ─── Nudge Banner ───

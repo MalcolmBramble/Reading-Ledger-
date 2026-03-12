@@ -3,21 +3,33 @@
 function renderShelf(){
   const books=searchQuery?data.books.filter(b=>{const q=searchQuery.toLowerCase();return(b.title||"").toLowerCase().includes(q)||(b.author||"").toLowerCase().includes(q)||(b.category||"").toLowerCase().includes(q)||(b.notes||"").toLowerCase().includes(q)||(b.themes||[]).some(t=>t.toLowerCase().includes(q))||(b.quotes||[]).some(qt=>(qt.text||"").toLowerCase().includes(q))}):data.books;
   let html="";
-  // Nudge banner
-  const nudge=getNudge();
-  if(nudge&&!searchQuery)
-    html+=`<div class="nudge-banner" id="nudgeBanner" data-id="${nudge.bookId}"><span class="nudge-icon">${nudge.icon}</span><div class="nudge-body"><p class="nudge-title">${esc(nudge.title)} \u2014 ${nudge.pct}%</p><p class="nudge-sub">${nudge.sub}</p></div><button class="nudge-dismiss" id="nudgeDismiss">\u2715</button></div>`;
-  // Backup reminder
-  const lastExp=data.settings.lastExport?new Date(data.settings.lastExport):null;
-  const daysSinceExport=lastExp?Math.floor((Date.now()-lastExp.getTime())/86400000):999;
-  if(daysSinceExport>30&&data.books.length>0&&!searchQuery)
-    html+=`<div class="backup-banner" id="backupBanner"><span style="font-size:16px">\u26A0</span><span style="flex:1">It\u2019s been ${lastExp?daysSinceExport+" days":"a while"} since your last backup.</span><button class="bb-export" id="bbExport">Export</button><button class="bb-dismiss" id="bbDismiss">\u2715</button></div>`;
-  // Quote banner
-  if(randomQuote&&!searchQuery)
-    html+=`<div class="quote-banner"><div style="flex-shrink:0;color:var(--accentDim);margin-top:2px">\u201C</div><div style="flex:1"><p class="quote-banner-text">${esc(randomQuote.text)}</p><p class="quote-banner-src">\u2014 ${esc(randomQuote.bookTitle)}${randomQuote.page?" \u00B7 p. "+esc(randomQuote.page):""}</p></div><button class="quote-refresh" id="quoteRefresh">\u21BB</button></div>`;
-  // Milestones
-  const ms=getMilestones();
-  if(ms.length&&!searchQuery) html+=`<div class="milestones">${ms.slice(-4).map(m=>`<div class="milestone"><span>${m.icon}</span> ${m.label}</div>`).join("")}</div>`;
+  // Show at most ONE banner to avoid mobile clutter (priority: nudge > backup > quote)
+  if(!searchQuery){
+    const nudge=getNudge();
+    const lastExp=data.settings.lastExport?new Date(data.settings.lastExport):null;
+    const daysSinceExport=lastExp?Math.floor((Date.now()-lastExp.getTime())/86400000):999;
+    if(nudge)
+      html+=`<div class="nudge-banner" id="nudgeBanner" data-id="${nudge.bookId}"><span class="nudge-icon">${nudge.icon}</span><div class="nudge-body"><p class="nudge-title">${esc(nudge.title)} \u2014 ${nudge.pct}%</p><p class="nudge-sub">${nudge.sub}</p></div><button class="nudge-dismiss" id="nudgeDismiss">\u2715</button></div>`;
+    else if(daysSinceExport>30&&data.books.length>0)
+      html+=`<div class="backup-banner" id="backupBanner"><span style="font-size:16px">\u26A0</span><span style="flex:1">Back up your library?</span><button class="bb-export" id="bbExport">Export</button><button class="bb-dismiss" id="bbDismiss">\u2715</button></div>`;
+    else if(randomQuote)
+      html+=`<div class="quote-banner"><div style="flex-shrink:0;color:var(--accentDim);margin-top:2px">\u201C</div><div style="flex:1"><p class="quote-banner-text">${esc(randomQuote.text)}</p><p class="quote-banner-src">\u2014 ${esc(randomQuote.bookTitle)}${randomQuote.page?" \u00B7 p. "+esc(randomQuote.page):""}</p></div><button class="quote-refresh" id="quoteRefresh">\u21BB</button></div>`;
+  }
+  // Now Reading strip — show above shelf so active books aren't buried
+  const nr=data.books.filter(b=>b.status==="reading");
+  if(nr.length&&!searchQuery){
+    html+=`<div class="nr-section"><p class="nr-section-title">Now Reading</p>`;
+    nr.forEach(b=>{
+      const col=CAT_COLORS[b.category]||CAT_COLORS.Other,pg=b.pages||1,cur=b.currentPage||0,pct=Math.min(100,Math.round(cur/pg*100));
+      html+=`<div class="nr-card" data-book="${b.id}"><div class="nr-card-header"><div class="nr-card-accent" style="background:linear-gradient(180deg,${col},${col}80)"></div><div class="nr-card-info"><div class="nr-card-title" data-id="${b.id}">${esc(b.title)}</div><div class="nr-card-author">${esc(b.author||'')}</div></div><span class="nr-card-pct" style="color:${col}" id="nrPct_${b.id}">${pct}%</span></div>`;
+      html+=`<div class="nr-bar"><div class="nr-bar-fill" id="nrFill_${b.id}" style="width:${pct}%;background:linear-gradient(90deg,${col}90,${col})"></div></div>`;
+      html+=`<div class="nr-stepper" data-book="${b.id}" data-pages="${pg}"><button data-inc="-10">\u221210</button><button data-inc="-1">\u22121</button><div class="nr-val"><input type="number" value="${cur}" min="0" max="${pg}" data-book="${b.id}"><span>${cur}</span></div><button data-inc="1">+1</button><button data-inc="10">+10</button></div>`;
+      html+=`<div class="nr-of">of ${pg} pages</div>`;
+      html+=`<div class="nr-pending" id="nrPending_${b.id}"></div>`;
+      html+=`</div>`;
+    });
+    html+=`</div>`;
+  }
   // Sort bar
   const sorts=[["date","Date"],["category","Category"],["rating","Rating"],["length","Length"],["status","Status"],["title","Title"]];
   html+=`<div class="shelf-header"><p class="shelf-count">${books.length} book${books.length!==1?"s":""}</p><div class="sort-bar">${sorts.map(([k,l])=>`<button class="sort-pill${currentSort===k?" active":""}" data-sort="${k}">${l}</button>`).join("")}</div></div>`;
@@ -37,21 +49,6 @@ function renderShelf(){
       html+=`</div><div class="shelf-board"></div></div>`}
     const usedCats=[...new Set(books.map(b=>b.category||"Other"))].sort();
     html+=`<div class="shelf-footer"><strong style="color:var(--text)">${books.length}</strong> books &middot; <span style="color:var(--green)">${books.filter(b=>b.status==="completed").length}</span> read &middot; <span style="color:var(--blue)">${books.filter(b=>b.status==="reading").length}</span> reading &middot; <span style="color:var(--textD)">${books.filter(b=>b.status==="want-to-read").length}</span> want<div class="shelf-footer-legend">${usedCats.map(c=>`<span class="shelf-footer-legend-item"><span class="shelf-footer-legend-dot" style="background:${CAT_COLORS[c]||CAT_COLORS.Other}"></span>${c}</span>`).join("")}</div></div>`;
-  }
-  // Now Reading strip (enhanced)
-  const nr=data.books.filter(b=>b.status==="reading");
-  if(nr.length&&!searchQuery){
-    html+=`<div class="nr-section"><p class="nr-section-title">Now Reading</p>`;
-    nr.forEach(b=>{
-      const col=CAT_COLORS[b.category]||CAT_COLORS.Other,pg=b.pages||1,cur=b.currentPage||0,pct=Math.min(100,Math.round(cur/pg*100));
-      html+=`<div class="nr-card" data-book="${b.id}"><div class="nr-card-header"><div class="nr-card-accent" style="background:linear-gradient(180deg,${col},${col}80)"></div><div class="nr-card-info"><div class="nr-card-title" data-id="${b.id}">${esc(b.title)}</div><div class="nr-card-author">${esc(b.author||'')}</div></div><span class="nr-card-pct" style="color:${col}" id="nrPct_${b.id}">${pct}%</span></div>`;
-      html+=`<div class="nr-bar"><div class="nr-bar-fill" id="nrFill_${b.id}" style="width:${pct}%;background:linear-gradient(90deg,${col}90,${col})"></div></div>`;
-      html+=`<div class="nr-stepper" data-book="${b.id}" data-pages="${pg}"><button data-inc="-10">\u221210</button><button data-inc="-1">\u22121</button><div class="nr-val"><input type="number" value="${cur}" min="0" max="${pg}" data-book="${b.id}"><span>${cur}</span></div><button data-inc="1">+1</button><button data-inc="10">+10</button></div>`;
-      html+=`<div class="nr-of">of ${pg} pages</div>`;
-      html+=`<div class="nr-pending" id="nrPending_${b.id}"></div>`;
-      html+=`</div>`;
-    });
-    html+=`</div>`;
   }
   document.getElementById("viewShelf").innerHTML=html;
   bindShelfEvents();
