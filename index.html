@@ -543,7 +543,7 @@ function bindShelfEvents(){
 }
 // ══════ TIMELINE ══════
 function renderTimeline(){const el=document.getElementById("viewTimeline");const reading=getReading();let html='';
-// ═══ 1. Session-Aware Focus Hero ═══
+// ═══ Focus Hero: progress ring, last session, timer ═══
 if(reading.length){const idx=(window._focusIdx||0)%reading.length;const book=reading[idx];const pages=book.pages||1,current=book.currentPage||0,pct=Math.min(100,Math.round(current/pages*100));const color=CAT_COLORS[book.category]||CAT_COLORS.Other;const r=90,circ=2*Math.PI*r,dashOff=circ-(pct/100)*circ;
 const isTimerBook=timerState.bookId===book.id,isRunning=isTimerBook&&timerState.running&&!timerState.paused,isPaused=isTimerBook&&timerState.paused;
 const elapsed=isTimerBook?timerState.elapsed:0,mm=Math.floor(elapsed/60),ss=elapsed%60,timeStr=String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0");
@@ -553,17 +553,6 @@ html+=`<p class="tlf-title" data-id="${book.id}">${esc(book.title)}</p><p class=
 // Last session context
 const lastSes=(book.sessions||[]).filter(s=>s.endPage>s.startPage).sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
 if(lastSes){const lp=Math.max(0,(lastSes.endPage||0)-(lastSes.startPage||0));const ld=lastSes.duration?lastSes.duration+' min':'';const ldate=lastSes.date?fmtShort(lastSes.date.slice(0,10)):'';html+=`<div class="tlf-last"><span class="tlf-last-icon">\u{1F4D6}</span><div class="tlf-last-body"><p class="tlf-last-label">Last session</p><p class="tlf-last-detail">${lp} pages${ld?' \u00B7 '+ld:''}</p><p class="tlf-last-sub">${ldate}${lastSes.startPage!=null?' \u00B7 pg '+lastSes.startPage+' \u2192 '+lastSes.endPage:''}</p></div></div>`}
-// Velocity trend
-const sesPages=(book.sessions||[]).reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0);const daysReading=book.startDate?daysBetween(book.startDate,new Date().toISOString()):0;const pgDay=daysReading>0?sesPages/daysReading:0;const remaining=pages-current;const estDays=pgDay>0?Math.ceil(remaining/pgDay):0;
-// This week vs last week pace
-const now=new Date(),weekAgo=new Date(now);weekAgo.setDate(weekAgo.getDate()-7);const twoWeeksAgo=new Date(now);twoWeeksAgo.setDate(twoWeeksAgo.getDate()-14);
-const thisWeekPages=(book.sessions||[]).filter(s=>new Date(s.date)>=weekAgo).reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0);
-const lastWeekPages=(book.sessions||[]).filter(s=>{const d=new Date(s.date);return d>=twoWeeksAgo&&d<weekAgo}).reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0);
-const trendUp=thisWeekPages>lastWeekPages;const trendClass=thisWeekPages>lastWeekPages?' up':thisWeekPages<lastWeekPages?' down':'';
-html+=`<div class="tlf-trend">`;
-if(pgDay>0)html+=`<div class="tlf-trend-card"><p class="tlf-trend-val${trendClass}">${trendUp?'\u2191':'\u2193'} ${pgDay.toFixed(1)}</p><p class="tlf-trend-label">pg/day</p></div>`;
-if(estDays>0&&remaining>0)html+=`<div class="tlf-trend-card"><p class="tlf-trend-val">~${estDays}</p><p class="tlf-trend-label">days left</p></div>`;
-html+=`<div class="tlf-trend-card"><p class="tlf-trend-val">${(book.sessions||[]).length}</p><p class="tlf-trend-label">sessions</p></div></div>`;
 // Timer + session save form
 if(pendingSessionDur>0&&!timerState.running&&window._lastTimerBookId===book.id){
   html+=`<div class="tlf-session-form" data-book="${book.id}"><p style="font-family:var(--ui);font-size:14px;color:var(--accent);font-weight:600;margin-bottom:10px">Session Complete: ${pendingSessionDur} min</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px"><div><p style="font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;margin-bottom:3px">Start Page</p><input class="tlf-page-input nr-st-start" type="number" placeholder="\u2014" style="width:100%"></div><div><p style="font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;margin-bottom:3px">End Page</p><input class="tlf-page-input nr-st-end" type="number" placeholder="\u2014" style="width:100%"></div></div><div style="margin-bottom:8px"><p style="font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;margin-bottom:3px">Notes</p><input class="tlf-page-input nr-st-notes" placeholder="Session notes..." style="width:100%"></div><div style="display:flex;gap:8px;justify-content:center"><button class="tlf-tbtn start nr-st-save" data-book="${book.id}">Save Session</button><button class="tlf-tbtn nr-st-skip" data-book="${book.id}" style="background:var(--border);color:var(--textM)">Skip</button></div></div>`;
@@ -576,54 +565,14 @@ if(pendingSessionDur>0&&!timerState.running&&window._lastTimerBookId===book.id){
 }
 html+=`</div>`}else{html+=`<p class="tl-empty">No books in progress. Add a book with status \u201CReading\u201D to get started.</p>`}
 
-// ═══ 2. Progress Lanes with Finish Dates ═══
-const recent=getCompleted().filter(b=>b.endDate).sort((a,b)=>new Date(b.endDate)-new Date(a.endDate)).slice(0,5);
-if(reading.length||recent.length){html+=`<hr class="tl-divider">`;const focusBook=reading.length?reading[(window._focusIdx||0)%reading.length]:null;
-if(reading.length){html+=`<p class="tl-section-title">Progress</p>`;reading.forEach(b=>{const pg=b.pages||1,cur=b.currentPage||0,pct=Math.min(100,Math.round(cur/pg*100)),col=CAT_COLORS[b.category]||CAT_COLORS.Other,ticks=(b.sessions||[]).filter(s=>s.endPage).map(s=>Math.min(100,Math.round((s.endPage/pg)*100))),isA=focusBook&&b.id===focusBook.id;
-// Estimate finish date
-const bSesPages=(b.sessions||[]).reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0);const bDays=b.startDate?daysBetween(b.startDate,new Date().toISOString()):0;const bPgDay=bDays>0?bSesPages/bDays:0;const bRemain=pg-cur;const bEstDays=bPgDay>0?Math.ceil(bRemain/bPgDay):0;let estStr='';if(bEstDays>0){const estDate=new Date();estDate.setDate(estDate.getDate()+bEstDays);estStr='~'+estDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})}
-html+=`<div class="tll-lane${isA?' active':''}" data-id="${b.id}"><div class="tll-lane-info"><span class="tll-lane-title">${esc(b.title)}</span><span class="tll-lane-meta">${cur}/${pg}p</span>${estStr?`<span class="tll-lane-est">${estStr}</span>`:''}</div><div class="tll-lane-track"><div class="tll-lane-fill" style="width:${pct}%;background:linear-gradient(90deg,${col}DD,${col}88)"><span class="tll-lane-pct">${pct}%</span></div>${ticks.map(t=>`<div style="position:absolute;top:0;bottom:0;left:${t}%;width:2px;background:${col};opacity:0.6;border-radius:1px"></div>`).join('')}<div class="tll-lane-marker" style="left:${pct}%"></div></div></div>`})}
-if(recent.length){html+=`<p class="tl-section-title" style="margin-top:${reading.length?'20':'0'}px">Recently Completed</p>`;recent.forEach(b=>{const col=CAT_COLORS[b.category]||CAT_COLORS.Other,dur=daysBetween(b.startDate,b.endDate);html+=`<div class="tll-lane" data-id="${b.id}"><div class="tll-lane-info"><span class="tll-lane-title">${esc(b.title)}</span><span class="tll-lane-meta">${b.pages||0}p${dur?' \u00B7 '+dur+'d':''}${b.rating?' \u00B7 '+'\u2605'.repeat(b.rating):''}</span></div><div class="tll-lane-track"><div class="tll-lane-fill" style="width:100%;background:linear-gradient(90deg,${col}DD,${col}88)"><span class="tll-lane-pct">Done</span></div></div></div>`})}
-const usedCats=[...new Set([...reading,...recent].map(b=>b.category||"Other"))];if(usedCats.length>1)html+=`<div class="tll-legend">${usedCats.map(c=>`<div class="tll-legend-item"><div class="tll-legend-dot" style="background:${CAT_COLORS[c]||CAT_COLORS.Other}"></div>${c}</div>`).join('')}</div>`}
-
-// ═══ 3. Streak Ring ═══
-const today=new Date();today.setHours(0,0,0,0);const sessionDays={};data.books.forEach(b=>(b.sessions||[]).forEach(s=>{if(!s.date)return;const k=s.date.slice(0,10);sessionDays[k]=(sessionDays[k]||0)+1}));
-let streak=0;for(let d=new Date(today);;d.setDate(d.getDate()-1)){if(sessionDays[d.toISOString().slice(0,10)])streak++;else break}
-let bestStreak=0,curS=0;const allDayKeys=Object.keys(sessionDays).sort();allDayKeys.forEach((k,i)=>{if(i===0){curS=1}else{const prev=new Date(allDayKeys[i-1]);prev.setDate(prev.getDate()+1);curS=prev.toISOString().slice(0,10)===k?curS+1:1}if(curS>bestStreak)bestStreak=curS});
-const todayKey=today.toISOString().slice(0,10);const todayDow=today.getDay()===0?6:today.getDay()-1;
-const weekStart=new Date(today);weekStart.setDate(weekStart.getDate()-todayDow);let weekDaysRead=0;
-for(let i=0;i<7;i++){const wd=new Date(weekStart);wd.setDate(wd.getDate()+i);if(sessionDays[wd.toISOString().slice(0,10)])weekDaysRead++}
-// Count days read this month
-const cm=today.getMonth(),cy=today.getFullYear(),dim=new Date(cy,cm+1,0).getDate();let monthDaysRead=0;
-for(let d=1;d<=dim;d++){const dk=`${cy}-${String(cm+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;if(sessionDays[dk])monthDaysRead++}
-// Ring: streak out of best (or 7 if no best)
-const ringMax=Math.max(bestStreak,7);const ringPct=Math.min(100,Math.round(streak/ringMax*100));const ringR=50,ringCirc=2*Math.PI*ringR,ringOff=ringCirc-(ringPct/100)*ringCirc;
-html+=`<hr class="tl-divider"><div class="streak-section"><p class="streak-section-title">Reading Streak</p><div class="sr-row"><div class="sr-ring-wrap"><svg viewBox="0 0 120 120" width="100" height="100"><circle cx="60" cy="60" r="${ringR}" fill="none" stroke="var(--border)" stroke-width="8"/><circle cx="60" cy="60" r="${ringR}" fill="none" stroke="var(--accent)" stroke-width="8" stroke-dasharray="${ringCirc}" stroke-dashoffset="${ringOff}" stroke-linecap="round" transform="rotate(-90 60 60)"/></svg><div class="sr-ring-inner"><span class="sr-ring-num">${streak}</span><span class="sr-ring-label">day${streak!==1?'s':''}</span></div></div>`;
-html+=`<div class="sr-details"><div class="sr-detail"><span class="sr-detail-label">Current streak</span><span class="sr-detail-val accent">${streak} day${streak!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">Best streak</span><span class="sr-detail-val">${bestStreak} day${bestStreak!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">This month</span><span class="sr-detail-val">${monthDaysRead} / ${dim} days</span></div><div class="sr-detail"><span class="sr-detail-label">This week</span><span class="sr-detail-val accent">${weekDaysRead} / 7 days</span></div></div></div>`;
-// This week mini bar
-const dayLabels=['M','T','W','T','F','S','S'];
-let twCells='',twLabels='';for(let i=0;i<7;i++){const wd=new Date(weekStart);wd.setDate(wd.getDate()+i);const wk=wd.toISOString().slice(0,10);const isRead=!!sessionDays[wk];const isT=wk===todayKey;const isFuture=wd>today;twCells+=`<div class="sr-tw-day${isRead?' read':''}${isT?' today':''}"></div>`;twLabels+=`<span class="sr-tw-label">${dayLabels[i]}</span>`}
-html+=`<div class="sr-this-week">${twCells}</div><div class="sr-tw-labels">${twLabels}</div></div>`;
-
-// ═══ 4. Activity Feed with Weekly Summaries ═══
+// ═══ Activity Feed (plain, no weekly summaries) ═══
+const today=new Date();today.setHours(0,0,0,0);const todayKey=today.toISOString().slice(0,10);
 const events=[];data.books.forEach(b=>{if(b.startDate)events.push({type:'start',date:b.startDate,book:b});if(b.endDate&&b.status==="completed")events.push({type:'finish',date:b.endDate,book:b});(b.sessions||[]).forEach(s=>events.push({type:'session',date:s.date,book:b,session:s}));(b.quotes||[]).forEach(q=>{if(q.addedAt)events.push({type:'quote',date:q.addedAt,book:b,quote:q})})});events.sort((a,b)=>new Date(b.date)-new Date(a.date));
 html+=`<hr class="tl-divider"><p class="tl-section-title">Activity</p>`;
 if(events.length){const shown=events.slice(0,window._tlStreamCount||20);
-// Group by day
 const dayGroups=[];let lastDay='';shown.forEach(ev=>{const dk=new Date(ev.date).toISOString().slice(0,10);if(dk!==lastDay){dayGroups.push({key:dk,events:[]});lastDay=dk}dayGroups[dayGroups.length-1].events.push(ev)});
 const yestD=new Date(today);yestD.setDate(yestD.getDate()-1);const yestKey=yestD.toISOString().slice(0,10);
-// Compute weekly summaries
-function getWeekKey(dateStr){const d=new Date(dateStr);const dow=d.getDay()===0?6:d.getDay()-1;const mon=new Date(d);mon.setDate(mon.getDate()-dow);return mon.toISOString().slice(0,10)}
-const weekSummaries={};events.forEach(ev=>{if(ev.type!=='session')return;const wk=getWeekKey(ev.date);if(!weekSummaries[wk])weekSummaries[wk]={sessions:0,pages:0,duration:0};weekSummaries[wk].sessions++;weekSummaries[wk].pages+=Math.max(0,(ev.session.endPage||0)-(ev.session.startPage||0));weekSummaries[wk].duration+=(ev.session.duration||0)});
-let lastWeekKey='';
 dayGroups.forEach(g=>{
-  const wk=getWeekKey(g.key);
-  // Insert weekly summary at week boundaries
-  if(wk!==lastWeekKey){lastWeekKey=wk;const ws=weekSummaries[wk];
-    if(ws){const thisWk=getWeekKey(todayKey);const isThisWeek=wk===thisWk;const lastWk=getWeekKey(new Date(new Date(todayKey).getTime()-7*86400000).toISOString());const isLastWeek=wk===lastWk;const wkLabel=isThisWeek?'This week':isLastWeek?'Last week':'Week of '+fmtShort(wk);
-    // Compute change vs previous week
-    const prevWkDate=new Date(wk);prevWkDate.setDate(prevWkDate.getDate()-7);const prevWkKey=prevWkDate.toISOString().slice(0,10);const prevWs=weekSummaries[prevWkKey];let changeStr='';if(prevWs&&prevWs.pages>0){const pctChange=Math.round(((ws.pages-prevWs.pages)/prevWs.pages)*100);if(pctChange>0)changeStr=`\u2191 ${pctChange}%`;else if(pctChange<0)changeStr=`\u2193 ${Math.abs(pctChange)}%`}
-    html+=`<div class="tl-week-summary${isThisWeek?'':'" style="opacity:0.7'}"><span class="tl-week-label">${wkLabel}</span><div class="tl-week-stats"><span class="tl-week-stat"><strong>${ws.sessions}</strong> sessions</span><span class="tl-week-stat"><strong>${ws.pages}</strong> pages</span>${ws.duration?`<span class="tl-week-stat"><strong>${(ws.duration/60).toFixed(1)}</strong> hrs</span>`:''}</div>${changeStr?`<span class="tl-week-highlight">${changeStr}</span>`:''}</div>`}}
   let label=fmtShort(g.key);if(g.key===todayKey)label='<strong>Today</strong> \u00B7 '+label;else if(g.key===yestKey)label='<strong>Yesterday</strong> \u00B7 '+label;else label='<strong>'+label+'</strong>';
   html+=`<div class="tl-feed-day"><div class="tl-feed-day-label">${label}</div>`;g.events.forEach(ev=>{if(ev.type==='session'){const pages=Math.max(0,(ev.session.endPage||0)-(ev.session.startPage||0));let sub=[];if(ev.session.startPage!=null&&ev.session.endPage!=null)sub.push(`p.${ev.session.startPage} \u2192 ${ev.session.endPage}`);if(ev.session.duration)sub.push(ev.session.duration+'min');if(pages>0&&ev.session.duration>0)sub.push((pages/ev.session.duration).toFixed(1)+' pg/min');
   html+=`<div class="tl-fi session" data-id="${ev.book.id}"><div class="tl-fi-body"><p class="tl-fi-text">Read <strong>${esc(ev.book.title)}</strong>${pages>0?' \u2014 <span class="pg">'+pages+' pages</span>':''}</p>${sub.length?'<p class="tl-fi-sub">'+sub.join(' \u00B7 ')+'</p>':''}</div></div>`}
@@ -632,7 +581,7 @@ dayGroups.forEach(g=>{
   else if(ev.type==='quote'){html+=`<div class="tl-fi quote" data-id="${ev.book.id}"><div class="tl-fi-body"><p class="tl-fi-text">Saved quote from <strong>${esc(ev.book.title)}</strong></p><p class="tl-fi-quote">\u201C${esc(ev.quote.text||'')}\u201D</p></div></div>`}});html+=`</div>`});
 if(events.length>(window._tlStreamCount||20))html+=`<button class="tls-show-more" id="tlShowMore">Show more</button>`}else{html+=`<p class="tl-empty">No reading activity yet.</p>`}
 
-// ═══ 5. What to Read Next ═══
+// ═══ Up Next ═══
 const wantToRead=data.books.filter(b=>b.status==='want-to-read').sort((a,b)=>{if(a.recommendedBy&&!b.recommendedBy)return -1;if(!a.recommendedBy&&b.recommendedBy)return 1;if((b.priority||0)!==(a.priority||0))return(b.priority||0)-(a.priority||0);return new Date(a.addedAt)-new Date(b.addedAt)});
 if(wantToRead.length){const nx=wantToRead[0];const nxCol=CAT_COLORS[nx.category]||CAT_COLORS.Other;
 html+=`<hr class="tl-divider"><div class="tl-next"><div class="tl-next-header"><span class="tl-next-icon">\u{1F4DA}</span><span class="tl-next-title">Up Next</span></div>`;
@@ -649,7 +598,6 @@ bindTimelineEvents(el);
 }
 
 function bindTimelineEvents(el){
-  el.querySelectorAll('.tll-lane[data-id]').forEach(item=>item.onclick=()=>openDetail(item.dataset.id));
   const prevBtn=el.querySelector('.tlf-prev');if(prevBtn)prevBtn.onclick=e=>{e.stopPropagation();window._focusIdx=((window._focusIdx||0)-1+getReading().length)%getReading().length;renderTimeline()};
   const nextBtn=el.querySelector('.tlf-next');if(nextBtn)nextBtn.onclick=e=>{e.stopPropagation();window._focusIdx=(window._focusIdx||0)+1;renderTimeline()};
   el.querySelectorAll('.tlf-title[data-id]').forEach(t=>t.onclick=()=>openDetail(t.dataset.id));
@@ -682,6 +630,19 @@ const avgDays=(()=>{const ds=comp.filter(b=>b.startDate&&b.endDate).map(b=>daysB
 const streak=getStreak(),allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.push(q)));const annotated=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
 let html=`<div class="mini-stats"><div class="mini-stat"><p class="mini-stat-label">Completed</p><p class="mini-stat-value">${comp.length}</p><p class="mini-stat-sub">of ${goal}</p></div><div class="mini-stat"><p class="mini-stat-label">Avg Pace</p><p class="mini-stat-value">${avgDays?avgDays+"d":"\u2014"}</p><p class="mini-stat-sub">per book</p></div><div class="mini-stat"><p class="mini-stat-label">Pages</p><p class="mini-stat-value">${totalPages.toLocaleString()}</p></div><div class="mini-stat"><p class="mini-stat-label">Streak</p><p class="mini-stat-value">${streak.weeks?streak.weeks+"w":"\u2014"}</p></div><div class="mini-stat"><p class="mini-stat-label">Annotated</p><p class="mini-stat-value">${annotated}</p></div><div class="mini-stat"><p class="mini-stat-label">Quotes</p><p class="mini-stat-value">${allQuotes.length}</p></div></div>`;
 html+=`<div class="panel"><div class="panel-title">Annual Progress</div><div class="progress-row"><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div><span class="progress-pct">${pct}%</span></div></div>`;
+// Streak Ring
+const sessionDays={};data.books.forEach(b=>(b.sessions||[]).forEach(s=>{if(!s.date)return;const k=s.date.slice(0,10);sessionDays[k]=(sessionDays[k]||0)+1}));
+const atToday=new Date();atToday.setHours(0,0,0,0);let aStreak=0;for(let d=new Date(atToday);;d.setDate(d.getDate()-1)){if(sessionDays[d.toISOString().slice(0,10)])aStreak++;else break}
+let aBestStreak=0,aCS=0;const aDayKeys=Object.keys(sessionDays).sort();aDayKeys.forEach((k,i)=>{if(i===0)aCS=1;else{const p=new Date(aDayKeys[i-1]);p.setDate(p.getDate()+1);aCS=p.toISOString().slice(0,10)===k?aCS+1:1}if(aCS>aBestStreak)aBestStreak=aCS});
+const aTodayKey=atToday.toISOString().slice(0,10),aDow=atToday.getDay()===0?6:atToday.getDay()-1;
+const aWeekStart=new Date(atToday);aWeekStart.setDate(aWeekStart.getDate()-aDow);let aWeekRead=0;
+for(let i=0;i<7;i++){const wd=new Date(aWeekStart);wd.setDate(wd.getDate()+i);if(sessionDays[wd.toISOString().slice(0,10)])aWeekRead++}
+const aCm=atToday.getMonth(),aCy=atToday.getFullYear(),aDim=new Date(aCy,aCm+1,0).getDate();let aMonthRead=0;
+for(let d=1;d<=aDim;d++){const dk=`${aCy}-${String(aCm+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;if(sessionDays[dk])aMonthRead++}
+const aRMax=Math.max(aBestStreak,7),aRPct=Math.min(100,Math.round(aStreak/aRMax*100)),aRR=50,aRC=2*Math.PI*aRR,aRO=aRC-(aRPct/100)*aRC;
+html+=`<div class="panel"><div class="panel-title">Reading Streak</div><div class="sr-row"><div class="sr-ring-wrap"><svg viewBox="0 0 120 120" width="100" height="100"><circle cx="60" cy="60" r="${aRR}" fill="none" stroke="var(--border)" stroke-width="8"/><circle cx="60" cy="60" r="${aRR}" fill="none" stroke="var(--accent)" stroke-width="8" stroke-dasharray="${aRC}" stroke-dashoffset="${aRO}" stroke-linecap="round" transform="rotate(-90 60 60)"/></svg><div class="sr-ring-inner"><span class="sr-ring-num">${aStreak}</span><span class="sr-ring-label">day${aStreak!==1?'s':''}</span></div></div><div class="sr-details"><div class="sr-detail"><span class="sr-detail-label">Current streak</span><span class="sr-detail-val accent">${aStreak} day${aStreak!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">Best streak</span><span class="sr-detail-val">${aBestStreak} day${aBestStreak!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">This month</span><span class="sr-detail-val">${aMonthRead} / ${aDim} days</span></div><div class="sr-detail"><span class="sr-detail-label">This week</span><span class="sr-detail-val accent">${aWeekRead} / 7 days</span></div></div></div>`;
+const aDayLabels=['M','T','W','T','F','S','S'];let aTwC='',aTwL='';for(let i=0;i<7;i++){const wd=new Date(aWeekStart);wd.setDate(wd.getDate()+i);const wk=wd.toISOString().slice(0,10);aTwC+=`<div class="sr-tw-day${sessionDays[wk]?' read':''}${wk===aTodayKey?' today':''}"></div>`;aTwL+=`<span class="sr-tw-label">${aDayLabels[i]}</span>`}
+html+=`<div class="sr-this-week">${aTwC}</div><div class="sr-tw-labels">${aTwL}</div></div>`;
 // Category Breakdown
 const catData=CATEGORIES.map(c=>({name:c,value:comp.filter(b=>b.category===c).length})).filter(c=>c.value>0);
 if(catData.length)html+=`<div class="panel"><div class="panel-title">Category Breakdown</div><div class="pie-row"><div class="pie-wrap"><canvas id="pieChart"></canvas></div><div class="cat-legend">${catData.sort((a,b)=>b.value-a.value).map(c=>`<div class="cat-legend-item"><div class="cat-legend-dot" style="background:${CAT_COLORS[c.name]}"></div><span class="cat-legend-name">${c.name}</span><span class="cat-legend-count">${c.value}</span><div class="cat-legend-bar"><div class="cat-legend-bar-fill" style="width:${(c.value/comp.length)*100}%;background:${CAT_COLORS[c.name]}"></div></div></div>`).join("")}</div></div></div>`;
