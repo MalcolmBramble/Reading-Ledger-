@@ -65,10 +65,26 @@ nav.tabs{display:flex;gap:0;margin-top:24px;border-bottom:1px solid var(--border
 /* Progress Lanes */
 .tll-lane{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;cursor:pointer;transition:border-color 0.2s;opacity:0;animation:laneIn 350ms cubic-bezier(0.23,1,0.32,1) forwards}@keyframes laneIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}.tll-lane:nth-child(1){animation-delay:0ms}.tll-lane:nth-child(2){animation-delay:60ms}.tll-lane:nth-child(3){animation-delay:120ms}.tll-lane:nth-child(4){animation-delay:180ms}.tll-lane:hover{border-color:var(--borderL)}.tll-lane.active{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 .tll-lane-info{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 6px}.tll-lane-title{font-family:var(--ui);font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;margin-right:10px}.tll-lane-meta{font-family:var(--ui);font-size:11px;color:var(--textD)}.tll-lane-est{font-family:var(--ui);font-size:10px;color:var(--accent);font-weight:500;margin-left:8px}.tll-lane-track{height:28px;background:var(--bg);margin:0 14px 10px;border-radius:6px;position:relative;overflow:hidden}.tll-lane-fill{height:100%;border-radius:6px;position:relative;transition:width 0.5s}.tll-lane-pct{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--ui);font-size:11px;font-weight:700;color:rgba(255,255,255,0.9);text-shadow:0 1px 2px rgba(0,0,0,0.4)}.tll-lane-marker{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--text);border-radius:1px;z-index:2}.tll-legend{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}.tll-legend-item{display:flex;align-items:center;gap:6px;font-family:var(--ui);font-size:11px;color:var(--textD)}.tll-legend-dot{width:10px;height:6px;border-radius:2px}
-/* Streak Calendar */
-.streak-cal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 24px;overflow:hidden}.streak-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.streak-header-title{font-family:var(--ui);font-size:13px;font-weight:600}.streak-nav-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-family:var(--ui);font-size:11px;color:var(--textD);cursor:pointer}.streak-stats{display:flex;gap:16px;margin-bottom:16px}.streak-stat{text-align:center;flex:1}.streak-stat-val{font-family:var(--ui);font-size:22px;font-weight:700;color:var(--accent)}.streak-stat-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cal-header{font-family:var(--ui);font-size:9px;color:var(--textDD);text-align:center;padding:4px 0}.cal-day{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--ui);font-size:11px;color:var(--textD);position:relative}.cal-day.empty{background:none}.cal-day.none{background:var(--bg);border:1px solid var(--border)}.cal-day.read{background:rgba(196,149,106,0.2);border:1px solid rgba(196,149,106,0.3);color:var(--accent);font-weight:600}.cal-day.today{box-shadow:0 0 0 2px var(--accent)}.cal-day .dot{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--accent)}
-.streak-goal{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}.streak-goal-bar{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}.streak-goal-fill{height:100%;border-radius:3px;background:var(--accent)}.streak-goal-label{font-family:var(--ui);font-size:11px;color:var(--textD)}.streak-goal-val{font-family:var(--ui);font-size:12px;color:var(--accent);font-weight:600;flex-shrink:0}
+/* Streak Ring */
+.streak-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px}
+.streak-section-title{font-family:var(--ui);font-size:13px;font-weight:600;margin-bottom:16px}
+.sr-row{display:flex;align-items:center;gap:20px}
+.sr-ring-wrap{position:relative;flex-shrink:0}
+.sr-ring-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sr-ring-num{font-family:var(--ui);font-size:28px;font-weight:700;color:var(--accent);line-height:1}
+.sr-ring-label{font-family:var(--ui);font-size:9px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em;margin-top:2px}
+.sr-details{flex:1}
+.sr-detail{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.sr-detail:last-child{border-bottom:none}
+.sr-detail-label{font-family:var(--ui);font-size:12px;color:var(--textM)}
+.sr-detail-val{font-family:var(--ui);font-size:14px;font-weight:600;color:var(--text)}
+.sr-detail-val.accent{color:var(--accent)}
+.sr-this-week{display:flex;gap:4px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+.sr-tw-day{flex:1;height:8px;border-radius:4px;background:var(--bg);border:1px solid var(--border)}
+.sr-tw-day.read{background:var(--accent);border-color:var(--accent)}
+.sr-tw-day.today{box-shadow:0 0 0 1px var(--text)}
+.sr-tw-labels{display:flex;gap:4px;margin-top:4px}
+.sr-tw-label{flex:1;text-align:center;font-family:var(--ui);font-size:8px;color:var(--textDD)}
 /* Weekly Summary */
 .tl-week-summary{background:linear-gradient(135deg,var(--surface),var(--bg));border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:16px}.tl-week-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;flex-shrink:0;min-width:70px}.tl-week-stats{display:flex;gap:14px;flex:1;flex-wrap:wrap}.tl-week-stat{font-family:var(--ui);font-size:12px;color:var(--textM)}.tl-week-stat strong{color:var(--text);font-weight:600}.tl-week-highlight{font-family:var(--ui);font-size:11px;color:var(--green);font-weight:500;flex-shrink:0}
 /* Feed */
@@ -570,26 +586,24 @@ html+=`<div class="tll-lane${isA?' active':''}" data-id="${b.id}"><div class="tl
 if(recent.length){html+=`<p class="tl-section-title" style="margin-top:${reading.length?'20':'0'}px">Recently Completed</p>`;recent.forEach(b=>{const col=CAT_COLORS[b.category]||CAT_COLORS.Other,dur=daysBetween(b.startDate,b.endDate);html+=`<div class="tll-lane" data-id="${b.id}"><div class="tll-lane-info"><span class="tll-lane-title">${esc(b.title)}</span><span class="tll-lane-meta">${b.pages||0}p${dur?' \u00B7 '+dur+'d':''}${b.rating?' \u00B7 '+'\u2605'.repeat(b.rating):''}</span></div><div class="tll-lane-track"><div class="tll-lane-fill" style="width:100%;background:linear-gradient(90deg,${col}DD,${col}88)"><span class="tll-lane-pct">Done</span></div></div></div>`})}
 const usedCats=[...new Set([...reading,...recent].map(b=>b.category||"Other"))];if(usedCats.length>1)html+=`<div class="tll-legend">${usedCats.map(c=>`<div class="tll-legend-item"><div class="tll-legend-dot" style="background:${CAT_COLORS[c]||CAT_COLORS.Other}"></div>${c}</div>`).join('')}</div>`}
 
-// ═══ 3. Streak Calendar ═══
+// ═══ 3. Streak Ring ═══
 const today=new Date();today.setHours(0,0,0,0);const sessionDays={};data.books.forEach(b=>(b.sessions||[]).forEach(s=>{if(!s.date)return;const k=s.date.slice(0,10);sessionDays[k]=(sessionDays[k]||0)+1}));
 let streak=0;for(let d=new Date(today);;d.setDate(d.getDate()-1)){if(sessionDays[d.toISOString().slice(0,10)])streak++;else break}
 let bestStreak=0,curS=0;const allDayKeys=Object.keys(sessionDays).sort();allDayKeys.forEach((k,i)=>{if(i===0){curS=1}else{const prev=new Date(allDayKeys[i-1]);prev.setDate(prev.getDate()+1);curS=prev.toISOString().slice(0,10)===k?curS+1:1}if(curS>bestStreak)bestStreak=curS});
-// Build month calendar
-const calMonth=window._calMonth||today.getMonth(),calYear=window._calYear||today.getFullYear();
-const monthName=new Date(calYear,calMonth).toLocaleDateString('en-US',{month:'long',year:'numeric'});
-const firstDay=new Date(calYear,calMonth,1).getDay();const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
-const startOffset=(firstDay===0?6:firstDay-1);// Monday start
-let calCells='';for(let i=0;i<startOffset;i++)calCells+=`<div class="cal-day empty"></div>`;
-// Count days read this week (Mon-Sun containing today)
 const todayKey=today.toISOString().slice(0,10);const todayDow=today.getDay()===0?6:today.getDay()-1;
 const weekStart=new Date(today);weekStart.setDate(weekStart.getDate()-todayDow);let weekDaysRead=0;
 for(let i=0;i<7;i++){const wd=new Date(weekStart);wd.setDate(wd.getDate()+i);if(sessionDays[wd.toISOString().slice(0,10)])weekDaysRead++}
-let monthDaysRead=0;
-for(let d=1;d<=daysInMonth;d++){const dk=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const isToday=dk===todayKey;const hasRead=!!sessionDays[dk];if(hasRead)monthDaysRead++;const isFuture=new Date(calYear,calMonth,d)>today;calCells+=`<div class="cal-day${hasRead?' read':isFuture?'':' none'}${isToday?' today':''}">${d}${hasRead?'<span class="dot"></span>':''}</div>`}
-html+=`<hr class="tl-divider"><div class="streak-cal"><div class="streak-header"><span class="streak-header-title">${monthName}</span><div style="display:flex;gap:8px"><button class="streak-nav-btn" id="calPrev">\u2039</button><button class="streak-nav-btn" id="calNext">\u203A</button></div></div>`;
-html+=`<div class="streak-stats"><div class="streak-stat"><p class="streak-stat-val">${streak}</p><p class="streak-stat-label">Current streak</p></div><div class="streak-stat"><p class="streak-stat-val">${monthDaysRead}</p><p class="streak-stat-label">Days read</p></div><div class="streak-stat"><p class="streak-stat-val">${bestStreak}</p><p class="streak-stat-label">Best streak</p></div></div>`;
-html+=`<div class="cal-grid"><div class="cal-header">M</div><div class="cal-header">T</div><div class="cal-header">W</div><div class="cal-header">T</div><div class="cal-header">F</div><div class="cal-header">S</div><div class="cal-header">S</div>${calCells}</div>`;
-html+=`<div class="streak-goal"><span class="streak-goal-label">Weekly goal</span><div class="streak-goal-bar"><div class="streak-goal-fill" style="width:${Math.min(100,Math.round(weekDaysRead/7*100))}%"></div></div><span class="streak-goal-val">${weekDaysRead}/7 days</span></div></div>`;
+// Count days read this month
+const cm=today.getMonth(),cy=today.getFullYear(),dim=new Date(cy,cm+1,0).getDate();let monthDaysRead=0;
+for(let d=1;d<=dim;d++){const dk=`${cy}-${String(cm+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;if(sessionDays[dk])monthDaysRead++}
+// Ring: streak out of best (or 7 if no best)
+const ringMax=Math.max(bestStreak,7);const ringPct=Math.min(100,Math.round(streak/ringMax*100));const ringR=50,ringCirc=2*Math.PI*ringR,ringOff=ringCirc-(ringPct/100)*ringCirc;
+html+=`<hr class="tl-divider"><div class="streak-section"><p class="streak-section-title">Reading Streak</p><div class="sr-row"><div class="sr-ring-wrap"><svg viewBox="0 0 120 120" width="100" height="100"><circle cx="60" cy="60" r="${ringR}" fill="none" stroke="var(--border)" stroke-width="8"/><circle cx="60" cy="60" r="${ringR}" fill="none" stroke="var(--accent)" stroke-width="8" stroke-dasharray="${ringCirc}" stroke-dashoffset="${ringOff}" stroke-linecap="round" transform="rotate(-90 60 60)"/></svg><div class="sr-ring-inner"><span class="sr-ring-num">${streak}</span><span class="sr-ring-label">day${streak!==1?'s':''}</span></div></div>`;
+html+=`<div class="sr-details"><div class="sr-detail"><span class="sr-detail-label">Current streak</span><span class="sr-detail-val accent">${streak} day${streak!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">Best streak</span><span class="sr-detail-val">${bestStreak} day${bestStreak!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">This month</span><span class="sr-detail-val">${monthDaysRead} / ${dim} days</span></div><div class="sr-detail"><span class="sr-detail-label">This week</span><span class="sr-detail-val accent">${weekDaysRead} / 7 days</span></div></div></div>`;
+// This week mini bar
+const dayLabels=['M','T','W','T','F','S','S'];
+let twCells='',twLabels='';for(let i=0;i<7;i++){const wd=new Date(weekStart);wd.setDate(wd.getDate()+i);const wk=wd.toISOString().slice(0,10);const isRead=!!sessionDays[wk];const isT=wk===todayKey;const isFuture=wd>today;twCells+=`<div class="sr-tw-day${isRead?' read':''}${isT?' today':''}"></div>`;twLabels+=`<span class="sr-tw-label">${dayLabels[i]}</span>`}
+html+=`<div class="sr-this-week">${twCells}</div><div class="sr-tw-labels">${twLabels}</div></div>`;
 
 // ═══ 4. Activity Feed with Weekly Summaries ═══
 const events=[];data.books.forEach(b=>{if(b.startDate)events.push({type:'start',date:b.startDate,book:b});if(b.endDate&&b.status==="completed")events.push({type:'finish',date:b.endDate,book:b});(b.sessions||[]).forEach(s=>events.push({type:'session',date:s.date,book:b,session:s}));(b.quotes||[]).forEach(q=>{if(q.addedAt)events.push({type:'quote',date:q.addedAt,book:b,quote:q})})});events.sort((a,b)=>new Date(b.date)-new Date(a.date));
@@ -654,9 +668,6 @@ function bindTimelineEvents(el){
   // Feed clicks
   el.querySelectorAll('.tl-fi[data-id]').forEach(item=>item.onclick=()=>openDetail(item.dataset.id));
   const showMore=document.getElementById('tlShowMore');if(showMore)showMore.onclick=()=>{window._tlStreamCount=(window._tlStreamCount||20)+20;renderTimeline()};
-  // Calendar nav
-  const calPrev=document.getElementById('calPrev');if(calPrev)calPrev.onclick=()=>{const cm=window._calMonth!=null?window._calMonth:new Date().getMonth();const cy=window._calYear||new Date().getFullYear();if(cm===0){window._calMonth=11;window._calYear=cy-1}else{window._calMonth=cm-1;window._calYear=cy}renderTimeline()};
-  const calNext=document.getElementById('calNext');if(calNext)calNext.onclick=()=>{const cm=window._calMonth!=null?window._calMonth:new Date().getMonth();const cy=window._calYear||new Date().getFullYear();if(cm===11){window._calMonth=0;window._calYear=cy+1}else{window._calMonth=cm+1;window._calYear=cy}renderTimeline()};
   // Up Next: Start button
   el.querySelectorAll('.tl-next-start').forEach(btn=>btn.onclick=e=>{e.stopPropagation();const bk=data.books.find(b=>b.id===btn.dataset.id);if(!bk)return;bk.status='reading';bk.startDate=new Date().toISOString().slice(0,10);bk.updatedAt=new Date().toISOString();save();showToast(`Started "${bk.title}"`);renderTimeline();renderShelf();updateHeader()});
   el.querySelectorAll('.tl-next-card').forEach(card=>card.onclick=()=>openDetail(card.dataset.id));
