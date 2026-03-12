@@ -97,12 +97,11 @@ nav.tabs{display:flex;gap:0;margin-top:24px;border-bottom:1px solid var(--border
 .panel{background:var(--surface);border-radius:12px;padding:24px;border:1px solid var(--border);margin-bottom:28px}.panel-title{font-size:19px;font-weight:500;font-style:italic;margin:0 0 16px}.panel-empty{font-family:var(--ui);font-size:13px;color:var(--textD);text-align:center;padding:36px 20px;font-style:italic;border:1px dashed var(--border);border-radius:10px}
 .progress-row{display:flex;align-items:center;gap:16px}.progress-track{flex:1;background:var(--border);border-radius:100px;height:12px;overflow:hidden}.progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--accentDim),var(--accent));transition:width 1s}.progress-pct{font-family:var(--ui);font-size:22px;font-weight:600;color:var(--accent);min-width:50px;text-align:right}
 .pie-row{display:flex;align-items:center;gap:28px;flex-wrap:wrap}.pie-wrap{width:170px;height:170px;flex-shrink:0}.pie-wrap canvas{width:100%;height:100%}.cat-legend{display:flex;flex-direction:column;gap:6px;flex:1}.cat-legend-item{display:flex;align-items:center;gap:10px}.cat-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}.cat-legend-name{font-family:var(--ui);font-size:13px;color:var(--textM);flex:1}.cat-legend-count{font-family:var(--ui);font-size:13px;color:var(--textD);font-weight:500}.cat-legend-bar{width:60px;height:4px;border-radius:2px;background:var(--border);overflow:hidden}.cat-legend-bar-fill{height:100%;border-radius:2px}
-canvas.pace-chart{width:100%;height:200px;display:block}
-.reading-habits .habit-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}.reading-habits .habit-label{font-family:var(--ui);font-size:12px;color:var(--textD);width:36px;text-align:right;flex-shrink:0}.reading-habits .habit-bar{flex:1;height:16px;background:var(--border);border-radius:4px;overflow:hidden}.reading-habits .habit-fill{height:100%;border-radius:4px;background:var(--accent);transition:width 0.5s}.reading-habits .habit-val{font-family:var(--ui);font-size:11px;color:var(--textD);min-width:24px}
+canvas
+
 .goal-panel-section{margin-top:20px}.goal-panel-section-title{font-family:var(--ui);font-size:12px;color:var(--textD);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin-bottom:10px}
 .challenge-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;position:relative}.challenge-label{font-family:var(--ui);font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}.challenge-meta{font-family:var(--ui);font-size:11px;color:var(--textD);margin-bottom:6px}.challenge-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}.challenge-progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accentDim),var(--accent));transition:width 0.5s}.challenge-pct{font-family:var(--ui);font-size:11px;color:var(--accent);margin-top:2px;text-align:right}.challenge-del{position:absolute;top:8px;right:10px;background:none;border:none;color:var(--textD);cursor:pointer;font-size:14px}.challenge-del:hover{color:var(--danger)}.challenge-done{border-left:3px solid var(--green)}
 .goal-cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.goal-cat-item{display:flex;align-items:center;gap:8px;font-family:var(--ui);font-size:12px;color:var(--textM)}.goal-cat-item input{width:50px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);font-family:var(--ui);font-size:12px;outline:none;text-align:center}
-.theme-index{margin-top:16px}.theme-index-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}.theme-index-header{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;transition:background 0.15s}.theme-index-header:hover{background:rgba(255,255,255,0.02)}.theme-index-name{font-family:var(--ui);font-size:14px;font-weight:500;color:var(--text);flex:1}.theme-index-count{font-family:var(--ui);font-size:12px;color:var(--textD);background:var(--bg);padding:2px 8px;border-radius:100px}.theme-index-chevron{color:var(--textD);font-size:11px;font-family:var(--ui);transition:transform 0.25s}.theme-index-item.expanded .theme-index-chevron{transform:rotate(90deg)}.theme-index-books{max-height:0;overflow:hidden;transition:max-height 0.35s}.theme-index-item.expanded .theme-index-books{max-height:600px}.theme-index-books-inner{padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:8px}.theme-book-mini{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer;max-width:200px}.theme-book-mini:hover{border-color:var(--accent)}.theme-book-mini-title{font-family:var(--ui);font-size:12px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.theme-book-mini-author{font-family:var(--ui);font-size:10px;color:var(--textD)}
 
 /* Year in Review */
 .yr-hero{background:linear-gradient(135deg,var(--surface),#1A1510);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;position:relative;overflow:hidden;margin-bottom:20px}.yr-hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(196,149,106,0.25),transparent 65%);pointer-events:none;animation:heroGlow 4s ease-in-out infinite alternate}@keyframes heroGlow{from{opacity:0.7}to{opacity:1}}.yr-hero-label{font-family:var(--ui);font-size:11px;color:var(--textD);letter-spacing:0.12em;text-transform:uppercase;font-weight:500;position:relative}.yr-hero-num{font-size:64px;font-weight:700;color:var(--accent);line-height:1;position:relative;margin-top:8px}.yr-hero-sub{font-family:var(--ui);font-size:14px;color:var(--textM);margin-top:4px;position:relative}.yr-hero-pages{font-family:var(--ui);font-size:13px;color:var(--textD);margin-top:8px;position:relative}.yr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}.yr-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}.yr-card-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500}.yr-card-value{font-size:22px;font-weight:600;margin-top:6px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.yr-card-value.sm{font-size:16px}.yr-card-sub{font-family:var(--ui);font-size:12px;color:var(--textD);margin-top:3px}.yr-milestones{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}.yr-milestone{background:var(--bg);border-radius:10px;padding:14px 12px;text-align:center;border:1px solid var(--border)}.yr-milestone-icon{font-size:24px}.yr-milestone-label{font-family:var(--ui);font-size:12px;font-weight:600;margin-top:6px}.yr-themes{display:flex;gap:8px;flex-wrap:wrap}.yr-theme{font-family:var(--ui);font-size:13px;padding:6px 14px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--textM)}.yr-theme em{color:var(--textD);font-size:11px;font-style:normal}
@@ -184,6 +183,34 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .nudge-dismiss{background:none;border:none;color:var(--textDD);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0}
 
 @media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.yr-grid{grid-template-columns:1fr}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}.tl-row-label{width:80px;font-size:11px}.tl-row-dates{width:100px;font-size:9px}}
+
+/* Reading DNA */
+.dna{background:linear-gradient(135deg,var(--surface),rgba(196,149,106,0.06));border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:24px}
+.dna-text{font-family:var(--ui);font-size:14px;color:var(--textM);line-height:1.6}
+.dna-text strong{color:var(--text);font-weight:500}
+.dna-accent{color:var(--accent);font-weight:600}
+/* Reading Patterns layout */
+.patterns-top{display:flex;gap:20px;align-items:center;margin-bottom:16px}
+/* Theme Cloud */
+.theme-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.theme-pill{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all 0.15s}
+.theme-pill:hover{border-color:var(--accent);background:var(--surfaceH)}
+.theme-pill.active{border-color:var(--accent);background:rgba(196,149,106,0.08)}
+.theme-pill-name{font-family:var(--ui);font-size:12px;color:var(--textM);font-weight:500}
+.theme-pill-count{font-family:var(--ui);font-size:10px;color:var(--textDD);background:var(--border);border-radius:100px;padding:1px 7px;font-weight:600}
+.theme-pill.lg .theme-pill-name{font-size:14px;color:var(--text)}
+.theme-pill.md .theme-pill-name{font-size:13px;color:var(--textM)}
+.theme-pill.sm .theme-pill-name{font-size:11px}
+.theme-books{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.theme-books.show{display:block}
+.theme-active-label{font-family:var(--ui);font-size:11px;color:var(--accent);font-weight:500;margin-bottom:8px}
+.theme-book-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03);cursor:pointer}
+.theme-book-item:last-child{border-bottom:none}
+.theme-book-item:hover{background:rgba(255,255,255,0.02)}
+.theme-book-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.theme-book-title{font-family:var(--ui);font-size:13px;color:var(--textM);font-weight:500;flex:1}
+.theme-book-cat{font-family:var(--ui);font-size:10px;color:var(--textDD)}
+.theme-auto-note{font-family:var(--ui);font-size:10px;color:var(--textDD);margin-top:12px;font-style:italic}
 </style>
 </head>
 <body>
@@ -603,50 +630,91 @@ function bindTimelineEvents(el){
   el.querySelectorAll('.tl-row[data-id]').forEach(row=>row.onclick=()=>openDetail(row.dataset.id));
 }
 
-/* ═══ ANALYTICS — Stats, categories, streak ring, pace chart, Year in Review ═══ */
+/* ═══ ANALYTICS — DNA summary, stats, streak ring, categories, theme cloud, goals ═══ */
 // ══════ ANALYTICS ══════
 function renderAnalytics(){
 const comp=getCompleted(),goal=getGoal(),pct=Math.min(100,Math.round(comp.length/goal*100)),totalPages=comp.reduce((s,b)=>s+(b.pages||0),0);
 const avgDays=(()=>{const ds=comp.filter(b=>b.startDate&&b.endDate).map(b=>daysBetween(b.startDate,b.endDate));return ds.length?Math.round(ds.reduce((a,c)=>a+c,0)/ds.length):0})();
-const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.push(q)));const annotated=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
-let html=`<div class="mini-stats"><div class="mini-stat"><p class="mini-stat-label">Completed</p><p class="mini-stat-value">${comp.length}</p><p class="mini-stat-sub">of ${goal}</p></div><div class="mini-stat"><p class="mini-stat-label">Avg Pace</p><p class="mini-stat-value">${avgDays?avgDays+"d":"\u2014"}</p><p class="mini-stat-sub">per book</p></div><div class="mini-stat"><p class="mini-stat-label">Pages</p><p class="mini-stat-value">${totalPages.toLocaleString()}</p></div><div class="mini-stat"><p class="mini-stat-label">Annotated</p><p class="mini-stat-value">${annotated}</p></div><div class="mini-stat"><p class="mini-stat-label">Quotes</p><p class="mini-stat-value">${allQuotes.length}</p></div></div>`;
-html+=`<div class="panel"><div class="panel-title">Annual Progress</div><div class="progress-row"><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div><span class="progress-pct">${pct}%</span></div></div>`;
-// Streak Ring (uses shared getDayStreak)
+const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.push(q)));
+const annotated=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
 const sk=getDayStreak();
+
+// Build theme data (used by DNA and theme cloud)
+const allThemes={};data.books.forEach(b=>(b.themes||[]).forEach(t=>{const key=t.toLowerCase();if(!allThemes[key])allThemes[key]={name:t,books:[]};allThemes[key].books.push(b)}));
+const themeEntries=Object.values(allThemes).sort((a,b)=>b.books.length-a.books.length);
+
+// Category data
+const catData=CATEGORIES.map(c=>({name:c,value:comp.filter(b=>b.category===c).length})).filter(c=>c.value>0).sort((a,b)=>b.value-a.value);
+
+let html='';
+
+// ═══ Reading DNA ═══
+if(comp.length){
+  const topCats=catData.slice(0,2).map(c=>c.name);
+  const topThemeNames=themeEntries.slice(0,3).map(t=>t.name);
+  let dna=`You\u2019ve completed <strong>${comp.length}</strong> book${comp.length!==1?'s':''} this year`;
+  if(topCats.length)dna+=`, mostly <span class="dna-accent">${topCats.join('</span> and <span class="dna-accent">')}</span>`;
+  dna+='.';
+  if(sk.current>0)dna+=` You\u2019re on a <span class="dna-accent">${sk.current}-day streak</span>`;
+  if(sk.best>sk.current)dna+=` \u2014 your best was ${sk.best}`;
+  if(sk.current>0)dna+='.';
+  if(topThemeNames.length)dna+=` Top themes: ${topThemeNames.map(t=>`<span class="dna-accent">${esc(t)}</span>`).join(', ')}.`;
+  html+=`<div class="dna"><p class="dna-text">${dna}</p></div>`;
+}
+
+// ═══ Stat Cards ═══
+html+=`<div class="mini-stats"><div class="mini-stat"><p class="mini-stat-label">Completed</p><p class="mini-stat-value">${comp.length}</p><p class="mini-stat-sub">of ${goal}</p></div><div class="mini-stat"><p class="mini-stat-label">Avg Pace</p><p class="mini-stat-value">${avgDays?avgDays+"d":"\u2014"}</p><p class="mini-stat-sub">per book</p></div><div class="mini-stat"><p class="mini-stat-label">Pages</p><p class="mini-stat-value">${totalPages.toLocaleString()}</p></div><div class="mini-stat"><p class="mini-stat-label">Annotated</p><p class="mini-stat-value">${annotated}</p></div><div class="mini-stat"><p class="mini-stat-label">Quotes</p><p class="mini-stat-value">${allQuotes.length}</p></div></div>`;
+
+// ═══ Annual Progress ═══
+html+=`<div class="panel"><div class="panel-title">Annual Progress</div><div class="progress-row"><div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div><span class="progress-pct">${pct}%</span></div></div>`;
+
+// ═══ Reading Patterns (streak ring + week strip only) ═══
 const aRMax=Math.max(sk.best,7),aRPct=Math.min(100,Math.round(sk.current/aRMax*100)),aRR=50,aRC=2*Math.PI*aRR,aRO=aRC-(aRPct/100)*aRC;
-html+=`<div class="panel"><div class="panel-title">Reading Streak</div><div class="sr-row"><div class="sr-ring-wrap"><svg viewBox="0 0 120 120" width="100" height="100"><circle cx="60" cy="60" r="${aRR}" fill="none" stroke="var(--border)" stroke-width="8"/><circle cx="60" cy="60" r="${aRR}" fill="none" stroke="var(--accent)" stroke-width="8" stroke-dasharray="${aRC}" stroke-dashoffset="${aRO}" stroke-linecap="round" transform="rotate(-90 60 60)"/></svg><div class="sr-ring-inner"><span class="sr-ring-num">${sk.current}</span><span class="sr-ring-label">day${sk.current!==1?'s':''}</span></div></div><div class="sr-details"><div class="sr-detail"><span class="sr-detail-label">Current streak</span><span class="sr-detail-val accent">${sk.current} day${sk.current!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">Best streak</span><span class="sr-detail-val">${sk.best} day${sk.best!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">This month</span><span class="sr-detail-val">${sk.monthRead} / ${sk.monthDays} days</span></div><div class="sr-detail"><span class="sr-detail-label">This week</span><span class="sr-detail-val accent">${sk.weekRead} / 7 days</span></div></div></div>`;
-const todayKey=new Date().toISOString().slice(0,10);const dow=new Date().getDay()===0?6:new Date().getDay()-1;const weekStart=new Date();weekStart.setHours(0,0,0,0);weekStart.setDate(weekStart.getDate()-dow);
+html+=`<div class="panel"><div class="panel-title">Reading Patterns</div><div class="patterns-top"><div class="sr-ring-wrap"><svg viewBox="0 0 120 120" width="100" height="100"><circle cx="60" cy="60" r="${aRR}" fill="none" stroke="var(--border)" stroke-width="8"/><circle cx="60" cy="60" r="${aRR}" fill="none" stroke="var(--accent)" stroke-width="8" stroke-dasharray="${aRC}" stroke-dashoffset="${aRO}" stroke-linecap="round" transform="rotate(-90 60 60)"/></svg><div class="sr-ring-inner"><span class="sr-ring-num">${sk.current}</span><span class="sr-ring-label">day${sk.current!==1?'s':''}</span></div></div><div class="sr-details"><div class="sr-detail"><span class="sr-detail-label">Current streak</span><span class="sr-detail-val accent">${sk.current} day${sk.current!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">Best streak</span><span class="sr-detail-val">${sk.best} day${sk.best!==1?'s':''}</span></div><div class="sr-detail"><span class="sr-detail-label">This month</span><span class="sr-detail-val">${sk.monthRead} / ${sk.monthDays} days</span></div><div class="sr-detail"><span class="sr-detail-label">This week</span><span class="sr-detail-val accent">${sk.weekRead} / 7 days</span></div></div></div>`;
+const todayKey=new Date().toISOString().slice(0,10);const dowVal=new Date().getDay()===0?6:new Date().getDay()-1;const weekStart=new Date();weekStart.setHours(0,0,0,0);weekStart.setDate(weekStart.getDate()-dowVal);
 const dayLabels=['M','T','W','T','F','S','S'];let twC='',twL='';for(let i=0;i<7;i++){const wd=new Date(weekStart);wd.setDate(wd.getDate()+i);const wk=wd.toISOString().slice(0,10);twC+=`<div class="sr-tw-day${sk.sessionDays[wk]?' read':''}${wk===todayKey?' today':''}"></div>`;twL+=`<span class="sr-tw-label">${dayLabels[i]}</span>`}
 html+=`<div class="sr-this-week">${twC}</div><div class="sr-tw-labels">${twL}</div></div>`;
-// Category Breakdown
-const catData=CATEGORIES.map(c=>({name:c,value:comp.filter(b=>b.category===c).length})).filter(c=>c.value>0);
-if(catData.length)html+=`<div class="panel"><div class="panel-title">Category Breakdown</div><div class="pie-row"><div class="pie-wrap"><canvas id="pieChart"></canvas></div><div class="cat-legend">${catData.sort((a,b)=>b.value-a.value).map(c=>`<div class="cat-legend-item"><div class="cat-legend-dot" style="background:${CAT_COLORS[c.name]}"></div><span class="cat-legend-name">${c.name}</span><span class="cat-legend-count">${c.value}</span><div class="cat-legend-bar"><div class="cat-legend-bar-fill" style="width:${(c.value/comp.length)*100}%;background:${CAT_COLORS[c.name]}"></div></div></div>`).join("")}</div></div></div>`;
-// Pace chart
-const mm={};comp.forEach(b=>{if(b.endDate){const d=new Date(b.endDate),k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;mm[k]=(mm[k]||0)+1}});const sm=Object.keys(mm).sort();
-if(sm.length)html+=`<div class="panel"><div class="panel-title">Reading Pace</div><canvas class="pace-chart" id="paceChart"></canvas></div>`;
-// Goals & Challenges
+
+// ═══ Categories ═══
+if(catData.length)html+=`<div class="panel"><div class="panel-title">Categories</div><div class="pie-row"><div class="pie-wrap"><canvas id="pieChart"></canvas></div><div class="cat-legend">${catData.map(c=>`<div class="cat-legend-item"><div class="cat-legend-dot" style="background:${CAT_COLORS[c.name]}"></div><span class="cat-legend-name">${c.name}</span><span class="cat-legend-count">${c.value}</span><div class="cat-legend-bar"><div class="cat-legend-bar-fill" style="width:${(c.value/comp.length)*100}%;background:${CAT_COLORS[c.name]}"></div></div></div>`).join("")}</div></div></div>`;
+
+// ═══ Theme Cloud ═══
+if(themeEntries.length){
+  const maxT=Math.max(...themeEntries.map(t=>t.books.length));
+  html+=`<div class="panel"><div class="panel-title">Themes</div><div class="theme-cloud" id="themeCloud">${themeEntries.map(t=>{
+    const size=t.books.length>=maxT?'lg':t.books.length>1?'md':'sm';
+    return`<div class="theme-pill ${size}" data-theme="${esc(t.name)}"><span class="theme-pill-name">${esc(t.name)}</span><span class="theme-pill-count">${t.books.length}</span></div>`;
+  }).join('')}</div><div class="theme-books" id="themeBooks"></div><p class="theme-auto-note">Themes are auto-tagged from book metadata when you search and add.</p></div>`;
+}
+
+// ═══ Goals & Challenges ═══
 const catGoals=data.settings.goals.categories||{},challenges=data.settings.goals.challenges||[];
 if(Object.keys(catGoals).length||challenges.length){html+=`<div class="panel"><div class="panel-title">Goals &amp; Challenges</div>`;
 if(Object.keys(catGoals).length){html+=`<div class="goal-panel-section"><p class="goal-panel-section-title">Category Goals</p>`;Object.entries(catGoals).forEach(([cat,target])=>{const prog=getCategoryProgress(cat);if(!prog)return;const color=CAT_COLORS[cat]||CAT_COLORS.Other;html+=`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-family:var(--ui);font-size:12px;margin-bottom:3px"><span style="color:var(--textM)">${cat}</span><span style="color:var(--textD)">${prog.count}/${prog.target}</span></div><div class="challenge-progress-bar"><div class="challenge-progress-fill" style="width:${prog.pct}%;background:${color}"></div></div></div>`});html+=`</div>`}
 if(challenges.length){html+=`<div class="goal-panel-section"><p class="goal-panel-section-title">Challenges</p>`;challenges.forEach(ch=>{const prog=getChallengeProgress(ch);html+=`<div class="challenge-card${prog.done?" challenge-done":""}"><p class="challenge-label">${esc(ch.label)}</p><p class="challenge-meta">${ch.type} \u00B7 ${prog.current}/${ch.target}</p><div class="challenge-progress-bar"><div class="challenge-progress-fill" style="width:${prog.pct}%"></div></div><p class="challenge-pct">${prog.pct}%</p></div>`});html+=`</div>`}
 html+=`</div>`}
-// Reading Habits
-const allSessions=[];data.books.forEach(b=>(b.sessions||[]).forEach(s=>allSessions.push(s)));
-if(allSessions.length){const totalMins=allSessions.reduce((s,x)=>s+x.duration,0),avgMins=Math.round(totalMins/allSessions.length);
-const totalSessionPages=allSessions.reduce((s,x)=>s+((x.endPage||0)-(x.startPage||0)),0);const pagesPerHour=totalMins>0?Math.round(totalSessionPages/(totalMins/60)):0;
-const dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],dayCounts=[0,0,0,0,0,0,0];allSessions.forEach(s=>{if(s.date){const d=new Date(s.date).getDay();dayCounts[d]++}});const maxDay=Math.max(...dayCounts)||1;
-const now=Date.now(),weekMs=7*86400000;const thisWeek=allSessions.filter(s=>{const t=new Date(s.date).getTime();return t>=now-weekMs}).length;const lastWeek=allSessions.filter(s=>{const t=new Date(s.date).getTime();return t>=now-2*weekMs&&t<now-weekMs}).length;
-html+=`<div class="panel"><div class="panel-title">Reading Habits</div><div class="mini-stats" style="margin-bottom:16px"><div class="mini-stat"><p class="mini-stat-label">Total Time</p><p class="mini-stat-value">${totalMins>=60?Math.round(totalMins/60)+"h":totalMins+"m"}</p></div><div class="mini-stat"><p class="mini-stat-label">Avg Session</p><p class="mini-stat-value">${avgMins}m</p></div>${pagesPerHour?`<div class="mini-stat"><p class="mini-stat-label">Pages/Hour</p><p class="mini-stat-value">${pagesPerHour}</p></div>`:""}<div class="mini-stat"><p class="mini-stat-label">This Week</p><p class="mini-stat-value">${thisWeek}</p><p class="mini-stat-sub">vs ${lastWeek} last week</p></div></div><p style="font-family:var(--ui);font-size:11px;color:var(--textD);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin-bottom:8px">Reading Days</p><div class="reading-habits">${dayNames.map((d,i)=>`<div class="habit-row"><span class="habit-label">${d}</span><div class="habit-bar"><div class="habit-fill" style="width:${(dayCounts[i]/maxDay)*100}%"></div></div><span class="habit-val">${dayCounts[i]}</span></div>`).join("")}</div></div>`}
-// Theme Index
-const allThemes={};data.books.forEach(b=>(b.themes||[]).forEach(t=>{if(!allThemes[t])allThemes[t]={name:t,books:[]};allThemes[t].books.push(b)}));const themeEntries=Object.values(allThemes).sort((a,b)=>b.books.length-a.books.length);
-if(themeEntries.length){html+=`<div class="panel"><div class="panel-title">Themes</div><div class="theme-index" id="themeIdx">${themeEntries.map(t=>`<div class="theme-index-item"><div class="theme-index-header" data-theme="${esc(t.name)}"><span class="theme-index-name">${esc(t.name)}</span><span class="theme-index-count">${t.books.length}</span><span class="theme-index-chevron">&#9656;</span></div><div class="theme-index-books"><div class="theme-index-books-inner">${t.books.map(b=>{const lc=CAT_COLORS[b.category]||CAT_COLORS.Other;return`<div class="theme-book-mini" data-id="${b.id}"><p class="theme-book-mini-title">${esc(b.title)}</p><p class="theme-book-mini-author">${esc(b.author)}</p></div>`}).join("")}</div></div></div>`).join("")}</div></div>`}
+
 document.getElementById("viewAnalytics").innerHTML=html;
-requestAnimationFrame(()=>{if(catData.length)drawPie(catData,comp.length);if(sm.length)drawPace(mm,sm);
-const idx=document.getElementById("themeIdx");if(idx){idx.querySelectorAll(".theme-index-header").forEach(h=>h.onclick=()=>h.closest(".theme-index-item").classList.toggle("expanded"));idx.querySelectorAll(".theme-book-mini").forEach(b=>b.onclick=()=>openDetail(b.dataset.id))}});
+requestAnimationFrame(()=>{
+  if(catData.length)drawPie(catData,comp.length);
+  // Theme cloud click handlers
+  const tc=document.getElementById("themeCloud");const tb=document.getElementById("themeBooks");
+  if(tc)tc.querySelectorAll(".theme-pill").forEach(pill=>pill.onclick=()=>{
+    const name=pill.dataset.theme;const entry=themeEntries.find(t=>t.name===name);if(!entry)return;
+    const wasActive=pill.classList.contains("active");
+    tc.querySelectorAll(".theme-pill").forEach(p=>p.classList.remove("active"));
+    if(wasActive){tb.classList.remove("show");tb.innerHTML="";return}
+    pill.classList.add("active");tb.classList.add("show");
+    tb.innerHTML=`<p class="theme-active-label">${entry.books.length} book${entry.books.length!==1?'s':''} tagged \u201C${esc(entry.name)}\u201D</p>${entry.books.map(b=>{
+      const col=CAT_COLORS[b.category]||CAT_COLORS.Other;
+      return`<div class="theme-book-item" data-id="${b.id}"><div class="theme-book-dot" style="background:${col}"></div><span class="theme-book-title">${esc(b.title)}</span><span class="theme-book-cat">${esc(b.category)}</span></div>`;
+    }).join('')}`;
+    tb.querySelectorAll(".theme-book-item").forEach(item=>item.onclick=()=>openDetail(item.dataset.id));
+  });
+});
 }
 
 function drawPie(cd,total){const c=document.getElementById("pieChart");if(!c)return;const dpr=window.devicePixelRatio||1;c.width=170*dpr;c.height=170*dpr;const ctx=c.getContext("2d");ctx.scale(dpr,dpr);let start=-Math.PI/2;cd.forEach(d=>{const sw=(d.value/total)*Math.PI*2;ctx.beginPath();ctx.arc(85,85,75,start,start+sw);ctx.arc(85,85,42,start+sw,start,true);ctx.closePath();ctx.fillStyle=CAT_COLORS[d.name]||"#7A7670";ctx.fill();start+=sw})}
-function drawPace(mm,sm){const c=document.getElementById("paceChart");if(!c)return;const dpr=window.devicePixelRatio||1;const rect=c.getBoundingClientRect();c.width=rect.width*dpr;c.height=rect.height*dpr;const ctx=c.getContext("2d");ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;let cum=0;const pts=sm.map(k=>{cum+=mm[k];const[y,m]=k.split("-");return{label:new Date(parseInt(y),parseInt(m)-1).toLocaleDateString("en-US",{month:"short",year:"2-digit"}),books:mm[k],cum}});const maxC=Math.max(...pts.map(p=>p.cum),1);const pL=36,pR=20,pT=20,pB=30,cw=w-pL-pR,ch=h-pT-pB;ctx.strokeStyle="#2A2419";ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pT+(ch/4)*i;ctx.beginPath();ctx.moveTo(pL,y);ctx.lineTo(w-pR,y);ctx.stroke()}const grad=ctx.createLinearGradient(0,pT,0,h-pB);grad.addColorStop(0,"rgba(196,149,106,0.25)");grad.addColorStop(1,"rgba(196,149,106,0)");ctx.beginPath();pts.forEach((p,i)=>{const x=pL+(i/(pts.length-1||1))*cw,y=pT+ch-(p.cum/maxC)*ch;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.lineTo(pL+cw,pT+ch);ctx.lineTo(pL,pT+ch);ctx.closePath();ctx.fillStyle=grad;ctx.fill();ctx.beginPath();pts.forEach((p,i)=>{const x=pL+(i/(pts.length-1||1))*cw,y=pT+ch-(p.cum/maxC)*ch;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});ctx.strokeStyle="#C4956A";ctx.lineWidth=2;ctx.stroke();pts.forEach((p,i)=>{const x=pL+(i/(pts.length-1||1))*cw,y=pT+ch-(p.cum/maxC)*ch;ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle="#C4956A";ctx.fill()});ctx.font="11px Outfit,sans-serif";ctx.fillStyle="#6A6258";ctx.textAlign="center";pts.forEach((p,i)=>{ctx.fillText(p.label,pL+(i/(pts.length-1||1))*cw,h-6)});ctx.textAlign="right";for(let i=0;i<=4;i++)ctx.fillText(Math.round((maxC/4)*(4-i)),pL-8,pT+(ch/4)*i+4)}
 
 // ══════ YEAR IN REVIEW ══════
 function renderReview(){const comp=getCompleted();if(comp.length<3){document.getElementById("viewReview").innerHTML=`<div class="empty"><p class="title">Complete at least 3 books to unlock Year in Review.</p></div>`;return}
@@ -816,7 +884,8 @@ const timerStopBtn=document.getElementById("timerStop");if(timerStopBtn)timerSto
 /* ═══ APP — Search API, add/edit form, settings, import/export, wiring ═══ */
 // ══════ BOOK SEARCH API ══════
 function mapCategory(apiCats){if(!apiCats||!apiCats.length)return"Other";const text=apiCats.join(" ").toLowerCase();const map=[["Self-Awareness",["self-help","psychology","mindfulness","habits","motivation","personal growth"]],["Current America",["american politics","current affairs","social justice","political science"]],["Economics & Money",["economics","finance","business","investing","money","entrepreneurship"]],["Technology",["technology","computer","programming","artificial intelligence","software","engineering"]],["American History",["american history","civil war","founding fathers","united states history"]],["Science",["science","physics","biology","mathematics","neuroscience","chemistry","astronomy"]],["World History",["world history","ancient","civilization","medieval","global history"]],["Philosophy & Ethics",["philosophy","ethics","stoic","existential","moral","logic"]],["Religion",["religion","theology","bible","christianity","buddhism","islam","spirituality"]],["Fiction",["fiction","novel","fantasy","sci-fi","mystery","thriller","literary","romance","horror"]]];for(const[cat,kw]of map)if(kw.some(k=>text.includes(k)))return cat;if(text.includes("history"))return"World History";return"Other"}
-async function searchBooks(query){const q=encodeURIComponent(query.trim());const[gRes,olRes]=await Promise.allSettled([fetch(`https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=5`).then(r=>r.json()),fetch(`https://openlibrary.org/search.json?q=${q}&limit=5&fields=title,author_name,number_of_pages_median,subject`).then(r=>r.json())]);const results=[];if(gRes.status==="fulfilled"&&gRes.value.items){for(const item of gRes.value.items){const v=item.volumeInfo||{};results.push({title:v.title||"",author:(v.authors||[]).join(", "),pages:v.pageCount||null,category:mapCategory(v.categories||[]),source:"google"})}}if(olRes.status==="fulfilled"&&olRes.value.docs){for(const doc of olRes.value.docs){results.push({title:doc.title||"",author:(doc.author_name||[]).join(", "),pages:doc.number_of_pages_median||null,category:mapCategory(doc.subject||[]),source:"openlibrary"})}}if(!results.length&&gRes.status==="rejected"&&olRes.status==="rejected")throw new Error("Search failed.");const seen=new Set(),deduped=[];for(const r of results){const key=(r.title+"|"+r.author).toLowerCase().replace(/\s+/g," ");if(!seen.has(key)){seen.add(key);deduped.push(r)}}return deduped.slice(0,8)}
+function extractThemes(apiSubjects){if(!apiSubjects||!apiSubjects.length)return[];const skip=new Set(["accessible book","protected daisy","in library","large type books","lending library","internet archive wishlist","long now","nyt","bestseller","new york times"]);return[...new Set(apiSubjects.map(s=>s.toLowerCase().trim()).filter(s=>s.length>2&&s.length<40&&!skip.has(s)))].slice(0,6)}
+async function searchBooks(query){const q=encodeURIComponent(query.trim());const[gRes,olRes]=await Promise.allSettled([fetch(`https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=5`).then(r=>r.json()),fetch(`https://openlibrary.org/search.json?q=${q}&limit=5&fields=title,author_name,number_of_pages_median,subject`).then(r=>r.json())]);const results=[];if(gRes.status==="fulfilled"&&gRes.value.items){for(const item of gRes.value.items){const v=item.volumeInfo||{};results.push({title:v.title||"",author:(v.authors||[]).join(", "),pages:v.pageCount||null,category:mapCategory(v.categories||[]),themes:extractThemes(v.categories||[]),source:"google"})}}if(olRes.status==="fulfilled"&&olRes.value.docs){for(const doc of olRes.value.docs){results.push({title:doc.title||"",author:(doc.author_name||[]).join(", "),pages:doc.number_of_pages_median||null,category:mapCategory(doc.subject||[]),themes:extractThemes(doc.subject||[]),source:"openlibrary"})}}if(!results.length&&gRes.status==="rejected"&&olRes.status==="rejected")throw new Error("Search failed.");const seen=new Set(),deduped=[];for(const r of results){const key=(r.title+"|"+r.author).toLowerCase().replace(/\s+/g," ");if(!seen.has(key)){seen.add(key);deduped.push(r)}}return deduped.slice(0,8)}
 
 // ══════ ADD/EDIT FORM ══════
 function openForm(book){const isEdit=!!book;
@@ -835,9 +904,10 @@ document.getElementById("fStatus").onchange=function(){const td=new Date().toISO
 if(!isEdit){let lastSR=[];const si=document.getElementById("fSearchInput"),sb=document.getElementById("fSearchBtn"),sr=document.getElementById("fSearchResults");
 const doSearch=async()=>{const q=si.value.trim();if(!q)return;sb.disabled=true;sr.innerHTML='<div class="book-search-loading">Searching\u2026</div>';try{lastSR=await searchBooks(q);if(!lastSR.length){sr.innerHTML='<p class="book-search-empty">No results.</p>';return}sr.innerHTML=lastSR.map((r,i)=>`<div class="book-search-item" data-idx="${i}"><span class="book-search-item-title">${esc(r.title)}</span><span class="book-search-item-author">${esc(r.author||"Unknown")}</span><div class="book-search-item-meta">${r.pages?`<span>${r.pages}p</span>`:""}<span>${esc(r.category)}</span><span class="book-search-source ${r.source}">${r.source==="google"?"Google":"OpenLib"}</span></div></div>`).join("")}catch(e){sr.innerHTML=`<p class="book-search-error">${esc(e.message)}</p>`}finally{sb.disabled=false}};
 sb.onclick=doSearch;si.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();doSearch()}};
-sr.onclick=e=>{const item=e.target.closest(".book-search-item");if(!item)return;const r=lastSR[parseInt(item.dataset.idx)];if(!r)return;document.getElementById("fTitle").value=r.title;document.getElementById("fAuthor").value=r.author||"";if(r.pages)document.getElementById("fPages").value=r.pages;const cs=document.getElementById("fCategory");for(let i=0;i<cs.options.length;i++)if(cs.options[i].value===r.category){cs.selectedIndex=i;break}sr.innerHTML="";document.getElementById("fTitle").focus()}}
+let _selectedThemes=[];
+sr.onclick=e=>{const item=e.target.closest(".book-search-item");if(!item)return;const r=lastSR[parseInt(item.dataset.idx)];if(!r)return;document.getElementById("fTitle").value=r.title;document.getElementById("fAuthor").value=r.author||"";if(r.pages)document.getElementById("fPages").value=r.pages;_selectedThemes=r.themes||[];const cs=document.getElementById("fCategory");for(let i=0;i<cs.options.length;i++)if(cs.options[i].value===r.category){cs.selectedIndex=i;break}sr.innerHTML="";document.getElementById("fTitle").focus()}}
 // Save
-document.getElementById("formSave").onclick=()=>{const title=document.getElementById("fTitle").value.trim();if(!title)return;const now=new Date().toISOString();const bd={title,author:document.getElementById("fAuthor").value.trim(),category:document.getElementById("fCategory").value,status:document.getElementById("fStatus").value,pages:parseInt(document.getElementById("fPages").value)||null,currentPage:0,startDate:document.getElementById("fStart").value,endDate:document.getElementById("fEnd").value,notes:document.getElementById("fNotes").value.trim(),updatedAt:now};if(isEdit)Object.assign(book,bd);else{bd.id=uid();bd.addedAt=now;bd.rating=0;bd.themes=[];bd.quotes=[];bd.connections=[];bd.coreArgument="";bd.impact="";bd.sessions=[];bd.recommendedBy="";bd.recommendationNote="";bd.recommendationSource="";bd.priority=0;data.books.push(bd)}save();document.getElementById("formModal").classList.remove("open");renderAll()}}
+document.getElementById("formSave").onclick=()=>{const title=document.getElementById("fTitle").value.trim();if(!title)return;const now=new Date().toISOString();const bd={title,author:document.getElementById("fAuthor").value.trim(),category:document.getElementById("fCategory").value,status:document.getElementById("fStatus").value,pages:parseInt(document.getElementById("fPages").value)||null,currentPage:0,startDate:document.getElementById("fStart").value,endDate:document.getElementById("fEnd").value,notes:document.getElementById("fNotes").value.trim(),updatedAt:now};if(isEdit)Object.assign(book,bd);else{bd.id=uid();bd.addedAt=now;bd.rating=0;bd.themes=_selectedThemes||[];bd.quotes=[];bd.connections=[];bd.coreArgument="";bd.impact="";bd.sessions=[];bd.recommendedBy="";bd.recommendationNote="";bd.recommendationSource="";bd.priority=0;data.books.push(bd);_selectedThemes=[]}save();document.getElementById("formModal").classList.remove("open");renderAll()}}
 
 // ══════ SETTINGS ══════
 function openSettings(){const lastExpStr=data.settings.lastExport?fmtDate(data.settings.lastExport):"Never";const challenges=data.settings.goals.challenges||[];
