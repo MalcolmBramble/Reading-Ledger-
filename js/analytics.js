@@ -185,14 +185,32 @@ const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.pus
 const bestQuote=allQuotes.sort((a,b)=>b.rating-a.rating)[0];
 if(bestQuote)html+=`<div class="yr-quote"><p class="yr-quote-text">\u201C${esc(bestQuote.text)}\u201D</p><p class="yr-quote-src">\u2014 <strong>${esc(bestQuote.title)}</strong> by ${esc(bestQuote.author)}</p></div>`;
 
-// 6. MILESTONES (from autoMilestones in data.js)
+// 6. MILESTONES (highlight + grid combo)
 const ms=autoMilestones();
-html+=`<div class="panel"><div class="panel-title">Milestones</div><div class="yr-ms-list">`;
-ms.earned.forEach(m=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
-html+=`<div class="yr-ms-item"><div class="yr-ms-icon-wrap" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${m.label}</p><p class="yr-ms-detail">${m.detail}</p></div></div>`});
-if(ms.next){const icon=MS_ICONS[ms.next.icon]||MS_ICONS.target;
-html+=`<div class="yr-ms-item yr-ms-next"><div class="yr-ms-icon-wrap" style="background:${ms.next.color}15;color:${ms.next.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${ms.next.label}</p><p class="yr-ms-detail">${ms.next.detail}</p><div class="yr-ms-bar"><div class="yr-ms-fill" style="width:${ms.next.pct}%"></div></div></div></div>`}
-html+=`</div></div>`;
+if(ms.earned.length){
+const latest=ms.earned[ms.earned.length-1];const latestIcon=MS_ICONS[latest.icon]||MS_ICONS.book;
+html+=`<div class="panel"><div class="panel-title">Milestones</div>`;
+html+=`<div class="ms-highlight"><div class="ms-hi-icon" style="background:${latest.color}15;color:${latest.color}">${latestIcon}</div><div class="ms-hi-info"><p class="ms-hi-eyebrow">Latest milestone</p><p class="ms-hi-title">${latest.label}</p><p class="ms-hi-detail">${latest.detail}</p></div></div>`;
+html+=`<div class="ms-grid" id="msGrid">`;
+ms.earned.forEach((m,i)=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
+html+=`<div class="ms-tile" data-idx="${i}"><div class="ms-tile-icon" style="background:${m.color}15;color:${m.color}">${icon}</div><p class="ms-tile-label">${m.label}</p></div>`});
+if(ms.next){const nIcon=MS_ICONS[ms.next.icon]||MS_ICONS.target;
+html+=`<div class="ms-tile ms-tile-next"><div class="ms-tile-icon" style="background:${ms.next.color}15;color:${ms.next.color}">${nIcon}</div><p class="ms-tile-label">${ms.next.label}</p><div class="ms-tile-bar"><div class="ms-tile-fill" style="width:${ms.next.pct}%"></div></div></div>`}
+html+=`<div class="ms-detail" id="msDetail"></div></div></div>`;
+}
 
 document.getElementById("viewReview").innerHTML=html;
+
+// Milestone grid tap handlers
+const msGrid=document.getElementById('msGrid');
+if(msGrid){let msActiveIdx=null;
+msGrid.querySelectorAll('.ms-tile:not(.ms-tile-next)').forEach(tile=>{
+  tile.onclick=()=>{const idx=parseInt(tile.dataset.idx);const detail=document.getElementById('msDetail');
+  msGrid.querySelectorAll('.ms-tile').forEach(t=>t.classList.remove('active'));
+  if(msActiveIdx===idx){detail.classList.remove('show');detail.innerHTML='';msActiveIdx=null;return}
+  msActiveIdx=idx;tile.classList.add('active');const m=ms.earned[idx];const icon=MS_ICONS[m.icon]||MS_ICONS.book;
+  detail.innerHTML=`<div class="ms-detail-icon" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="ms-detail-text"><p class="ms-detail-label">${m.label}</p><p class="ms-detail-sub">${m.detail}</p></div>`;
+  detail.classList.add('show');
+  const tiles=[...msGrid.querySelectorAll('.ms-tile')];const tilePos=tiles.indexOf(tile);const rowEnd=Math.ceil((tilePos+1)/3)*3;
+  const insertAfter=tiles[Math.min(rowEnd-1,tiles.length-1)];insertAfter.after(detail)}})};
 }

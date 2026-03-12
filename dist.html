@@ -279,7 +279,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .yr-id-ratings{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg);border-radius:8px}.yr-id-rat-visual{display:flex;align-items:flex-end;gap:2px;height:20px}.yr-id-rat-bar{width:8px;border-radius:2px 2px 0 0;min-height:2px}.yr-id-rat-labels{display:flex;gap:2px}.yr-id-rat-lbl{width:8px;text-align:center;font-family:var(--ui);font-size:7px;color:var(--textDD)}.yr-id-rat-text{font-family:var(--ui);font-size:11px;color:var(--textD);flex:1}.yr-id-rat-text strong{color:var(--gold);font-weight:600}
 .yr-evo{padding-top:16px;border-top:1px solid var(--border)}.yr-evo-title{font-family:var(--ui);font-size:9px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-bottom:10px}.yr-evo-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center}.yr-evo-chip{font-family:var(--ui);font-size:11px;padding:5px 12px;border-radius:100px;border:1px solid var(--border);background:var(--bg);color:var(--textD);white-space:nowrap}.yr-evo-now{border-color:var(--accent);color:var(--accent);background:rgba(196,149,106,0.08);font-weight:600}.yr-evo-arrow{color:var(--textDD);padding:0 8px;font-family:var(--ui);font-size:10px}.yr-evo-period{font-family:var(--ui);font-size:8px;color:var(--textDD);display:block;text-align:center;margin-top:2px}
 .yr-quote{position:relative;padding:20px 20px 20px 24px;margin:0 20px 20px;background:linear-gradient(135deg,var(--surface),rgba(196,149,106,0.04));border:1px solid var(--border);border-radius:14px;border-left:3px solid var(--accent)}.yr-quote-text{font-size:16px;font-style:italic;line-height:1.5;color:var(--text);margin-bottom:8px}.yr-quote-src{font-family:var(--ui);font-size:11px;color:var(--textD)}.yr-quote-src strong{color:var(--textM);font-weight:500}
-.yr-ms-list{display:flex;flex-direction:column;gap:8px}.yr-ms-item{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px}.yr-ms-next{opacity:0.5;border-style:dashed}.yr-ms-icon-wrap{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.yr-ms-icon-wrap svg{width:18px;height:18px;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none}.yr-ms-info{flex:1}.yr-ms-label{font-family:var(--ui);font-size:12px;color:var(--text);font-weight:500}.yr-ms-detail{font-family:var(--ui);font-size:10px;color:var(--textD);margin-top:1px}.yr-ms-next .yr-ms-label{color:var(--textM)}.yr-ms-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px;max-width:140px}.yr-ms-fill{height:100%;border-radius:2px;background:var(--accent)}
+.ms-highlight{display:flex;align-items:center;gap:16px;padding:14px 16px;background:linear-gradient(135deg,var(--bg),rgba(196,149,106,0.04));border:1px solid var(--borderL);border-radius:12px;margin-bottom:16px}.ms-hi-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.ms-hi-icon svg{width:22px;height:22px;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none}.ms-hi-info{flex:1}.ms-hi-eyebrow{font-family:var(--ui);font-size:9px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500}.ms-hi-title{font-family:var(--ui);font-size:15px;font-weight:700;color:var(--accent);margin:2px 0}.ms-hi-detail{font-family:var(--ui);font-size:11px;color:var(--textD)}
+.ms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.ms-tile{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.15s}.ms-tile:hover{border-color:var(--borderL);background:var(--surfaceH)}.ms-tile.active{border-color:var(--accent);background:rgba(196,149,106,0.06)}.ms-tile-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}.ms-tile-icon svg{width:14px;height:14px;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none}.ms-tile-label{font-family:var(--ui);font-size:10px;font-weight:600;color:var(--text);line-height:1.2}.ms-tile-next{opacity:0.35;border-style:dashed}.ms-tile-next .ms-tile-label{color:var(--textD);font-weight:500}.ms-tile-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin:6px auto 0;width:70%}.ms-tile-fill{height:100%;border-radius:2px;background:var(--accent)}
+.ms-detail{display:none;background:var(--bg);border:1px solid var(--borderL);border-radius:8px;padding:10px 14px;margin-top:0;font-family:var(--ui);font-size:11px;color:var(--textD);grid-column:1/-1}.ms-detail.show{display:flex;align-items:center;gap:10px}.ms-detail-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.ms-detail-icon svg{width:14px;height:14px;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none}.ms-detail-text{flex:1}.ms-detail-label{font-family:var(--ui);font-size:12px;font-weight:600;color:var(--text)}.ms-detail-sub{font-family:var(--ui);font-size:10px;color:var(--textD);margin-top:1px}
 </style>
 </head>
 <body>
@@ -1044,16 +1046,34 @@ const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.pus
 const bestQuote=allQuotes.sort((a,b)=>b.rating-a.rating)[0];
 if(bestQuote)html+=`<div class="yr-quote"><p class="yr-quote-text">\u201C${esc(bestQuote.text)}\u201D</p><p class="yr-quote-src">\u2014 <strong>${esc(bestQuote.title)}</strong> by ${esc(bestQuote.author)}</p></div>`;
 
-// 6. MILESTONES (from autoMilestones in data.js)
+// 6. MILESTONES (highlight + grid combo)
 const ms=autoMilestones();
-html+=`<div class="panel"><div class="panel-title">Milestones</div><div class="yr-ms-list">`;
-ms.earned.forEach(m=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
-html+=`<div class="yr-ms-item"><div class="yr-ms-icon-wrap" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${m.label}</p><p class="yr-ms-detail">${m.detail}</p></div></div>`});
-if(ms.next){const icon=MS_ICONS[ms.next.icon]||MS_ICONS.target;
-html+=`<div class="yr-ms-item yr-ms-next"><div class="yr-ms-icon-wrap" style="background:${ms.next.color}15;color:${ms.next.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${ms.next.label}</p><p class="yr-ms-detail">${ms.next.detail}</p><div class="yr-ms-bar"><div class="yr-ms-fill" style="width:${ms.next.pct}%"></div></div></div></div>`}
-html+=`</div></div>`;
+if(ms.earned.length){
+const latest=ms.earned[ms.earned.length-1];const latestIcon=MS_ICONS[latest.icon]||MS_ICONS.book;
+html+=`<div class="panel"><div class="panel-title">Milestones</div>`;
+html+=`<div class="ms-highlight"><div class="ms-hi-icon" style="background:${latest.color}15;color:${latest.color}">${latestIcon}</div><div class="ms-hi-info"><p class="ms-hi-eyebrow">Latest milestone</p><p class="ms-hi-title">${latest.label}</p><p class="ms-hi-detail">${latest.detail}</p></div></div>`;
+html+=`<div class="ms-grid" id="msGrid">`;
+ms.earned.forEach((m,i)=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
+html+=`<div class="ms-tile" data-idx="${i}"><div class="ms-tile-icon" style="background:${m.color}15;color:${m.color}">${icon}</div><p class="ms-tile-label">${m.label}</p></div>`});
+if(ms.next){const nIcon=MS_ICONS[ms.next.icon]||MS_ICONS.target;
+html+=`<div class="ms-tile ms-tile-next"><div class="ms-tile-icon" style="background:${ms.next.color}15;color:${ms.next.color}">${nIcon}</div><p class="ms-tile-label">${ms.next.label}</p><div class="ms-tile-bar"><div class="ms-tile-fill" style="width:${ms.next.pct}%"></div></div></div>`}
+html+=`<div class="ms-detail" id="msDetail"></div></div></div>`;
+}
 
 document.getElementById("viewReview").innerHTML=html;
+
+// Milestone grid tap handlers
+const msGrid=document.getElementById('msGrid');
+if(msGrid){let msActiveIdx=null;
+msGrid.querySelectorAll('.ms-tile:not(.ms-tile-next)').forEach(tile=>{
+  tile.onclick=()=>{const idx=parseInt(tile.dataset.idx);const detail=document.getElementById('msDetail');
+  msGrid.querySelectorAll('.ms-tile').forEach(t=>t.classList.remove('active'));
+  if(msActiveIdx===idx){detail.classList.remove('show');detail.innerHTML='';msActiveIdx=null;return}
+  msActiveIdx=idx;tile.classList.add('active');const m=ms.earned[idx];const icon=MS_ICONS[m.icon]||MS_ICONS.book;
+  detail.innerHTML=`<div class="ms-detail-icon" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="ms-detail-text"><p class="ms-detail-label">${m.label}</p><p class="ms-detail-sub">${m.detail}</p></div>`;
+  detail.classList.add('show');
+  const tiles=[...msGrid.querySelectorAll('.ms-tile')];const tilePos=tiles.indexOf(tile);const rowEnd=Math.ceil((tilePos+1)/3)*3;
+  const insertAfter=tiles[Math.min(rowEnd-1,tiles.length-1)];insertAfter.after(detail)}})};
 }
 
 /* ═══ DETAIL — Book detail view, always inline editable ═══ */
