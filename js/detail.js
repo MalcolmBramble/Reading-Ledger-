@@ -72,18 +72,21 @@ function renderQuotesSection(bk){
   return h+`</div>`;
 }
 
-function _autoSave(bk){
+function _flashSave(el){if(!el)return;el.classList.remove('save-flash');void el.offsetWidth;el.classList.add('save-flash')}
+
+function _autoSave(bk,sourceEl){
   const argTA=document.getElementById("argTA");if(argTA)bk.coreArgument=argTA.value.trim();
   const impTA=document.getElementById("impactTA");if(impTA)bk.impact=impTA.value.trim();
   const notesTA=document.getElementById("notesTA");if(notesTA)bk.notes=notesTA.value.trim();
   bk.updatedAt=new Date().toISOString();save();
+  if(sourceEl)_flashSave(sourceEl);
 }
 
 function bindDetailEvents(){
 const bk=detailBook;
 document.getElementById("detailBack").onclick=()=>{_autoSave(bk);closeDetail()};
 // Auto-save textareas on blur
-document.querySelectorAll("#detailView textarea").forEach(ta=>ta.onblur=()=>_autoSave(bk));
+document.querySelectorAll("#detailView textarea").forEach(ta=>ta.onblur=()=>_autoSave(bk,ta));
 // Actions
 document.querySelectorAll("#detailActions .dbtn").forEach(btn=>btn.onclick=()=>{_autoSave(bk);const a=btn.dataset.action;if(a==="complete"){bk.status="completed";bk.endDate=new Date().toISOString().slice(0,10);bk.currentPage=bk.pages||bk.currentPage;bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="start"){bk.status="reading";bk.startDate=bk.startDate||new Date().toISOString().slice(0,10);bk.endDate="";bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="reread"){bk.status="reading";bk.startDate=new Date().toISOString().slice(0,10);bk.endDate="";bk.currentPage=0;bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="delete"){showConfirm("Delete Book","Permanently remove?",()=>{data.books=data.books.filter(b=>b.id!==bk.id);save();closeDetail()})}});
 // Inline star rating
