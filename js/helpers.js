@@ -119,7 +119,7 @@ function updateHeader(){
   const R=11,C=2*Math.PI*R;
   let h=`<div class="goal-pill"><svg width="28" height="28" viewBox="0 0 28 28" style="transform:rotate(-90deg)"><circle cx="14" cy="14" r="${R}" fill="none" stroke="#2A2419" stroke-width="3"/><circle cx="14" cy="14" r="${R}" fill="none" stroke="#C4956A" stroke-width="3" stroke-dasharray="${(pct/100)*C} ${C}" stroke-linecap="round"/></svg><span class="goal-pill-text">${c}<span>/${g}</span></span></div>`;
   if(streak.current>0)h+=`<div class="streak-pill">\u{1F525} ${streak.current}d streak</div>`;
-  if(reading>0)h+=`<span style="font-family:var(--ui);font-size:12px;color:var(--textD)">${reading} in progress</span>`;
+  if(reading>0)h+=`<span style="font-family:var(--ui);font-size:12px;color:var(--textD)">${reading} reading</span>`;
   document.getElementById("hdrPills").innerHTML=h;
 }
 
