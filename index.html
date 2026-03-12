@@ -113,7 +113,7 @@ canvas.pace-chart{width:100%;height:200px;display:block}
 .yr-hero{background:linear-gradient(135deg,var(--surface),#1A1510);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;position:relative;overflow:hidden;margin-bottom:20px}.yr-hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(196,149,106,0.25),transparent 65%);pointer-events:none;animation:heroGlow 4s ease-in-out infinite alternate}@keyframes heroGlow{from{opacity:0.7}to{opacity:1}}.yr-hero-label{font-family:var(--ui);font-size:11px;color:var(--textD);letter-spacing:0.12em;text-transform:uppercase;font-weight:500;position:relative}.yr-hero-num{font-size:64px;font-weight:700;color:var(--accent);line-height:1;position:relative;margin-top:8px}.yr-hero-sub{font-family:var(--ui);font-size:14px;color:var(--textM);margin-top:4px;position:relative}.yr-hero-pages{font-family:var(--ui);font-size:13px;color:var(--textD);margin-top:8px;position:relative}.yr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}.yr-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}.yr-card-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500}.yr-card-value{font-size:22px;font-weight:600;margin-top:6px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.yr-card-value.sm{font-size:16px}.yr-card-sub{font-family:var(--ui);font-size:12px;color:var(--textD);margin-top:3px}.yr-milestones{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}.yr-milestone{background:var(--bg);border-radius:10px;padding:14px 12px;text-align:center;border:1px solid var(--border)}.yr-milestone-icon{font-size:24px}.yr-milestone-label{font-family:var(--ui);font-size:12px;font-weight:600;margin-top:6px}.yr-themes{display:flex;gap:8px;flex-wrap:wrap}.yr-theme{font-family:var(--ui);font-size:13px;padding:6px 14px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--textM)}.yr-theme em{color:var(--textD);font-size:11px;font-style:normal}
 
 /* Detail */
-.detail-view{display:none;min-height:100vh;background:var(--bg);opacity:0;transform:translateY(40px)}.detail-view.active{display:block;animation:detailIn 300ms cubic-bezier(0.23,1,0.32,1) forwards}@keyframes detailIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}.detail-banner{position:relative;min-height:180px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}.detail-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(14,12,10,0.7) 80%,var(--bg) 100%);pointer-events:none}.detail-banner-bg{position:absolute;inset:0;z-index:-1}.detail-banner-top{display:flex;justify-content:space-between;padding:16px 28px 0;position:relative;z-index:1}.detail-back{background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;padding:8px;border-radius:8px;display:flex;align-items:center;gap:6px;font-family:var(--ui);font-size:13px}.detail-back:hover{color:var(--text)}.detail-banner-content{position:relative;z-index:1;padding:20px 28px 24px}.detail-pills{display:flex;align-items:center;gap:10px;margin-bottom:8px}.cat-pill{font-family:var(--ui);font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;text-transform:uppercase}.status-badge{font-family:var(--ui);font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;text-transform:uppercase}.status-badge.completed{background:rgba(85,107,74,0.13);color:#7D8B6E}.status-badge.reading{background:rgba(46,68,96,0.13);color:#5B8AB0}.status-badge.want-to-read{background:rgba(122,118,112,0.13);color:#7A7670}.status-badge.abandoned{background:rgba(196,91,91,0.13);color:#C45B5B}.detail-title{font-size:28px;font-weight:600;line-height:1.15;margin:0 0 4px}.detail-author{font-family:var(--ui);font-size:15px;color:var(--textM);margin:0 0 12px}.detail-meta-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}.detail-meta-item{font-family:var(--ui);font-size:12px;color:var(--textD)}.detail-meta-item strong{color:var(--textM);font-weight:500}.detail-actions{display:flex;gap:8px;margin-top:14px}.dbtn{border-radius:8px;padding:9px 16px;font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;border:none}.dbtn.green{background:#556B4A;color:#EDE6D8}.dbtn.blue{background:#2E4460;color:#EDE6D8}.dbtn.blue-o{background:none;border:1px solid var(--border);color:#5B8AB0}.dbtn.ghost{background:none;color:var(--textD)}.detail-body{max-width:var(--max);margin:0 auto;padding:0 28px 140px}.detail-section{border-bottom:1px solid var(--border);padding:28px 0}.detail-section:last-child{border-bottom:none}
+.detail-view{display:none;min-height:100vh;background:var(--bg);opacity:0;transform:translateY(40px)}.detail-view.active{display:block;animation:detailIn 300ms cubic-bezier(0.23,1,0.32,1) forwards}@keyframes detailIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}.detail-banner{position:relative;min-height:180px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}.detail-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(14,12,10,0.7) 80%,var(--bg) 100%);pointer-events:none}.detail-banner-bg{position:absolute;inset:0;z-index:-1}.detail-banner-top{display:flex;justify-content:space-between;padding:16px 28px 0;position:relative;z-index:1}.detail-back{background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;padding:8px;border-radius:8px;display:flex;align-items:center;gap:6px;font-family:var(--ui);font-size:13px}.detail-back:hover{color:var(--text)}.detail-edit-toggle{font-family:var(--ui);font-size:13px;color:var(--accent);background:none;border:1px solid var(--accent);border-radius:8px;padding:6px 16px;cursor:pointer;font-weight:500}.detail-stars-inline{display:inline-flex;gap:1px}.detail-star-tap{font-size:16px;cursor:pointer;color:var(--textDD);transition:color 0.15s;padding:2px}.detail-star-tap.on{color:var(--gold)}.detail-star-tap:hover{color:var(--gold)}.detail-banner-content{position:relative;z-index:1;padding:20px 28px 24px}.detail-pills{display:flex;align-items:center;gap:10px;margin-bottom:8px}.cat-pill{font-family:var(--ui);font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;text-transform:uppercase}.status-badge{font-family:var(--ui);font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;text-transform:uppercase}.status-badge.completed{background:rgba(85,107,74,0.13);color:#7D8B6E}.status-badge.reading{background:rgba(46,68,96,0.13);color:#5B8AB0}.status-badge.want-to-read{background:rgba(122,118,112,0.13);color:#7A7670}.status-badge.abandoned{background:rgba(196,91,91,0.13);color:#C45B5B}.detail-title{font-size:28px;font-weight:600;line-height:1.15;margin:0 0 4px}.detail-author{font-family:var(--ui);font-size:15px;color:var(--textM);margin:0 0 12px}.detail-meta-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}.detail-meta-item{font-family:var(--ui);font-size:12px;color:var(--textD)}.detail-meta-item strong{color:var(--textM);font-weight:500}.detail-actions{display:flex;gap:8px;margin-top:14px}.dbtn{border-radius:8px;padding:9px 16px;font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;border:none}.dbtn.green{background:#556B4A;color:#EDE6D8}.dbtn.blue{background:#2E4460;color:#EDE6D8}.dbtn.blue-o{background:none;border:1px solid var(--border);color:#5B8AB0}.dbtn.ghost{background:none;color:var(--textD)}.detail-body{max-width:var(--max);margin:0 auto;padding:0 28px 140px}.detail-section{border-bottom:1px solid var(--border);padding:28px 0}.detail-section:last-child{border-bottom:none}
 .detail-section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.detail-section-label{font-family:var(--ui);font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--textD);display:flex;align-items:center;gap:8px}
 .detail-section-edit-btn{font-family:var(--ui);font-size:11px;color:var(--textDD);background:none;border:none;cursor:pointer;padding:3px 8px;border-radius:4px;transition:all 0.2s}.detail-section-edit-btn:hover{color:var(--textD);background:var(--surfaceH)}.detail-section.editing .detail-section-edit-btn{color:var(--accent)}
 .detail-section .edit-view{display:none}.detail-section.editing .read-view{display:none}.detail-section.editing .edit-view{display:block}
@@ -693,65 +693,128 @@ function closeDetail(){document.getElementById("detailView").classList.remove("a
 function renderDetail(){
 const bk=detailBook;if(!bk)return;
 const lc=CAT_COLORS[bk.category]||CAT_COLORS.Other,dur=daysBetween(bk.startDate,bk.endDate);
-const starsHTML=[1,2,3,4,5].map(s=>`<span class="detail-star ${s<=(bk.rating||0)?"filled":"empty"}">${s<=(bk.rating||0)?"\u2605":"\u2606"}</span>`).join("");
-let act="";if(bk.status==="reading")act+=`<button class="dbtn green" data-action="complete">&#10003; Complete</button>`;if(bk.status==="want-to-read")act+=`<button class="dbtn blue" data-action="start">&#9654; Start</button>`;if(bk.status==="completed")act+=`<button class="dbtn blue-o" data-action="reread">&#9654; Re-read</button>`;act+=`<button class="dbtn ghost" data-action="delete">&#128465;</button>`;
-let meta="";if(bk.pages)meta+=`<span class="detail-meta-item"><strong>${bk.pages}</strong> pages</span>`;if(bk.startDate)meta+=`<span class="detail-meta-item">${fmtShort(bk.startDate)}</span>`;if(bk.endDate)meta+=`<span class="detail-meta-item">&mdash; ${fmtShort(bk.endDate)}</span>`;if(dur)meta+=`<span class="detail-meta-item">(${dur}d)</span>`;
+const isEditing=window._detailEdit||false;
 const quotes=bk.quotes||[],themes=bk.themes||[],sessions=bk.sessions||[];
 const connections=(bk.connections||[]).map(id=>data.books.find(b=>b.id===id)).filter(Boolean);
 const others=data.books.filter(b=>b.id!==bk.id);
-// Recommendation context
-let recHTML="";if(bk.status==="want-to-read"&&(bk.recommendedBy||bk.recommendationNote))recHTML=`<div class="rec-context">${bk.recommendedBy?`Recommended by <span class="rec-by">${esc(bk.recommendedBy)}</span>`:""}${bk.recommendationSource?`<span class="rec-source-pill">${esc(bk.recommendationSource)}</span>`:""}${bk.recommendationNote?`<p class="rec-note">${esc(bk.recommendationNote)}</p>`:""}</div>`;
-// Timer widget for reading books
-let timerHTML="";if(bk.status==="reading"){const isThis=timerState.bookId===bk.id,isRun=isThis&&timerState.running&&!timerState.paused,isPau=isThis&&timerState.paused,el=isThis?timerState.elapsed:0,mins=Math.floor(el/60),secs=el%60,disp=String(mins).padStart(2,"0")+":"+String(secs).padStart(2,"0");
-timerHTML=`<div class="session-timer"><p class="timer-label">Reading Timer</p><p class="timer-display timer-live">${disp}</p><div class="timer-btns">${isRun?`<button class="timer-btn pause" id="timerPause">Pause</button><button class="timer-btn stop" id="timerStop">Stop</button>`:isPau?`<button class="timer-btn start" id="timerResume">Resume</button><button class="timer-btn stop" id="timerStop">Stop</button>`:`<button class="timer-btn start" id="timerStart">Start Reading</button>`}<button class="timer-btn log" id="logSessionBtn">Log Session</button></div></div>`}
-// Section helper
-function editSection(name,label,readHTML,editHTML){
-return`<div class="detail-section" data-section="${name}"><div class="detail-section-header"><span class="detail-section-label">${label}</span><button class="detail-section-edit-btn" data-edit="${name}">[edit]</button></div><div class="read-view">${readHTML}</div><div class="edit-view">${editHTML}<div class="detail-section-actions"><button class="dsec-save" data-save="${name}">Save</button><button class="dsec-cancel" data-cancel="${name}">Cancel</button></div></div></div>`}
-// Rating
-const ratingRead=`<div style="display:flex;gap:2px">${starsHTML}</div>`;
-const ratingEdit=`<div class="rating-row" id="detailRating">${[1,2,3,4,5].map(s=>`<button class="rbox ${s<=(bk.rating||0)?"on":"off"}" data-star="${s}">${s}</button>`).join("")}</div>`;
-// Themes
-const themesRead=themes.length?`<div class="themes-row">${themes.map(t=>`<span class="theme-tag">${esc(t)}</span>`).join("")}</div>`:`<p class="refl-empty">No themes yet.</p>`;
-const themesEdit=`<div class="themes-row" id="detailThemes">${themes.map(t=>`<span class="theme-tag">${esc(t)}<button data-theme="${esc(t)}">&times;</button></span>`).join("")}<input class="theme-input" id="themeInput" placeholder="Add theme&hellip;"></div>`;
-// Core Argument
-const argRead=bk.coreArgument?`<div class="refl-display">${esc(bk.coreArgument)}</div>`:`<p class="refl-empty">What's the central thesis?</p>`;
-const argEdit=`<textarea class="refl-ta" id="argTA">${esc(bk.coreArgument||"")}</textarea>`;
-// Impact
-const impRead=bk.impact?`<div class="refl-display">${esc(bk.impact)}</div>`:`<p class="refl-empty">What shifted in your understanding?</p>`;
-const impEdit=`<textarea class="refl-ta" id="impactTA">${esc(bk.impact||"")}</textarea>`;
-// Notes + Quotes
-const quotesReadHTML=quotes.length?quotes.map(q=>`<div class="quote-item"><p class="quote-text">&ldquo;${esc(q.text)}&rdquo;</p><div class="quote-footer">${q.page?`<span class="quote-page">p. ${esc(q.page)}</span>`:""}<span></span></div></div>`).join(""):"";
-const notesRead=`${bk.notes?`<div class="refl-display">${esc(bk.notes)}</div>`:`<p class="refl-empty">Key passages, observations&hellip;</p>`}${quotesReadHTML?`<div style="margin-top:16px"><p style="font-family:var(--ui);font-size:11px;color:var(--textD);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin-bottom:8px">&ldquo; Saved Passages</p>${quotesReadHTML}</div>`:""}`;
-const notesEdit=`<textarea class="refl-ta tall" id="notesTA">${esc(bk.notes||"")}</textarea><div style="margin-top:16px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-family:var(--ui);font-size:11px;color:var(--textD);text-transform:uppercase;letter-spacing:0.08em;font-weight:500">&ldquo; Saved Passages</span><button class="rbtn save" id="addQuoteBtn" style="font-size:11px;padding:4px 10px">+ Add</button></div><div id="quoteForm" style="display:none"></div><div id="quotesList">${quotes.length?quotes.map(q=>`<div class="quote-item" data-qid="${q.id}"><p class="quote-text">&ldquo;${esc(q.text)}&rdquo;</p><div class="quote-footer">${q.page?`<span class="quote-page">p. ${esc(q.page)}</span>`:""}<span></span><button class="quote-del" data-qid="${q.id}">&times;</button></div></div>`).join(""):`<p class="refl-empty">Save memorable passages.</p>`}</div></div>`;
-// Sessions
-let sessionsHTML="";if(sessions.length||bk.status==="reading"){
-const sessRead=sessions.length?[...sessions].reverse().map(s=>`<div class="session-item"><div class="session-info"><p class="session-date">${fmtDate(s.date)}</p><p class="session-detail">${s.startPage!=null&&s.endPage!=null?"p. "+s.startPage+" \u2192 "+s.endPage+" \u00B7 ":""}${s.duration} min</p>${s.notes?`<p class="session-notes-preview">${esc(s.notes)}</p>`:""}</div></div>`).join(""):`<p class="refl-empty">No sessions logged.</p>`;
-const sessEdit=`<div id="sessionFormArea"></div><div class="session-list">${sessions.length?[...sessions].reverse().map(s=>`<div class="session-item"><div class="session-info"><p class="session-date">${fmtDate(s.date)}</p><p class="session-detail">${s.startPage!=null&&s.endPage!=null?"p. "+s.startPage+" \u2192 "+s.endPage+" \u00B7 ":""}${s.duration} min</p></div><button class="session-del" data-sid="${s.id}">&times;</button></div>`).join(""):`<p class="refl-empty">No sessions logged.</p>`}</div>`;
-sessionsHTML=editSection("sessions","\u23F1 Sessions",`<div class="session-list">${sessRead}</div>`,sessEdit)}
-// Connected Reading
-let connHTML="";if(connections.length||others.length){
-const miniSpines=connections.length?`<div class="connected-scroll">${connections.map(cb=>{const csc=CAT_SPINE[cb.category]||CAT_SPINE.Other,clc=CAT_COLORS[cb.category]||CAT_COLORS.Other;return`<div class="mini-spine-card" data-id="${cb.id}"><div class="mini-spine" style="background:linear-gradient(135deg,${clc}20,${csc} 15%,${csc} 85%,${clc}10);border:1px solid ${clc}25;box-shadow:1px 1px 4px rgba(0,0,0,0.4)"></div><div class="mini-spine-title">${esc(cb.title)}</div></div>`}).join("")}</div>`:"";
-const suggestions=getSuggestedConnections(bk.id);let sugHTML="";if(suggestions.length)sugHTML=`<div class="suggested-section"><p class="suggested-label">Suggested Connections</p>${suggestions.map(s=>`<div class="suggested-item" data-sid="${s.book.id}"><span class="suggested-score">${s.score}pt</span><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(s.book.title)}</span><span style="font-family:var(--ui);font-size:10px;color:var(--textD);margin-left:auto">${s.sharedThemes.length?s.sharedThemes.join(", "):s.book.category}</span></div>`).join("")}</div>`;
-const connRead=miniSpines||`<p class="refl-empty">No connections yet.</p>`;
-const connEdit=`${miniSpines}<button class="rbtn save" id="addConnBtn" style="font-size:11px;padding:4px 10px;margin-top:8px">+ Link</button><div id="connPicker" style="display:none"></div>${sugHTML}`;
-connHTML=editSection("connected","&#128279; Connected Reading",connRead,connEdit)}
 
-document.getElementById("detailView").innerHTML=`<div class="detail-banner"><div class="detail-banner-bg" style="background:linear-gradient(180deg,${lc}30 0%,${lc}12 40%,var(--bg) 100%)"></div><div class="detail-banner-top"><button class="detail-back" id="detailBack"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back</button></div><div class="detail-banner-content"><div class="detail-pills"><span class="cat-pill" style="background:${lc}22;color:${lc}">${esc(bk.category)}</span><span class="status-badge ${bk.status}">${STATUS_LABELS[bk.status]}</span></div><h1 class="detail-title">${esc(bk.title)}</h1><p class="detail-author">${esc(bk.author)}</p><div class="detail-meta-row">${meta}${bk.rating?`<span class="detail-meta-item">${starsHTML}</span>`:""}</div><div class="detail-actions" id="detailActions">${act}</div></div></div><div class="detail-body">${recHTML}${timerHTML}${editSection("rating","&starf; Rating",ratingRead,ratingEdit)}${editSection("themes","&#127991; Themes",themesRead,themesEdit)}${editSection("argument","&#128161; Core Argument",argRead,argEdit)}${editSection("impact","&#10024; Impact",impRead,impEdit)}${editSection("notes","&#128278; Notes &amp; Passages",notesRead,notesEdit)}${sessionsHTML}${connHTML}</div>`;
+// ─── Hero Banner ───
+let act="";if(bk.status==="reading")act+=`<button class="dbtn green" data-action="complete">&#10003; Complete</button>`;if(bk.status==="want-to-read")act+=`<button class="dbtn blue" data-action="start">&#9654; Start Reading</button>`;if(bk.status==="completed")act+=`<button class="dbtn blue-o" data-action="reread">&#9654; Re-read</button>`;act+=`<button class="dbtn ghost" data-action="delete">&#128465;</button>`;
+let meta="";if(bk.pages)meta+=`<span class="detail-meta-item"><strong>${bk.pages}</strong> pages</span>`;if(bk.startDate)meta+=`<span class="detail-meta-item">${fmtShort(bk.startDate)}</span>`;if(bk.endDate)meta+=`<span class="detail-meta-item">&mdash; ${fmtShort(bk.endDate)}</span>`;if(dur)meta+=`<span class="detail-meta-item">(${dur}d)</span>`;
+// Inline tappable stars
+const starsHTML=[1,2,3,4,5].map(s=>`<span class="detail-star-tap${s<=(bk.rating||0)?" on":""}" data-star="${s}">${s<=(bk.rating||0)?"\u2605":"\u2606"}</span>`).join("");
+
+let html=`<div class="detail-banner"><div class="detail-banner-bg" style="background:linear-gradient(180deg,${lc}30 0%,${lc}12 40%,var(--bg) 100%)"></div><div class="detail-banner-top"><button class="detail-back" id="detailBack"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back</button><button class="detail-edit-toggle" id="detailEditToggle">${isEditing?'Done':'Edit'}</button></div><div class="detail-banner-content"><div class="detail-pills"><span class="cat-pill" style="background:${lc}22;color:${lc}">${esc(bk.category)}</span><span class="status-badge ${bk.status}">${STATUS_LABELS[bk.status]}</span></div><h1 class="detail-title">${esc(bk.title)}</h1><p class="detail-author">${esc(bk.author)}</p><div class="detail-meta-row">${meta}<span class="detail-meta-item detail-stars-inline">${starsHTML}</span></div><div class="detail-actions" id="detailActions">${act}</div></div></div><div class="detail-body">`;
+
+// ─── Status-aware body ───
+
+if(bk.status==="want-to-read"){
+  // Want-to-read: recommendation context + why it's on the list
+  if(bk.recommendedBy||bk.recommendationNote)html+=`<div class="rec-context">${bk.recommendedBy?`Recommended by <span class="rec-by">${esc(bk.recommendedBy)}</span>`:""}${bk.recommendationSource?`<span class="rec-source-pill">${esc(bk.recommendationSource)}</span>`:""}${bk.recommendationNote?`<p class="rec-note">${esc(bk.recommendationNote)}</p>`:""}</div>`;
+  if(bk.notes||isEditing)html+=`<div class="detail-section"><span class="detail-section-label">Why this book?</span>${isEditing?`<textarea class="refl-ta" id="notesTA" placeholder="Why did you add this? What do you hope to get from it?">${esc(bk.notes||"")}</textarea>`:(bk.notes?`<div class="refl-display">${esc(bk.notes)}</div>`:"")}</div>`;
+  // Themes
+  if(themes.length||isEditing)html+=renderThemesSection(bk,isEditing);
+}
+
+else if(bk.status==="reading"){
+  // Reading: progress + timer + notes scratchpad
+  const pg=bk.pages||1,cur=bk.currentPage||0,pct=Math.min(100,Math.round(cur/pg*100));
+  html+=`<div class="detail-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><span class="detail-section-label">Progress</span><span style="font-family:var(--ui);font-size:14px;font-weight:600;color:var(--accent)">${pct}%</span></div><div style="height:12px;background:var(--border);border-radius:6px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${lc};border-radius:6px;transition:width 0.3s"></div></div><p style="font-family:var(--ui);font-size:11px;color:var(--textD);margin-top:6px;text-align:center">pg ${cur} of ${pg}</p></div>`;
+  // Timer
+  const isThis=timerState.bookId===bk.id,isRun=isThis&&timerState.running&&!timerState.paused,isPau=isThis&&timerState.paused,el=isThis?timerState.elapsed:0,mins=Math.floor(el/60),secs=el%60,disp=String(mins).padStart(2,"0")+":"+String(secs).padStart(2,"0");
+  html+=`<div class="session-timer"><p class="timer-label">Reading Timer</p><p class="timer-display timer-live">${disp}</p><div class="timer-btns">${isRun?`<button class="timer-btn pause" id="timerPause">Pause</button><button class="timer-btn stop" id="timerStop">Stop</button>`:isPau?`<button class="timer-btn start" id="timerResume">Resume</button><button class="timer-btn stop" id="timerStop">Stop</button>`:`<button class="timer-btn start" id="timerStart">Start</button>`}<button class="timer-btn log" id="logSessionBtn">Log Session</button></div><div id="sessionFormArea"></div></div>`;
+  // Notes scratchpad
+  html+=`<div class="detail-section"><span class="detail-section-label">Notes</span>${isEditing?`<textarea class="refl-ta tall" id="notesTA">${esc(bk.notes||"")}</textarea>`:(bk.notes?`<div class="refl-display">${esc(bk.notes)}</div>`:`<p class="refl-empty">Jot observations as you read&hellip;</p>`)}</div>`;
+  // Themes
+  if(themes.length||isEditing)html+=renderThemesSection(bk,isEditing);
+  // Quotes so far
+  if(quotes.length||isEditing)html+=renderQuotesSection(bk,isEditing);
+  // Sessions
+  if(sessions.length){html+=`<div class="detail-section"><span class="detail-section-label">Sessions</span><div class="session-list">${[...sessions].reverse().slice(0,5).map(s=>`<div class="session-item"><div class="session-info"><p class="session-date">${fmtDate(s.date)}</p><p class="session-detail">${s.startPage!=null&&s.endPage!=null?"p. "+s.startPage+" \u2192 "+s.endPage+" \u00B7 ":""}${s.duration||0} min</p></div>${isEditing?`<button class="session-del" data-sid="${s.id}">&times;</button>`:""}</div>`).join("")}</div>${sessions.length>5?`<p style="font-family:var(--ui);font-size:11px;color:var(--textDD);margin-top:8px">${sessions.length} total sessions</p>`:""}</div>`}
+}
+
+else if(bk.status==="completed"||bk.status==="abandoned"){
+  // Completed: quotes → takeaway → themes → connections → sessions summary
+  // Quotes as visual centerpiece
+  if(quotes.length||isEditing)html+=renderQuotesSection(bk,isEditing);
+  // My Takeaway (merged core argument + impact + notes)
+  const takeaway=bk.coreArgument||bk.impact||bk.notes;
+  if(takeaway||isEditing){
+    html+=`<div class="detail-section"><span class="detail-section-label">My Takeaway</span>`;
+    if(isEditing){
+      html+=`<p style="font-family:var(--ui);font-size:11px;color:var(--textDD);margin-bottom:8px">What's the one thing from this book you'd tell a friend?</p>`;
+      html+=`<textarea class="refl-ta" id="argTA" placeholder="The central idea&hellip;">${esc(bk.coreArgument||"")}</textarea>`;
+      html+=`<textarea class="refl-ta" id="impactTA" placeholder="What shifted in your understanding?" style="margin-top:8px">${esc(bk.impact||"")}</textarea>`;
+      html+=`<textarea class="refl-ta tall" id="notesTA" placeholder="Other notes&hellip;" style="margin-top:8px">${esc(bk.notes||"")}</textarea>`;
+    }else{
+      if(bk.coreArgument)html+=`<div class="refl-display">${esc(bk.coreArgument)}</div>`;
+      if(bk.impact)html+=`<div class="refl-display" style="margin-top:12px;padding-left:14px;border-left:2px solid ${lc}40;color:var(--textM)">${esc(bk.impact)}</div>`;
+      if(bk.notes)html+=`<div class="refl-display" style="margin-top:12px;color:var(--textD)">${esc(bk.notes)}</div>`;
+      if(!takeaway)html+=`<p class="refl-empty">What did this book leave you with?</p>`;
+    }
+    html+=`</div>`;
+  }
+  // Themes
+  if(themes.length||isEditing)html+=renderThemesSection(bk,isEditing);
+  // Connected Reading
+  if(connections.length||isEditing)html+=renderConnectionsSection(bk,connections,isEditing);
+  // Sessions summary (collapsed)
+  if(sessions.length){const totalMin=sessions.reduce((s,se)=>s+(se.duration||0),0);const totalPages=sessions.reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0);
+  html+=`<div class="detail-section"><span class="detail-section-label">Sessions</span><div style="font-family:var(--ui);font-size:13px;color:var(--textM)">${sessions.length} session${sessions.length!==1?'s':''}${totalMin?' \u00B7 '+Math.round(totalMin/60)+' hrs':''}${totalPages?' \u00B7 '+totalPages+' pages':''}</div></div>`}
+}
+
+html+=`</div>`;
+document.getElementById("detailView").innerHTML=html;
 bindDetailEvents();
+}
+
+function renderThemesSection(bk,isEditing){
+  const themes=bk.themes||[];
+  let h=`<div class="detail-section"><span class="detail-section-label">Themes</span>`;
+  if(isEditing)h+=`<div class="themes-row" id="detailThemes">${themes.map(t=>`<span class="theme-tag">${esc(t)}<button data-theme="${esc(t)}">&times;</button></span>`).join("")}<input class="theme-input" id="themeInput" placeholder="Add theme&hellip;"></div>`;
+  else h+=`<div class="themes-row">${themes.map(t=>`<span class="theme-tag">${esc(t)}</span>`).join("")}</div>`;
+  return h+`</div>`;
+}
+
+function renderQuotesSection(bk,isEditing){
+  const quotes=bk.quotes||[];const lc=CAT_COLORS[bk.category]||CAT_COLORS.Other;
+  let h=`<div class="detail-section"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><span class="detail-section-label">Saved Passages</span>${isEditing?`<button class="rbtn save" id="addQuoteBtn" style="font-size:11px;padding:4px 10px">+ Add</button>`:""}</div>`;
+  if(isEditing)h+=`<div id="quoteForm" style="display:none"></div>`;
+  if(quotes.length)h+=quotes.map(q=>`<div class="quote-item" style="border-left-color:${lc}60"><p class="quote-text">&ldquo;${esc(q.text)}&rdquo;</p><div class="quote-footer">${q.page?`<span class="quote-page">p. ${esc(q.page)}</span>`:""}<span></span>${isEditing?`<button class="quote-del" data-qid="${q.id}">&times;</button>`:""}</div></div>`).join("");
+  else h+=`<p class="refl-empty">${isEditing?"Save memorable passages.":"No passages saved yet."}</p>`;
+  return h+`</div>`;
+}
+
+function renderConnectionsSection(bk,connections,isEditing){
+  const lc=CAT_COLORS[bk.category]||CAT_COLORS.Other;
+  let h=`<div class="detail-section"><span class="detail-section-label">Connected Reading</span>`;
+  if(connections.length)h+=`<div class="connected-scroll">${connections.map(cb=>{const csc=CAT_SPINE[cb.category]||CAT_SPINE.Other,clc=CAT_COLORS[cb.category]||CAT_COLORS.Other;return`<div class="mini-spine-card" data-id="${cb.id}"><div class="mini-spine" style="background:linear-gradient(135deg,${clc}20,${csc} 15%,${csc} 85%,${clc}10);border:1px solid ${clc}25;box-shadow:1px 1px 4px rgba(0,0,0,0.4)"></div><div class="mini-spine-title">${esc(cb.title)}</div></div>`}).join("")}</div>`;
+  if(isEditing){
+    h+=`<button class="rbtn save" id="addConnBtn" style="font-size:11px;padding:4px 10px;margin-top:8px">+ Link</button><div id="connPicker" style="display:none"></div>`;
+    const suggestions=getSuggestedConnections(bk.id);
+    if(suggestions.length)h+=`<div class="suggested-section"><p class="suggested-label">Suggested</p>${suggestions.map(s=>`<div class="suggested-item" data-sid="${s.book.id}"><span class="suggested-score">${s.score}pt</span><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(s.book.title)}</span></div>`).join("")}</div>`;
+  }else if(!connections.length)h+=`<p class="refl-empty">No connections yet.</p>`;
+  return h+`</div>`;
 }
 
 function bindDetailEvents(){
 const bk=detailBook;
-document.getElementById("detailBack").onclick=closeDetail;
+document.getElementById("detailBack").onclick=()=>{window._detailEdit=false;closeDetail()};
+// Edit toggle
+document.getElementById("detailEditToggle").onclick=()=>{
+  if(window._detailEdit){
+    // Save all editable fields
+    const argTA=document.getElementById("argTA");if(argTA)bk.coreArgument=argTA.value.trim();
+    const impTA=document.getElementById("impactTA");if(impTA)bk.impact=impTA.value.trim();
+    const notesTA=document.getElementById("notesTA");if(notesTA)bk.notes=notesTA.value.trim();
+    bk.updatedAt=new Date().toISOString();save();
+  }
+  window._detailEdit=!window._detailEdit;renderDetail();
+};
 // Actions
-document.querySelectorAll("#detailActions .dbtn").forEach(btn=>btn.onclick=()=>{const a=btn.dataset.action;if(a==="complete"){bk.status="completed";bk.endDate=new Date().toISOString().slice(0,10);bk.currentPage=bk.pages||bk.currentPage;bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="start"){bk.status="reading";bk.startDate=bk.startDate||new Date().toISOString().slice(0,10);bk.endDate="";bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="reread"){bk.status="reading";bk.startDate=new Date().toISOString().slice(0,10);bk.endDate="";bk.currentPage=0;bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="delete"){showConfirm("Delete Book","Permanently remove?",()=>{data.books=data.books.filter(b=>b.id!==bk.id);save();closeDetail()})}});
-// Per-section edit toggle
-document.querySelectorAll('.detail-section-edit-btn').forEach(btn=>btn.onclick=()=>{const sec=btn.closest('.detail-section');if(sec.classList.contains('editing')){renderDetail()}else{sec.classList.add('editing');btn.textContent='[cancel]'}});
-// Per-section save
-document.querySelectorAll('.dsec-save').forEach(btn=>btn.onclick=()=>{const n=btn.dataset.save;if(n==='argument'){const ta=document.getElementById('argTA');if(ta)bk.coreArgument=ta.value.trim()}else if(n==='impact'){const ta=document.getElementById('impactTA');if(ta)bk.impact=ta.value.trim()}else if(n==='notes'){const ta=document.getElementById('notesTA');if(ta)bk.notes=ta.value.trim()}bk.updatedAt=new Date().toISOString();save();renderDetail()});
-document.querySelectorAll('.dsec-cancel').forEach(btn=>btn.onclick=()=>renderDetail());
-// Rating
-document.querySelectorAll("#detailRating .rbox").forEach(b=>b.onclick=()=>{bk.rating=parseInt(b.dataset.star);bk.updatedAt=new Date().toISOString();save();renderDetail()});
+document.querySelectorAll("#detailActions .dbtn").forEach(btn=>btn.onclick=()=>{const a=btn.dataset.action;if(a==="complete"){bk.status="completed";bk.endDate=new Date().toISOString().slice(0,10);bk.currentPage=bk.pages||bk.currentPage;bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="start"){bk.status="reading";bk.startDate=bk.startDate||new Date().toISOString().slice(0,10);bk.endDate="";bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="reread"){bk.status="reading";bk.startDate=new Date().toISOString().slice(0,10);bk.endDate="";bk.currentPage=0;bk.updatedAt=new Date().toISOString();save();renderDetail()}else if(a==="delete"){showConfirm("Delete Book","Permanently remove?",()=>{data.books=data.books.filter(b=>b.id!==bk.id);save();window._detailEdit=false;closeDetail()})}});
+// Inline star rating
+document.querySelectorAll(".detail-stars-inline .detail-star-tap").forEach(s=>s.onclick=e=>{e.stopPropagation();const star=parseInt(s.dataset.star)||0;bk.rating=bk.rating===star?0:star;bk.updatedAt=new Date().toISOString();save();renderDetail()});
 // Themes
 document.querySelectorAll("#detailThemes .theme-tag button").forEach(b=>b.onclick=()=>{bk.themes=(bk.themes||[]).filter(t=>t!==b.dataset.theme);bk.updatedAt=new Date().toISOString();save();renderDetail()});
 const ti=document.getElementById("themeInput");if(ti)ti.onkeydown=e=>{if(e.key==="Enter"&&ti.value.trim()){if(!bk.themes)bk.themes=[];if(!bk.themes.includes(ti.value.trim())){bk.themes.push(ti.value.trim());bk.updatedAt=new Date().toISOString();save();renderDetail()}}};
@@ -759,7 +822,7 @@ const ti=document.getElementById("themeInput");if(ti)ti.onkeydown=e=>{if(e.key==
 const aqb=document.getElementById("addQuoteBtn");if(aqb)aqb.onclick=()=>{const qf=document.getElementById("quoteForm");qf.style.display=qf.style.display==="none"?"block":"none";qf.innerHTML=`<div class="quote-form"><textarea id="qText" placeholder="Enter passage&hellip;"></textarea><div class="quote-form-row"><input id="qPage" placeholder="Page #"><button class="rbtn save" id="qSave">Save</button><button class="rbtn cancel" id="qCancel">Cancel</button></div></div>`;document.getElementById("qSave").onclick=()=>{const t=document.getElementById("qText").value.trim();if(!t)return;if(!bk.quotes)bk.quotes=[];bk.quotes.push({id:uid(),text:t,page:document.getElementById("qPage").value.trim()||null,addedAt:new Date().toISOString()});bk.updatedAt=new Date().toISOString();save();renderDetail()};document.getElementById("qCancel").onclick=()=>{qf.style.display="none"}};
 document.querySelectorAll(".quote-del").forEach(b=>b.onclick=e=>{e.stopPropagation();bk.quotes=(bk.quotes||[]).filter(q=>q.id!==b.dataset.qid);bk.updatedAt=new Date().toISOString();save();renderDetail()});
 // Connections
-const acb=document.getElementById("addConnBtn");if(acb)acb.onclick=()=>{const cp=document.getElementById("connPicker");cp.style.display=cp.style.display==="none"?"block":"none";const others=data.books.filter(b=>b.id!==bk.id);cp.innerHTML=`<div class="conn-picker">${others.map(b=>{const linked=(bk.connections||[]).includes(b.id);return`<div class="conn-picker-item${linked?" linked":""}" data-cid="${b.id}"><div class="conn-check${linked?" on":""}"></div><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(b.title)}</span><span style="font-family:var(--ui);font-size:11px;color:var(--textD);margin-left:auto">${esc(b.category)}</span></div>`}).join("")}</div>`;cp.querySelectorAll(".conn-picker-item").forEach(item=>item.onclick=()=>{if(!bk.connections)bk.connections=[];const cid=item.dataset.cid;if(bk.connections.includes(cid))bk.connections=bk.connections.filter(x=>x!==cid);else bk.connections.push(cid);bk.updatedAt=new Date().toISOString();save();renderDetail()})};
+const acb=document.getElementById("addConnBtn");if(acb)acb.onclick=()=>{const cp=document.getElementById("connPicker");cp.style.display=cp.style.display==="none"?"block":"none";const others=data.books.filter(b=>b.id!==bk.id);cp.innerHTML=`<div class="conn-picker">${others.map(b=>{const linked=(bk.connections||[]).includes(b.id);return`<div class="conn-picker-item${linked?" linked":""}" data-cid="${b.id}"><div class="conn-check${linked?" on":""}"></div><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(b.title)}</span></div>`}).join("")}</div>`;cp.querySelectorAll(".conn-picker-item").forEach(item=>item.onclick=()=>{if(!bk.connections)bk.connections=[];const cid=item.dataset.cid;if(bk.connections.includes(cid))bk.connections=bk.connections.filter(x=>x!==cid);else bk.connections.push(cid);bk.updatedAt=new Date().toISOString();save();renderDetail()})};
 document.querySelectorAll(".mini-spine-card").forEach(b=>b.onclick=()=>openDetail(b.dataset.id));
 document.querySelectorAll(".suggested-item").forEach(item=>item.onclick=()=>{if(!bk.connections)bk.connections=[];const sid=item.dataset.sid;if(!bk.connections.includes(sid)){bk.connections.push(sid);bk.updatedAt=new Date().toISOString();save();renderDetail()}});
 // Sessions delete
