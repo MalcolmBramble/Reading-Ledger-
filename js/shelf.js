@@ -27,10 +27,10 @@ function renderShelf(){
     const sorted=[...books].sort((a,b)=>{switch(currentSort){case"date":return new Date(b.addedAt||0)-new Date(a.addedAt||0);case"category":return(a.category||"").localeCompare(b.category||"");case"rating":return(b.rating||0)-(a.rating||0);case"length":return(b.pages||0)-(a.pages||0);case"status":{const o={reading:0,completed:1,"want-to-read":2,abandoned:3};return(o[a.status]??4)-(o[b.status]??4)}case"title":return(a.title||"").localeCompare(b.title||"");default:return 0}});
     for(let i=0;i<sorted.length;i+=6){const row=sorted.slice(i,i+6);
       html+=`<div class="shelf-row-wrap"><div class="shelf-spines">`;
-      row.forEach(bk=>{const p=bk.pages||250,h=Math.min(150,Math.max(70,Math.round(p/3.5))),sc=CAT_SPINE[bk.category]||CAT_SPINE.Other,lc=CAT_COLORS[bk.category]||CAT_COLORS.Other;
-        html+=`<div class="spine" data-id="${bk.id}" style="width:52px;height:${h}px;background:linear-gradient(145deg,${sc},${lc}80);border:1px solid ${lc}25;box-shadow:1px 2px 5px rgba(0,0,0,0.5)"><div class="sheen"></div>`;
+      row.forEach(bk=>{const sc=CAT_SPINE[bk.category]||CAT_SPINE.Other,lc=CAT_COLORS[bk.category]||CAT_COLORS.Other;
+        html+=`<div class="spine" data-id="${bk.id}" style="width:52px;height:100px;background:linear-gradient(145deg,${sc},${lc}80);border:1px solid ${lc}25;box-shadow:1px 2px 5px rgba(0,0,0,0.5)"><div class="sheen"></div>`;
         if(bk.rating>=4)html+=`<div class="gold-top"></div>`;
-        html+=`<span class="spine-title" style="color:rgba(255,255,255,0.92);max-height:${h-20}px">${esc(bk.title)}</span>`;
+        html+=`<span class="spine-title" style="color:rgba(255,255,255,0.92);max-height:80px">${esc(bk.title)}</span>`;
         if(bk.status==="reading")html+=`<div class="reading-dot"></div>`;
         if(bk.status==="want-to-read")html+=`<div class="want-mark"></div>`;
         html+=`</div>`});
