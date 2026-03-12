@@ -205,9 +205,11 @@ public class MainActivity extends Activity {
                 c.drawCircle(r, r, r - dp(2), p);
                 p.setColor(C.ACCENT);
                 float sweep = pct * 360;
-                c.drawArc(dp(2), dp(2), getWidth() - dp(2), getHeight() - dp(2), -90, sweep, false, p);
+                RectF arc = new RectF(dp(2), dp(2), getWidth() - dp(2), getHeight() - dp(2));
+                c.drawArc(arc, -90, sweep, false, p);
             }
         };
+        circle.setWillNotDraw(false);
         pill.addView(circle, new LinearLayout.LayoutParams(dp(28), dp(28)));
 
         TextView goalText = new TextView(this);
@@ -525,6 +527,7 @@ public class MainActivity extends Activity {
                     }
                 }
             };
+            spine.setWillNotDraw(false);
             spine.setOnClickListener(v -> openDetail(b.id));
             LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(dp(C.SPINE_W), dp(C.SPINE_H));
             sp.setMargins(dp(3), 0, dp(3), 0);
@@ -624,7 +627,7 @@ public class MainActivity extends Activity {
         fillBg.setCornerRadius(dp(3));
         fill.setBackground(fillBg);
         bar.addView(fill, new FrameLayout.LayoutParams(
-            (int)(getWindowManager().getDefaultDisplay().getWidth() * 0.85f * pct / 100f), dp(4)));
+            (int)(getResources().getDisplayMetrics().widthPixels * 0.85f * pct / 100f), dp(4)));
 
         card.addView(bar);
 
@@ -786,6 +789,7 @@ public class MainActivity extends Activity {
                 c.drawCircle(getWidth()/2f, getHeight()/2f, dp(4), p);
             }
         };
+        dot.setWillNotDraw(false);
         item.addView(dot, new LinearLayout.LayoutParams(dp(16), dp(16)));
 
         LinearLayout text = new LinearLayout(this);

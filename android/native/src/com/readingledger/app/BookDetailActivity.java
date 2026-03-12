@@ -193,7 +193,7 @@ public class BookDetailActivity extends Activity {
             fillBg.setColor(catColor);
             fillBg.setCornerRadius(dp(4));
             fill.setBackground(fillBg);
-            int screenW = getWindowManager().getDefaultDisplay().getWidth() - dp(40);
+            int screenW = getResources().getDisplayMetrics().widthPixels - dp(40);
             bar.addView(fill, new FrameLayout.LayoutParams((int)(screenW * pct / 100f), dp(8)));
             content.addView(bar);
 
