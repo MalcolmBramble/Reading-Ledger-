@@ -118,9 +118,7 @@ canvas
 .detail-star{font-size:14px}.detail-star.filled{color:var(--gold)}.detail-star.empty{color:var(--textDD)}
 .quote-item{background:var(--bg);border-radius:10px;padding:14px 18px;border-left:3px solid var(--accentDim);margin-bottom:8px}.quote-text{font-size:15px;font-style:italic;line-height:1.6;color:var(--textM);margin:0}.quote-footer{display:flex;justify-content:space-between;align-items:center;margin-top:6px}.quote-page{font-family:var(--ui);font-size:11px;color:var(--textD)}.quote-del{background:none;border:none;color:var(--textD);cursor:pointer}.quote-del:hover{color:var(--danger)}
 .quote-form{background:var(--bg);border:1px solid var(--borderL);border-radius:10px;padding:16px;margin-bottom:12px}.quote-form textarea{width:100%;min-height:70px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-family:var(--serif);font-size:15px;line-height:1.6;resize:vertical;outline:none}.quote-form-row{display:flex;gap:8px;margin-top:8px;align-items:center}.quote-form-row input{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);font-family:var(--ui);font-size:13px;outline:none;width:70px}
-.connected-scroll{display:flex;gap:12px;overflow-x:auto;padding:4px 0 8px;-webkit-overflow-scrolling:touch}.connected-scroll::-webkit-scrollbar{height:4px}.connected-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}.mini-spine-card{flex-shrink:0;text-align:center;cursor:pointer;width:52px}.mini-spine{width:40px;height:60px;border-radius:2px 3px 2px 2px;margin:0 auto;transition:transform 0.2s}.mini-spine:hover{transform:translateY(-4px)}.mini-spine-title{font-family:var(--ui);font-size:9px;color:var(--textD);margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.conn-picker{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px;max-height:200px;overflow-y:auto}.conn-picker-item{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:6px;cursor:pointer}.conn-picker-item.linked{background:rgba(196,149,106,0.07)}.conn-check{width:16px;height:16px;border-radius:4px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}.conn-check.on{border-color:var(--accent);background:var(--accent)}
-.suggested-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}.suggested-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.08em;font-weight:500;margin-bottom:8px}.suggested-item{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background 0.15s}.suggested-item:hover{background:rgba(255,255,255,0.03)}.suggested-score{font-family:var(--ui);font-size:10px;color:var(--accentDim);min-width:20px;text-align:center}
+
 .rec-context{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:var(--ui);font-size:13px;color:var(--textM)}.rec-context .rec-by{color:var(--accent);font-weight:600}.rec-source-pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:100px;background:var(--border);color:var(--textM);margin-left:8px;font-weight:500}.rec-note{margin-top:6px;font-style:italic;color:var(--textD);font-size:12px}
 .session-timer{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:16px;text-align:center}.timer-display{font-family:var(--ui);font-size:36px;font-weight:600;color:var(--accent);letter-spacing:0.05em;margin:8px 0;font-variant-numeric:tabular-nums}.timer-label{font-family:var(--ui);font-size:11px;color:var(--textD);text-transform:uppercase;letter-spacing:0.1em;font-weight:500}.timer-btns{display:flex;gap:8px;justify-content:center;margin-top:10px}.timer-btn{border-radius:8px;padding:8px 20px;font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s}.timer-btn.start{background:var(--green);color:#EDE6D8}.timer-btn.pause{background:var(--gold);color:var(--bg)}.timer-btn.stop{background:var(--danger);color:#fff}.timer-btn.log{background:var(--surface);border:1px solid var(--border);color:var(--textM)}
 .session-list{margin-top:12px}.session-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}.session-info{flex:1}.session-date{font-family:var(--ui);font-size:12px;font-weight:500;color:var(--text)}.session-detail{font-family:var(--ui);font-size:11px;color:var(--textD);margin-top:2px}.session-notes-preview{font-family:var(--ui);font-size:11px;color:var(--textD);font-style:italic;margin-top:2px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.session-del{background:none;border:none;color:var(--textD);cursor:pointer;font-size:12px;padding:4px}.session-del:hover{color:var(--danger)}
@@ -286,23 +284,11 @@ function getMilestones(){
   if(cats.size>=8)ms.push({label:"Renaissance Reader",icon:"\u{1F3AD}"});
   const ann=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
   if(ann>=10)ms.push({label:"Deep Annotator",icon:"\u270D\uFE0F"});
-  const conn=data.books.filter(b=>b.connections&&b.connections.length>0).length;
-  if(conn>=5)ms.push({label:"Web Weaver",icon:"\u{1F578}\uFE0F"});
   return ms;
 }
 
 function getCategoryProgress(cat){const target=(data.settings.goals.categories||{})[cat]||0;if(!target)return null;const count=getCompleted().filter(b=>b.category===cat).length;return{target,count,pct:Math.min(100,Math.round(count/target*100))}}
 function getChallengeProgress(ch){const completed=getCompleted();let current=0;if(ch.type==="count"){let pool=completed;if(ch.categoryFilter)pool=pool.filter(b=>b.category===ch.categoryFilter);if(ch.minPages)pool=pool.filter(b=>(b.pages||0)>=ch.minPages);current=pool.length}else if(ch.type==="pages"){let pool=completed;if(ch.categoryFilter)pool=pool.filter(b=>b.category===ch.categoryFilter);current=pool.reduce((s,b)=>s+(b.pages||0),0)}else if(ch.type==="category"){current=completed.filter(b=>b.category===ch.categoryFilter).length}else if(ch.type==="diversity"){current=new Set(completed.map(b=>b.category)).size}return{current,target:ch.target,pct:Math.min(100,Math.round(current/ch.target*100)),done:current>=ch.target}}
-
-function getSuggestedConnections(bookId){
-  const book=data.books.find(b=>b.id===bookId);if(!book)return[];
-  const existing=new Set(book.connections||[]);
-  return data.books.filter(b=>b.id!==bookId&&!existing.has(b.id)).map(b=>{
-    let score=0;const sharedThemes=(book.themes||[]).filter(t=>(b.themes||[]).includes(t));score+=sharedThemes.length*3;if(b.category===book.category)score+=2;
-    if(book.startDate&&b.startDate){const s1=new Date(book.startDate),e1=book.endDate?new Date(book.endDate):new Date(),s2=new Date(b.startDate),e2=b.endDate?new Date(b.endDate):new Date();if(s1<=e2&&s2<=e1)score+=1}
-    return{book:b,score,sharedThemes};
-  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
-}
 
 function exportCSV(){
   const headers=["Title","Author","Category","Status","Rating","Pages","Start Date","End Date","Themes","Notes"];
@@ -331,7 +317,6 @@ const books=[
 {id:uid(),title:"The Brothers Karamazov",author:"Fyodor Dostoevsky",category:"Fiction",status:"want-to-read",pages:796,currentPage:0,rating:0,startDate:"",endDate:"",notes:"",themes:[],quotes:[],connections:[],sessions:[],coreArgument:"",impact:"",recommendedBy:"",recommendationNote:"",recommendationSource:"",priority:0,addedAt:"2026-03-01T10:00:00Z",updatedAt:now},
 {id:uid(),title:"Being and Time",author:"Martin Heidegger",category:"Philosophy & Ethics",status:"abandoned",pages:589,currentPage:95,rating:2,startDate:"2025-06-01",endDate:"2025-06-20",notes:"Too dense. Will revisit.",themes:["existentialism"],quotes:[],connections:[],sessions:[],coreArgument:"",impact:"",recommendedBy:"",recommendationNote:"",recommendationSource:"",priority:0,addedAt:"2025-06-01T10:00:00Z",updatedAt:now}
 ];
-books[0].connections=[books[1].id];books[1].connections=[books[0].id];books[3].connections=[books[2].id,books[5].id];
 return{books,settings:{goal:50,lastExport:null,goals:{annual:50,categories:{},challenges:[]}}};
 }
 
@@ -740,8 +725,6 @@ const bk=detailBook;if(!bk)return;
 const lc=CAT_COLORS[bk.category]||CAT_COLORS.Other,dur=daysBetween(bk.startDate,bk.endDate);
 const isEditing=window._detailEdit||false;
 const quotes=bk.quotes||[],themes=bk.themes||[],sessions=bk.sessions||[];
-const connections=(bk.connections||[]).map(id=>data.books.find(b=>b.id===id)).filter(Boolean);
-const others=data.books.filter(b=>b.id!==bk.id);
 
 // ─── Hero Banner ───
 let act="";if(bk.status==="reading")act+=`<button class="dbtn green" data-action="complete">&#10003; Complete</button>`;if(bk.status==="want-to-read")act+=`<button class="dbtn blue" data-action="start">&#9654; Start Reading</button>`;if(bk.status==="completed")act+=`<button class="dbtn blue-o" data-action="reread">&#9654; Re-read</button>`;act+=`<button class="dbtn ghost" data-action="delete">&#128465;</button>`;
@@ -801,8 +784,6 @@ else if(bk.status==="completed"||bk.status==="abandoned"){
   }
   // Themes
   if(themes.length||isEditing)html+=renderThemesSection(bk,isEditing);
-  // Connected Reading
-  if(connections.length||isEditing)html+=renderConnectionsSection(bk,connections,isEditing);
   // Sessions summary (collapsed)
   if(sessions.length){const totalMin=sessions.reduce((s,se)=>s+(se.duration||0),0);const totalPages=sessions.reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0);
   html+=`<div class="detail-section"><span class="detail-section-label">Sessions</span><div style="font-family:var(--ui);font-size:13px;color:var(--textM)">${sessions.length} session${sessions.length!==1?'s':''}${totalMin?' \u00B7 '+Math.round(totalMin/60)+' hrs':''}${totalPages?' \u00B7 '+totalPages+' pages':''}</div></div>`}
@@ -830,18 +811,6 @@ function renderQuotesSection(bk,isEditing){
   return h+`</div>`;
 }
 
-function renderConnectionsSection(bk,connections,isEditing){
-  const lc=CAT_COLORS[bk.category]||CAT_COLORS.Other;
-  let h=`<div class="detail-section"><span class="detail-section-label">Connected Reading</span>`;
-  if(connections.length)h+=`<div class="connected-scroll">${connections.map(cb=>{const csc=CAT_SPINE[cb.category]||CAT_SPINE.Other,clc=CAT_COLORS[cb.category]||CAT_COLORS.Other;return`<div class="mini-spine-card" data-id="${cb.id}"><div class="mini-spine" style="background:linear-gradient(135deg,${clc}20,${csc} 15%,${csc} 85%,${clc}10);border:1px solid ${clc}25;box-shadow:1px 1px 4px rgba(0,0,0,0.4)"></div><div class="mini-spine-title">${esc(cb.title)}</div></div>`}).join("")}</div>`;
-  if(isEditing){
-    h+=`<button class="rbtn save" id="addConnBtn" style="font-size:11px;padding:4px 10px;margin-top:8px">+ Link</button><div id="connPicker" style="display:none"></div>`;
-    const suggestions=getSuggestedConnections(bk.id);
-    if(suggestions.length)h+=`<div class="suggested-section"><p class="suggested-label">Suggested</p>${suggestions.map(s=>`<div class="suggested-item" data-sid="${s.book.id}"><span class="suggested-score">${s.score}pt</span><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(s.book.title)}</span></div>`).join("")}</div>`;
-  }else if(!connections.length)h+=`<p class="refl-empty">No connections yet.</p>`;
-  return h+`</div>`;
-}
-
 function bindDetailEvents(){
 const bk=detailBook;
 document.getElementById("detailBack").onclick=()=>{window._detailEdit=false;closeDetail()};
@@ -866,10 +835,6 @@ const ti=document.getElementById("themeInput");if(ti)ti.onkeydown=e=>{if(e.key==
 // Quotes
 const aqb=document.getElementById("addQuoteBtn");if(aqb)aqb.onclick=()=>{const qf=document.getElementById("quoteForm");qf.style.display=qf.style.display==="none"?"block":"none";qf.innerHTML=`<div class="quote-form"><textarea id="qText" placeholder="Enter passage&hellip;"></textarea><div class="quote-form-row"><input id="qPage" placeholder="Page #"><button class="rbtn save" id="qSave">Save</button><button class="rbtn cancel" id="qCancel">Cancel</button></div></div>`;document.getElementById("qSave").onclick=()=>{const t=document.getElementById("qText").value.trim();if(!t)return;if(!bk.quotes)bk.quotes=[];bk.quotes.push({id:uid(),text:t,page:document.getElementById("qPage").value.trim()||null,addedAt:new Date().toISOString()});bk.updatedAt=new Date().toISOString();save();renderDetail()};document.getElementById("qCancel").onclick=()=>{qf.style.display="none"}};
 document.querySelectorAll(".quote-del").forEach(b=>b.onclick=e=>{e.stopPropagation();bk.quotes=(bk.quotes||[]).filter(q=>q.id!==b.dataset.qid);bk.updatedAt=new Date().toISOString();save();renderDetail()});
-// Connections
-const acb=document.getElementById("addConnBtn");if(acb)acb.onclick=()=>{const cp=document.getElementById("connPicker");cp.style.display=cp.style.display==="none"?"block":"none";const others=data.books.filter(b=>b.id!==bk.id);cp.innerHTML=`<div class="conn-picker">${others.map(b=>{const linked=(bk.connections||[]).includes(b.id);return`<div class="conn-picker-item${linked?" linked":""}" data-cid="${b.id}"><div class="conn-check${linked?" on":""}"></div><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(b.title)}</span></div>`}).join("")}</div>`;cp.querySelectorAll(".conn-picker-item").forEach(item=>item.onclick=()=>{if(!bk.connections)bk.connections=[];const cid=item.dataset.cid;if(bk.connections.includes(cid))bk.connections=bk.connections.filter(x=>x!==cid);else bk.connections.push(cid);bk.updatedAt=new Date().toISOString();save();renderDetail()})};
-document.querySelectorAll(".mini-spine-card").forEach(b=>b.onclick=()=>openDetail(b.dataset.id));
-document.querySelectorAll(".suggested-item").forEach(item=>item.onclick=()=>{if(!bk.connections)bk.connections=[];const sid=item.dataset.sid;if(!bk.connections.includes(sid)){bk.connections.push(sid);bk.updatedAt=new Date().toISOString();save();renderDetail()}});
 // Sessions delete
 document.querySelectorAll(".session-del").forEach(b=>b.onclick=()=>{bk.sessions=(bk.sessions||[]).filter(s=>s.id!==b.dataset.sid);bk.updatedAt=new Date().toISOString();save();renderDetail()});
 // Log session manually

@@ -8,8 +8,6 @@ const bk=detailBook;if(!bk)return;
 const lc=CAT_COLORS[bk.category]||CAT_COLORS.Other,dur=daysBetween(bk.startDate,bk.endDate);
 const isEditing=window._detailEdit||false;
 const quotes=bk.quotes||[],themes=bk.themes||[],sessions=bk.sessions||[];
-const connections=(bk.connections||[]).map(id=>data.books.find(b=>b.id===id)).filter(Boolean);
-const others=data.books.filter(b=>b.id!==bk.id);
 
 // ─── Hero Banner ───
 let act="";if(bk.status==="reading")act+=`<button class="dbtn green" data-action="complete">&#10003; Complete</button>`;if(bk.status==="want-to-read")act+=`<button class="dbtn blue" data-action="start">&#9654; Start Reading</button>`;if(bk.status==="completed")act+=`<button class="dbtn blue-o" data-action="reread">&#9654; Re-read</button>`;act+=`<button class="dbtn ghost" data-action="delete">&#128465;</button>`;
@@ -69,8 +67,6 @@ else if(bk.status==="completed"||bk.status==="abandoned"){
   }
   // Themes
   if(themes.length||isEditing)html+=renderThemesSection(bk,isEditing);
-  // Connected Reading
-  if(connections.length||isEditing)html+=renderConnectionsSection(bk,connections,isEditing);
   // Sessions summary (collapsed)
   if(sessions.length){const totalMin=sessions.reduce((s,se)=>s+(se.duration||0),0);const totalPages=sessions.reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0);
   html+=`<div class="detail-section"><span class="detail-section-label">Sessions</span><div style="font-family:var(--ui);font-size:13px;color:var(--textM)">${sessions.length} session${sessions.length!==1?'s':''}${totalMin?' \u00B7 '+Math.round(totalMin/60)+' hrs':''}${totalPages?' \u00B7 '+totalPages+' pages':''}</div></div>`}
@@ -98,18 +94,6 @@ function renderQuotesSection(bk,isEditing){
   return h+`</div>`;
 }
 
-function renderConnectionsSection(bk,connections,isEditing){
-  const lc=CAT_COLORS[bk.category]||CAT_COLORS.Other;
-  let h=`<div class="detail-section"><span class="detail-section-label">Connected Reading</span>`;
-  if(connections.length)h+=`<div class="connected-scroll">${connections.map(cb=>{const csc=CAT_SPINE[cb.category]||CAT_SPINE.Other,clc=CAT_COLORS[cb.category]||CAT_COLORS.Other;return`<div class="mini-spine-card" data-id="${cb.id}"><div class="mini-spine" style="background:linear-gradient(135deg,${clc}20,${csc} 15%,${csc} 85%,${clc}10);border:1px solid ${clc}25;box-shadow:1px 1px 4px rgba(0,0,0,0.4)"></div><div class="mini-spine-title">${esc(cb.title)}</div></div>`}).join("")}</div>`;
-  if(isEditing){
-    h+=`<button class="rbtn save" id="addConnBtn" style="font-size:11px;padding:4px 10px;margin-top:8px">+ Link</button><div id="connPicker" style="display:none"></div>`;
-    const suggestions=getSuggestedConnections(bk.id);
-    if(suggestions.length)h+=`<div class="suggested-section"><p class="suggested-label">Suggested</p>${suggestions.map(s=>`<div class="suggested-item" data-sid="${s.book.id}"><span class="suggested-score">${s.score}pt</span><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(s.book.title)}</span></div>`).join("")}</div>`;
-  }else if(!connections.length)h+=`<p class="refl-empty">No connections yet.</p>`;
-  return h+`</div>`;
-}
-
 function bindDetailEvents(){
 const bk=detailBook;
 document.getElementById("detailBack").onclick=()=>{window._detailEdit=false;closeDetail()};
@@ -134,10 +118,6 @@ const ti=document.getElementById("themeInput");if(ti)ti.onkeydown=e=>{if(e.key==
 // Quotes
 const aqb=document.getElementById("addQuoteBtn");if(aqb)aqb.onclick=()=>{const qf=document.getElementById("quoteForm");qf.style.display=qf.style.display==="none"?"block":"none";qf.innerHTML=`<div class="quote-form"><textarea id="qText" placeholder="Enter passage&hellip;"></textarea><div class="quote-form-row"><input id="qPage" placeholder="Page #"><button class="rbtn save" id="qSave">Save</button><button class="rbtn cancel" id="qCancel">Cancel</button></div></div>`;document.getElementById("qSave").onclick=()=>{const t=document.getElementById("qText").value.trim();if(!t)return;if(!bk.quotes)bk.quotes=[];bk.quotes.push({id:uid(),text:t,page:document.getElementById("qPage").value.trim()||null,addedAt:new Date().toISOString()});bk.updatedAt=new Date().toISOString();save();renderDetail()};document.getElementById("qCancel").onclick=()=>{qf.style.display="none"}};
 document.querySelectorAll(".quote-del").forEach(b=>b.onclick=e=>{e.stopPropagation();bk.quotes=(bk.quotes||[]).filter(q=>q.id!==b.dataset.qid);bk.updatedAt=new Date().toISOString();save();renderDetail()});
-// Connections
-const acb=document.getElementById("addConnBtn");if(acb)acb.onclick=()=>{const cp=document.getElementById("connPicker");cp.style.display=cp.style.display==="none"?"block":"none";const others=data.books.filter(b=>b.id!==bk.id);cp.innerHTML=`<div class="conn-picker">${others.map(b=>{const linked=(bk.connections||[]).includes(b.id);return`<div class="conn-picker-item${linked?" linked":""}" data-cid="${b.id}"><div class="conn-check${linked?" on":""}"></div><span style="font-family:var(--ui);font-size:13px;color:var(--textM)">${esc(b.title)}</span></div>`}).join("")}</div>`;cp.querySelectorAll(".conn-picker-item").forEach(item=>item.onclick=()=>{if(!bk.connections)bk.connections=[];const cid=item.dataset.cid;if(bk.connections.includes(cid))bk.connections=bk.connections.filter(x=>x!==cid);else bk.connections.push(cid);bk.updatedAt=new Date().toISOString();save();renderDetail()})};
-document.querySelectorAll(".mini-spine-card").forEach(b=>b.onclick=()=>openDetail(b.dataset.id));
-document.querySelectorAll(".suggested-item").forEach(item=>item.onclick=()=>{if(!bk.connections)bk.connections=[];const sid=item.dataset.sid;if(!bk.connections.includes(sid)){bk.connections.push(sid);bk.updatedAt=new Date().toISOString();save();renderDetail()}});
 // Sessions delete
 document.querySelectorAll(".session-del").forEach(b=>b.onclick=()=>{bk.sessions=(bk.sessions||[]).filter(s=>s.id!==b.dataset.sid);bk.updatedAt=new Date().toISOString();save();renderDetail()});
 // Log session manually

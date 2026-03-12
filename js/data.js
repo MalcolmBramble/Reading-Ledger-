@@ -43,23 +43,11 @@ function getMilestones(){
   if(cats.size>=8)ms.push({label:"Renaissance Reader",icon:"\u{1F3AD}"});
   const ann=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
   if(ann>=10)ms.push({label:"Deep Annotator",icon:"\u270D\uFE0F"});
-  const conn=data.books.filter(b=>b.connections&&b.connections.length>0).length;
-  if(conn>=5)ms.push({label:"Web Weaver",icon:"\u{1F578}\uFE0F"});
   return ms;
 }
 
 function getCategoryProgress(cat){const target=(data.settings.goals.categories||{})[cat]||0;if(!target)return null;const count=getCompleted().filter(b=>b.category===cat).length;return{target,count,pct:Math.min(100,Math.round(count/target*100))}}
 function getChallengeProgress(ch){const completed=getCompleted();let current=0;if(ch.type==="count"){let pool=completed;if(ch.categoryFilter)pool=pool.filter(b=>b.category===ch.categoryFilter);if(ch.minPages)pool=pool.filter(b=>(b.pages||0)>=ch.minPages);current=pool.length}else if(ch.type==="pages"){let pool=completed;if(ch.categoryFilter)pool=pool.filter(b=>b.category===ch.categoryFilter);current=pool.reduce((s,b)=>s+(b.pages||0),0)}else if(ch.type==="category"){current=completed.filter(b=>b.category===ch.categoryFilter).length}else if(ch.type==="diversity"){current=new Set(completed.map(b=>b.category)).size}return{current,target:ch.target,pct:Math.min(100,Math.round(current/ch.target*100)),done:current>=ch.target}}
-
-function getSuggestedConnections(bookId){
-  const book=data.books.find(b=>b.id===bookId);if(!book)return[];
-  const existing=new Set(book.connections||[]);
-  return data.books.filter(b=>b.id!==bookId&&!existing.has(b.id)).map(b=>{
-    let score=0;const sharedThemes=(book.themes||[]).filter(t=>(b.themes||[]).includes(t));score+=sharedThemes.length*3;if(b.category===book.category)score+=2;
-    if(book.startDate&&b.startDate){const s1=new Date(book.startDate),e1=book.endDate?new Date(book.endDate):new Date(),s2=new Date(b.startDate),e2=b.endDate?new Date(b.endDate):new Date();if(s1<=e2&&s2<=e1)score+=1}
-    return{book:b,score,sharedThemes};
-  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
-}
 
 function exportCSV(){
   const headers=["Title","Author","Category","Status","Rating","Pages","Start Date","End Date","Themes","Notes"];
@@ -88,7 +76,6 @@ const books=[
 {id:uid(),title:"The Brothers Karamazov",author:"Fyodor Dostoevsky",category:"Fiction",status:"want-to-read",pages:796,currentPage:0,rating:0,startDate:"",endDate:"",notes:"",themes:[],quotes:[],connections:[],sessions:[],coreArgument:"",impact:"",recommendedBy:"",recommendationNote:"",recommendationSource:"",priority:0,addedAt:"2026-03-01T10:00:00Z",updatedAt:now},
 {id:uid(),title:"Being and Time",author:"Martin Heidegger",category:"Philosophy & Ethics",status:"abandoned",pages:589,currentPage:95,rating:2,startDate:"2025-06-01",endDate:"2025-06-20",notes:"Too dense. Will revisit.",themes:["existentialism"],quotes:[],connections:[],sessions:[],coreArgument:"",impact:"",recommendedBy:"",recommendationNote:"",recommendationSource:"",priority:0,addedAt:"2025-06-01T10:00:00Z",updatedAt:now}
 ];
-books[0].connections=[books[1].id];books[1].connections=[books[0].id];books[3].connections=[books[2].id,books[5].id];
 return{books,settings:{goal:50,lastExport:null,goals:{annual:50,categories:{},challenges:[]}}};
 }
 
