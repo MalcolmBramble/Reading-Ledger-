@@ -35,16 +35,108 @@ function getDayStreak(){
   return{current,best,weekRead,monthRead,monthDays:dim,sessionDays};
 }
 
-function getMilestones(){
-  const c=getCompleted(),ms=[];
-  [1,5,10,15,20,25,30,40,50].forEach(t=>{if(c.length>=t)ms.push({label:t===1?"First Book":t===50?"Goal Reached!":t+" Books",icon:t===50?"\u{1F3C6}":t>=25?"\u2B50":"\u{1F4D6}"})});
-  const cats=new Set(c.map(b=>b.category));
-  if(cats.size>=5)ms.push({label:cats.size+" Categories",icon:"\u{1F308}"});
-  if(cats.size>=8)ms.push({label:"Renaissance Reader",icon:"\u{1F3AD}"});
-  const ann=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
-  if(ann>=10)ms.push({label:"Deep Annotator",icon:"\u270D\uFE0F"});
-  return ms;
+// ═══ AUTO-MILESTONE ENGINE (50 rules) ═══
+// Returns {earned:[], next:{}} — earned milestones + next upcoming
+function autoMilestones(){
+const comp=getCompleted().sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
+const all=data.books;const ab=all.filter(b=>b.status==="abandoned");const reading=getReading();
+if(!comp.length)return{earned:[],next:{icon:"book",color:"var(--accent)",label:"Finish Your First Book",detail:"Start reading!",pct:0}};
+const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0);
+const cats=new Set(comp.map(b=>b.category));
+const durs=comp.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:Math.max(1,Math.round((new Date(b.endDate)-new Date(b.startDate))/86400000))}));
+const ratings=comp.filter(b=>b.rating>0);
+const annotated=all.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length)).length;
+const totalQuotes=all.reduce((s,b)=>s+(b.quotes||[]).length,0);
+const monthMap={};comp.forEach(b=>{if(b.endDate){const k=b.endDate.slice(0,7);monthMap[k]=(monthMap[k]||0)+1}});
+const monthNames={"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
+const allSessions=[];all.forEach(b=>(b.sessions||[]).forEach(s=>allSessions.push({...s,book:b})));
+const earned=[];
+
+// ── COUNT MILESTONES (1-9) ──
+if(comp.length>=1)earned.push({icon:"book",color:"var(--accent)",label:"First Book",detail:comp[0].title});
+[5,10,15,20,25,30,40,50].forEach(n=>{if(comp.length>=n)earned.push({icon:n>=25?"star":"books",color:n>=25?"var(--gold)":"var(--accent)",label:`${n} Books`,detail:`Reached with ${comp[n-1].title}`})});
+
+// ── PAGE MILESTONES (10-12) ──
+if(totalPages>=10000)earned.push({icon:"ruler",color:"#8B6AAC",label:"10,000 Pages",detail:`${totalPages.toLocaleString()} total`});
+else if(totalPages>=5000)earned.push({icon:"ruler",color:"#8B6AAC",label:"5,000 Pages",detail:`${totalPages.toLocaleString()} total`});
+else if(totalPages>=2000)earned.push({icon:"ruler",color:"#8B6AAC",label:"2,000 Pages",detail:`${totalPages.toLocaleString()} total`});
+
+// ── RATING MILESTONES (13-16) ──
+const fiveStars=ratings.filter(b=>b.rating===5);
+if(fiveStars.length>=1)earned.push({icon:"star",color:"var(--gold)",label:"First 5-Star",detail:fiveStars[0].title});
+if(fiveStars.length>=5)earned.push({icon:"star",color:"var(--gold)",label:"5 Five-Star Books",detail:"Discerning taste"});
+if(ratings.length>=5&&ratings.every(b=>b.rating>=4))earned.push({icon:"star",color:"var(--gold)",label:"No Book Below 4★",detail:"High standards"});
+if(ratings.length>=3&&ratings.every(b=>b.rating===5))earned.push({icon:"star",color:"var(--gold)",label:"Perfect Streak",detail:"All 5 stars"});
+
+// ── PACE MILESTONES (17-22) ──
+if(durs.length){
+  const fastest=durs.reduce((a,b)=>a.days<b.days?a:b);
+  if(fastest.days<=3)earned.push({icon:"bolt",color:"#C46B5B",label:"Lightning Read",detail:`${fastest.title} in ${fastest.days}d`});
+  else if(fastest.days<=7)earned.push({icon:"bolt",color:"#C46B5B",label:"Speed Reader",detail:`${fastest.title} in ${fastest.days}d`});
+  else if(fastest.days<=14)earned.push({icon:"bolt",color:"#C46B5B",label:"Quick Finish",detail:`${fastest.title} in ${fastest.days}d`});
+  const slowest=durs.reduce((a,b)=>a.days>b.days?a:b);
+  if(slowest.days>=90)earned.push({icon:"clock",color:"var(--textD)",label:"The Long Haul",detail:`${slowest.title} — ${slowest.days} days`});
 }
+const biggest=comp.reduce((a,b)=>(a.pages||0)>(b.pages||0)?a:b,comp[0]);
+if(biggest.pages>=1000)earned.push({icon:"brick",color:"var(--blue)",label:"Thousand-Pager",detail:`${biggest.title} — ${biggest.pages.toLocaleString()}p`});
+else if(biggest.pages>=500)earned.push({icon:"brick",color:"var(--blue)",label:"Marathon Read",detail:`${biggest.title} — ${biggest.pages}p`});
+
+// ── CATEGORY MILESTONES (23-28) ──
+if(cats.size>=8)earned.push({icon:"rainbow",color:"var(--green)",label:"Renaissance Reader",detail:`${cats.size} categories`});
+else if(cats.size>=5)earned.push({icon:"rainbow",color:"var(--green)",label:`${cats.size} Categories`,detail:"Wide-ranging taste"});
+if(cats.size===1&&comp.length>=3)earned.push({icon:"target",color:"var(--accent)",label:"Specialist",detail:`All ${[...cats][0]}`});
+const catCounts={};comp.forEach(b=>catCounts[b.category]=(catCounts[b.category]||0)+1);
+const topCatEntry=Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];
+if(topCatEntry&&topCatEntry[1]>=5)earned.push({icon:"target",color:"var(--accent)",label:`${topCatEntry[0]} Expert`,detail:`${topCatEntry[1]} books`});
+if(comp.length>=3){let maxS=1,curS=1,sCat=comp[0].category;for(let i=1;i<comp.length;i++){if(comp[i].category===comp[i-1].category){curS++;if(curS>maxS){maxS=curS;sCat=comp[i].category}}else curS=1}if(maxS>=3)earned.push({icon:"target",color:"var(--accent)",label:`${sCat} Deep Dive`,detail:`${maxS} in a row`})}
+
+// ── MONTH/TEMPORAL MILESTONES (29-34) ──
+const bestMonth=Object.entries(monthMap).sort((a,b)=>b[1]-a[1])[0];
+if(bestMonth&&bestMonth[1]>=3)earned.push({icon:"flame",color:"#C45B5B",label:`${bestMonth[1]} in One Month`,detail:monthNames[bestMonth[0].split("-")[1]]||bestMonth[0]});
+else if(bestMonth&&bestMonth[1]>=2)earned.push({icon:"flame",color:"#C45B5B",label:"Double Month",detail:monthNames[bestMonth[0].split("-")[1]]||bestMonth[0]});
+const activeMonths=Object.keys(monthMap).length;
+if(activeMonths>=10)earned.push({icon:"calendar",color:"var(--green)",label:"Year-Round Reader",detail:`${activeMonths} months active`});
+else if(activeMonths>=6)earned.push({icon:"calendar",color:"var(--green)",label:"Steady Habit",detail:`${activeMonths} months active`});
+for(let i=1;i<comp.length;i++){const gap=Math.round((new Date(comp[i].endDate)-new Date(comp[i-1].endDate))/86400000);if(gap<=3){earned.push({icon:"bolt",color:"#C46B5B",label:"Back to Back",detail:`${comp[i-1].title} → ${comp[i].title}`});break}}
+
+// ── CONTENT MILESTONES (35-42) ──
+if(annotated>=10)earned.push({icon:"pencil",color:"var(--accent)",label:"Deep Annotator",detail:`${annotated} books with notes`});
+else if(annotated>=5)earned.push({icon:"pencil",color:"var(--accent)",label:"Active Reader",detail:`${annotated} books annotated`});
+if(totalQuotes>=20)earned.push({icon:"quote",color:"var(--accentDim)",label:"Quote Collector",detail:`${totalQuotes} passages saved`});
+else if(totalQuotes>=10)earned.push({icon:"quote",color:"var(--accentDim)",label:"Passage Hunter",detail:`${totalQuotes} saved`});
+else if(totalQuotes>=5)earned.push({icon:"quote",color:"var(--accentDim)",label:"First Passages",detail:`${totalQuotes} saved`});
+const allThemes={};all.forEach(b=>(b.themes||[]).forEach(t=>{const k=t.toLowerCase();allThemes[k]=(allThemes[k]||0)+1}));
+if(Object.keys(allThemes).length>=20)earned.push({icon:"grid",color:"#5B9EAD",label:"Theme Mapper",detail:`${Object.keys(allThemes).length} unique themes`});
+const themeMax=Object.entries(allThemes).sort((a,b)=>b[1]-a[1])[0];
+if(themeMax&&themeMax[1]>=4)earned.push({icon:"grid",color:"#5B9EAD",label:`"${themeMax[0]}" Thread`,detail:`Appears in ${themeMax[1]} books`});
+if(ab.length===0&&comp.length>=5)earned.push({icon:"check",color:"var(--green)",label:"Completionist",detail:"Zero abandoned books"});
+
+// ── BEHAVIORAL MILESTONES (43-47) ──
+if(allSessions.length>=50)earned.push({icon:"clock",color:"var(--blue)",label:"50 Sessions",detail:"Dedicated tracker"});
+else if(allSessions.length>=20)earned.push({icon:"clock",color:"var(--blue)",label:"20 Sessions",detail:"Building the habit"});
+const totalMin=allSessions.reduce((s,x)=>s+(x.duration||0),0);
+if(totalMin>=1200)earned.push({icon:"clock",color:"var(--blue)",label:"20+ Hours Reading",detail:`${Math.round(totalMin/60)}h tracked`});
+if(reading.length>=3)earned.push({icon:"books",color:"var(--accent)",label:"Parallel Reader",detail:`${reading.length} books at once`});
+const recs=all.filter(b=>b.recommendedBy);
+if(recs.length>=3)earned.push({icon:"heart",color:"#C45B72",label:"Trust Your People",detail:`${recs.length} recommended books`});
+
+// ── IDENTITY MILESTONES (48-50) ──
+if(comp.length>=4){const fc=comp[0].category,lc=comp[comp.length-1].category;if(fc!==lc)earned.push({icon:"compass",color:"#6EC4A7",label:"Evolving Taste",detail:`${fc} → ${lc}`})}
+const fiction=comp.filter(b=>b.category==="Fiction").length;
+if(fiction===0&&comp.length>=5)earned.push({icon:"book",color:"var(--accent)",label:"All Nonfiction",detail:"Not a single novel"});
+if(comp.length>=10&&cats.size>=5){const balanced=Object.values(catCounts).every(c=>c<=comp.length*0.3);if(balanced)earned.push({icon:"rainbow",color:"var(--green)",label:"Balanced Reader",detail:"No category over 30%"})}
+
+// ── NEXT MILESTONE ──
+let next=null;
+const nextCount=[5,10,15,20,25,30,40,50].find(n=>n>comp.length);
+if(nextCount){const rem=nextCount-comp.length;next={icon:"target",color:"var(--textD)",label:`${rem} to ${nextCount} Books`,detail:`${comp.length} of ${nextCount}`,pct:Math.round(comp.length/nextCount*100)}}
+else if(totalPages<5000)next={icon:"ruler",color:"var(--textD)",label:`${(5000-totalPages).toLocaleString()} to 5,000 Pages`,detail:`${totalPages.toLocaleString()} so far`,pct:Math.round(totalPages/5000*100)};
+
+return{earned,next};
+}
+
+// Backward compat wrapper for shelf banner
+function getMilestones(){return autoMilestones().earned.slice(-4).map(m=>({label:m.label,icon:""}))}
 
 function getCategoryProgress(cat){const target=(data.settings.goals.categories||{})[cat]||0;if(!target)return null;const count=getCompleted().filter(b=>b.category===cat).length;return{target,count,pct:Math.min(100,Math.round(count/target*100))}}
 function getChallengeProgress(ch){const completed=getCompleted();let current=0;if(ch.type==="count"){let pool=completed;if(ch.categoryFilter)pool=pool.filter(b=>b.category===ch.categoryFilter);if(ch.minPages)pool=pool.filter(b=>(b.pages||0)>=ch.minPages);current=pool.length}else if(ch.type==="pages"){let pool=completed;if(ch.categoryFilter)pool=pool.filter(b=>b.category===ch.categoryFilter);current=pool.reduce((s,b)=>s+(b.pages||0),0)}else if(ch.type==="category"){current=completed.filter(b=>b.category===ch.categoryFilter).length}else if(ch.type==="diversity"){current=new Set(completed.map(b=>b.category)).size}return{current,target:ch.target,pct:Math.min(100,Math.round(current/ch.target*100)),done:current>=ch.target}}

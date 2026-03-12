@@ -269,6 +269,17 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .yr-ms-detail{font-family:var(--ui);font-size:10px;color:var(--textD);margin-top:1px}
 .yr-ms-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px;max-width:140px}
 .yr-ms-fill{height:100%;border-radius:2px;background:var(--accent)}
+
+/* ═══ Year in Review — new sections ═══ */
+.yr-months{display:flex;gap:2px;padding:0 20px;margin-bottom:24px;overflow-x:auto}.yr-month{flex:1;min-width:50px;display:flex;flex-direction:column;align-items:center;gap:4px}.yr-month-label{font-family:var(--ui);font-size:9px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.04em}.yr-month-dots{display:flex;flex-direction:column;gap:3px;align-items:center;min-height:20px;justify-content:center}.yr-month-dot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,0.3)}.yr-month-empty{width:10px;height:2px;border-radius:1px;background:var(--border)}
+.yr-narrative{font-family:var(--ui);font-size:13px;color:var(--textM);line-height:1.7}.yr-narrative strong{color:var(--text);font-weight:500}.yr-narrative em{color:var(--accent);font-style:normal;font-weight:600}
+.yr-identity{position:relative;overflow:hidden;margin:0 20px 20px;border-radius:14px;border:1px solid var(--borderL)}.yr-id-bg{position:absolute;inset:0;background:linear-gradient(145deg,#1a1610,#17140F 40%,rgba(196,149,106,0.05) 100%)}.yr-id-accent-line{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}.yr-id-content{position:relative;padding:28px 24px 24px}
+.yr-id-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:16px}.yr-id-icon{width:52px;height:52px;border-radius:12px;background:rgba(196,149,106,0.1);border:1px solid rgba(196,149,106,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}.yr-id-icon svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.yr-id-text{flex:1}.yr-id-label{font-family:var(--ui);font-size:9px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.08em;font-weight:500}.yr-id-title{font-size:22px;font-weight:700;color:var(--accent);margin:3px 0 4px;line-height:1.15}.yr-id-desc{font-family:var(--ui);font-size:11px;color:var(--textM);line-height:1.5}
+.yr-id-stats{display:flex;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px}.yr-id-stat{flex:1;background:var(--bg);padding:10px 8px;text-align:center}.yr-id-stat-val{font-family:var(--ui);font-size:16px;font-weight:700;color:var(--text);line-height:1}.yr-gold{color:var(--gold)}.yr-id-stat-label{font-family:var(--ui);font-size:8px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.04em;margin-top:3px}
+.yr-id-ratings{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg);border-radius:8px}.yr-id-rat-visual{display:flex;align-items:flex-end;gap:2px;height:20px}.yr-id-rat-bar{width:8px;border-radius:2px 2px 0 0;min-height:2px}.yr-id-rat-labels{display:flex;gap:2px}.yr-id-rat-lbl{width:8px;text-align:center;font-family:var(--ui);font-size:7px;color:var(--textDD)}.yr-id-rat-text{font-family:var(--ui);font-size:11px;color:var(--textD);flex:1}.yr-id-rat-text strong{color:var(--gold);font-weight:600}
+.yr-evo{padding-top:16px;border-top:1px solid var(--border)}.yr-evo-title{font-family:var(--ui);font-size:9px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-bottom:10px}.yr-evo-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center}.yr-evo-chip{font-family:var(--ui);font-size:11px;padding:5px 12px;border-radius:100px;border:1px solid var(--border);background:var(--bg);color:var(--textD);white-space:nowrap}.yr-evo-now{border-color:var(--accent);color:var(--accent);background:rgba(196,149,106,0.08);font-weight:600}.yr-evo-arrow{color:var(--textDD);padding:0 8px;font-family:var(--ui);font-size:10px}.yr-evo-period{font-family:var(--ui);font-size:8px;color:var(--textDD);display:block;text-align:center;margin-top:2px}
+.yr-quote{position:relative;padding:20px 20px 20px 24px;margin:0 20px 20px;background:linear-gradient(135deg,var(--surface),rgba(196,149,106,0.04));border:1px solid var(--border);border-radius:14px;border-left:3px solid var(--accent)}.yr-quote-text{font-size:16px;font-style:italic;line-height:1.5;color:var(--text);margin-bottom:8px}.yr-quote-src{font-family:var(--ui);font-size:11px;color:var(--textD)}.yr-quote-src strong{color:var(--textM);font-weight:500}
+.yr-ms-list{display:flex;flex-direction:column;gap:8px}.yr-ms-item{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px}.yr-ms-next{opacity:0.5;border-style:dashed}.yr-ms-icon-wrap{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.yr-ms-icon-wrap svg{width:18px;height:18px;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none}.yr-ms-info{flex:1}.yr-ms-label{font-family:var(--ui);font-size:12px;color:var(--text);font-weight:500}.yr-ms-detail{font-family:var(--ui);font-size:10px;color:var(--textD);margin-top:1px}.yr-ms-next .yr-ms-label{color:var(--textM)}.yr-ms-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px;max-width:140px}.yr-ms-fill{height:100%;border-radius:2px;background:var(--accent)}
 </style>
 </head>
 <body>
@@ -336,16 +347,108 @@ function getDayStreak(){
   return{current,best,weekRead,monthRead,monthDays:dim,sessionDays};
 }
 
-function getMilestones(){
-  const c=getCompleted(),ms=[];
-  [1,5,10,15,20,25,30,40,50].forEach(t=>{if(c.length>=t)ms.push({label:t===1?"First Book":t===50?"Goal Reached!":t+" Books",icon:t===50?"\u{1F3C6}":t>=25?"\u2B50":"\u{1F4D6}"})});
-  const cats=new Set(c.map(b=>b.category));
-  if(cats.size>=5)ms.push({label:cats.size+" Categories",icon:"\u{1F308}"});
-  if(cats.size>=8)ms.push({label:"Renaissance Reader",icon:"\u{1F3AD}"});
-  const ann=data.books.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length>0)).length;
-  if(ann>=10)ms.push({label:"Deep Annotator",icon:"\u270D\uFE0F"});
-  return ms;
+// ═══ AUTO-MILESTONE ENGINE (50 rules) ═══
+// Returns {earned:[], next:{}} — earned milestones + next upcoming
+function autoMilestones(){
+const comp=getCompleted().sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
+const all=data.books;const ab=all.filter(b=>b.status==="abandoned");const reading=getReading();
+if(!comp.length)return{earned:[],next:{icon:"book",color:"var(--accent)",label:"Finish Your First Book",detail:"Start reading!",pct:0}};
+const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0);
+const cats=new Set(comp.map(b=>b.category));
+const durs=comp.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:Math.max(1,Math.round((new Date(b.endDate)-new Date(b.startDate))/86400000))}));
+const ratings=comp.filter(b=>b.rating>0);
+const annotated=all.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes&&b.quotes.length)).length;
+const totalQuotes=all.reduce((s,b)=>s+(b.quotes||[]).length,0);
+const monthMap={};comp.forEach(b=>{if(b.endDate){const k=b.endDate.slice(0,7);monthMap[k]=(monthMap[k]||0)+1}});
+const monthNames={"01":"Jan","02":"Feb","03":"Mar","04":"Apr","05":"May","06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov","12":"Dec"};
+const allSessions=[];all.forEach(b=>(b.sessions||[]).forEach(s=>allSessions.push({...s,book:b})));
+const earned=[];
+
+// ── COUNT MILESTONES (1-9) ──
+if(comp.length>=1)earned.push({icon:"book",color:"var(--accent)",label:"First Book",detail:comp[0].title});
+[5,10,15,20,25,30,40,50].forEach(n=>{if(comp.length>=n)earned.push({icon:n>=25?"star":"books",color:n>=25?"var(--gold)":"var(--accent)",label:`${n} Books`,detail:`Reached with ${comp[n-1].title}`})});
+
+// ── PAGE MILESTONES (10-12) ──
+if(totalPages>=10000)earned.push({icon:"ruler",color:"#8B6AAC",label:"10,000 Pages",detail:`${totalPages.toLocaleString()} total`});
+else if(totalPages>=5000)earned.push({icon:"ruler",color:"#8B6AAC",label:"5,000 Pages",detail:`${totalPages.toLocaleString()} total`});
+else if(totalPages>=2000)earned.push({icon:"ruler",color:"#8B6AAC",label:"2,000 Pages",detail:`${totalPages.toLocaleString()} total`});
+
+// ── RATING MILESTONES (13-16) ──
+const fiveStars=ratings.filter(b=>b.rating===5);
+if(fiveStars.length>=1)earned.push({icon:"star",color:"var(--gold)",label:"First 5-Star",detail:fiveStars[0].title});
+if(fiveStars.length>=5)earned.push({icon:"star",color:"var(--gold)",label:"5 Five-Star Books",detail:"Discerning taste"});
+if(ratings.length>=5&&ratings.every(b=>b.rating>=4))earned.push({icon:"star",color:"var(--gold)",label:"No Book Below 4★",detail:"High standards"});
+if(ratings.length>=3&&ratings.every(b=>b.rating===5))earned.push({icon:"star",color:"var(--gold)",label:"Perfect Streak",detail:"All 5 stars"});
+
+// ── PACE MILESTONES (17-22) ──
+if(durs.length){
+  const fastest=durs.reduce((a,b)=>a.days<b.days?a:b);
+  if(fastest.days<=3)earned.push({icon:"bolt",color:"#C46B5B",label:"Lightning Read",detail:`${fastest.title} in ${fastest.days}d`});
+  else if(fastest.days<=7)earned.push({icon:"bolt",color:"#C46B5B",label:"Speed Reader",detail:`${fastest.title} in ${fastest.days}d`});
+  else if(fastest.days<=14)earned.push({icon:"bolt",color:"#C46B5B",label:"Quick Finish",detail:`${fastest.title} in ${fastest.days}d`});
+  const slowest=durs.reduce((a,b)=>a.days>b.days?a:b);
+  if(slowest.days>=90)earned.push({icon:"clock",color:"var(--textD)",label:"The Long Haul",detail:`${slowest.title} — ${slowest.days} days`});
 }
+const biggest=comp.reduce((a,b)=>(a.pages||0)>(b.pages||0)?a:b,comp[0]);
+if(biggest.pages>=1000)earned.push({icon:"brick",color:"var(--blue)",label:"Thousand-Pager",detail:`${biggest.title} — ${biggest.pages.toLocaleString()}p`});
+else if(biggest.pages>=500)earned.push({icon:"brick",color:"var(--blue)",label:"Marathon Read",detail:`${biggest.title} — ${biggest.pages}p`});
+
+// ── CATEGORY MILESTONES (23-28) ──
+if(cats.size>=8)earned.push({icon:"rainbow",color:"var(--green)",label:"Renaissance Reader",detail:`${cats.size} categories`});
+else if(cats.size>=5)earned.push({icon:"rainbow",color:"var(--green)",label:`${cats.size} Categories`,detail:"Wide-ranging taste"});
+if(cats.size===1&&comp.length>=3)earned.push({icon:"target",color:"var(--accent)",label:"Specialist",detail:`All ${[...cats][0]}`});
+const catCounts={};comp.forEach(b=>catCounts[b.category]=(catCounts[b.category]||0)+1);
+const topCatEntry=Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];
+if(topCatEntry&&topCatEntry[1]>=5)earned.push({icon:"target",color:"var(--accent)",label:`${topCatEntry[0]} Expert`,detail:`${topCatEntry[1]} books`});
+if(comp.length>=3){let maxS=1,curS=1,sCat=comp[0].category;for(let i=1;i<comp.length;i++){if(comp[i].category===comp[i-1].category){curS++;if(curS>maxS){maxS=curS;sCat=comp[i].category}}else curS=1}if(maxS>=3)earned.push({icon:"target",color:"var(--accent)",label:`${sCat} Deep Dive`,detail:`${maxS} in a row`})}
+
+// ── MONTH/TEMPORAL MILESTONES (29-34) ──
+const bestMonth=Object.entries(monthMap).sort((a,b)=>b[1]-a[1])[0];
+if(bestMonth&&bestMonth[1]>=3)earned.push({icon:"flame",color:"#C45B5B",label:`${bestMonth[1]} in One Month`,detail:monthNames[bestMonth[0].split("-")[1]]||bestMonth[0]});
+else if(bestMonth&&bestMonth[1]>=2)earned.push({icon:"flame",color:"#C45B5B",label:"Double Month",detail:monthNames[bestMonth[0].split("-")[1]]||bestMonth[0]});
+const activeMonths=Object.keys(monthMap).length;
+if(activeMonths>=10)earned.push({icon:"calendar",color:"var(--green)",label:"Year-Round Reader",detail:`${activeMonths} months active`});
+else if(activeMonths>=6)earned.push({icon:"calendar",color:"var(--green)",label:"Steady Habit",detail:`${activeMonths} months active`});
+for(let i=1;i<comp.length;i++){const gap=Math.round((new Date(comp[i].endDate)-new Date(comp[i-1].endDate))/86400000);if(gap<=3){earned.push({icon:"bolt",color:"#C46B5B",label:"Back to Back",detail:`${comp[i-1].title} → ${comp[i].title}`});break}}
+
+// ── CONTENT MILESTONES (35-42) ──
+if(annotated>=10)earned.push({icon:"pencil",color:"var(--accent)",label:"Deep Annotator",detail:`${annotated} books with notes`});
+else if(annotated>=5)earned.push({icon:"pencil",color:"var(--accent)",label:"Active Reader",detail:`${annotated} books annotated`});
+if(totalQuotes>=20)earned.push({icon:"quote",color:"var(--accentDim)",label:"Quote Collector",detail:`${totalQuotes} passages saved`});
+else if(totalQuotes>=10)earned.push({icon:"quote",color:"var(--accentDim)",label:"Passage Hunter",detail:`${totalQuotes} saved`});
+else if(totalQuotes>=5)earned.push({icon:"quote",color:"var(--accentDim)",label:"First Passages",detail:`${totalQuotes} saved`});
+const allThemes={};all.forEach(b=>(b.themes||[]).forEach(t=>{const k=t.toLowerCase();allThemes[k]=(allThemes[k]||0)+1}));
+if(Object.keys(allThemes).length>=20)earned.push({icon:"grid",color:"#5B9EAD",label:"Theme Mapper",detail:`${Object.keys(allThemes).length} unique themes`});
+const themeMax=Object.entries(allThemes).sort((a,b)=>b[1]-a[1])[0];
+if(themeMax&&themeMax[1]>=4)earned.push({icon:"grid",color:"#5B9EAD",label:`"${themeMax[0]}" Thread`,detail:`Appears in ${themeMax[1]} books`});
+if(ab.length===0&&comp.length>=5)earned.push({icon:"check",color:"var(--green)",label:"Completionist",detail:"Zero abandoned books"});
+
+// ── BEHAVIORAL MILESTONES (43-47) ──
+if(allSessions.length>=50)earned.push({icon:"clock",color:"var(--blue)",label:"50 Sessions",detail:"Dedicated tracker"});
+else if(allSessions.length>=20)earned.push({icon:"clock",color:"var(--blue)",label:"20 Sessions",detail:"Building the habit"});
+const totalMin=allSessions.reduce((s,x)=>s+(x.duration||0),0);
+if(totalMin>=1200)earned.push({icon:"clock",color:"var(--blue)",label:"20+ Hours Reading",detail:`${Math.round(totalMin/60)}h tracked`});
+if(reading.length>=3)earned.push({icon:"books",color:"var(--accent)",label:"Parallel Reader",detail:`${reading.length} books at once`});
+const recs=all.filter(b=>b.recommendedBy);
+if(recs.length>=3)earned.push({icon:"heart",color:"#C45B72",label:"Trust Your People",detail:`${recs.length} recommended books`});
+
+// ── IDENTITY MILESTONES (48-50) ──
+if(comp.length>=4){const fc=comp[0].category,lc=comp[comp.length-1].category;if(fc!==lc)earned.push({icon:"compass",color:"#6EC4A7",label:"Evolving Taste",detail:`${fc} → ${lc}`})}
+const fiction=comp.filter(b=>b.category==="Fiction").length;
+if(fiction===0&&comp.length>=5)earned.push({icon:"book",color:"var(--accent)",label:"All Nonfiction",detail:"Not a single novel"});
+if(comp.length>=10&&cats.size>=5){const balanced=Object.values(catCounts).every(c=>c<=comp.length*0.3);if(balanced)earned.push({icon:"rainbow",color:"var(--green)",label:"Balanced Reader",detail:"No category over 30%"})}
+
+// ── NEXT MILESTONE ──
+let next=null;
+const nextCount=[5,10,15,20,25,30,40,50].find(n=>n>comp.length);
+if(nextCount){const rem=nextCount-comp.length;next={icon:"target",color:"var(--textD)",label:`${rem} to ${nextCount} Books`,detail:`${comp.length} of ${nextCount}`,pct:Math.round(comp.length/nextCount*100)}}
+else if(totalPages<5000)next={icon:"ruler",color:"var(--textD)",label:`${(5000-totalPages).toLocaleString()} to 5,000 Pages`,detail:`${totalPages.toLocaleString()} so far`,pct:Math.round(totalPages/5000*100)};
+
+return{earned,next};
+}
+
+// Backward compat wrapper for shelf banner
+function getMilestones(){return autoMilestones().earned.slice(-4).map(m=>({label:m.label,icon:""}))}
 
 function getCategoryProgress(cat){const target=(data.settings.goals.categories||{})[cat]||0;if(!target)return null;const count=getCompleted().filter(b=>b.category===cat).length;return{target,count,pct:Math.min(100,Math.round(count/target*100))}}
 function getChallengeProgress(ch){const completed=getCompleted();let current=0;if(ch.type==="count"){let pool=completed;if(ch.categoryFilter)pool=pool.filter(b=>b.category===ch.categoryFilter);if(ch.minPages)pool=pool.filter(b=>(b.pages||0)>=ch.minPages);current=pool.length}else if(ch.type==="pages"){let pool=completed;if(ch.categoryFilter)pool=pool.filter(b=>b.category===ch.categoryFilter);current=pool.reduce((s,b)=>s+(b.pages||0),0)}else if(ch.type==="category"){current=completed.filter(b=>b.category===ch.categoryFilter).length}else if(ch.type==="diversity"){current=new Set(completed.map(b=>b.category)).size}return{current,target:ch.target,pct:Math.min(100,Math.round(current/ch.target*100)),done:current>=ch.target}}
@@ -841,26 +944,7 @@ requestAnimationFrame(()=>{
 function drawPie(cd,total){const c=document.getElementById("pieChart");if(!c)return;const dpr=window.devicePixelRatio||1;c.width=170*dpr;c.height=170*dpr;const ctx=c.getContext("2d");ctx.scale(dpr,dpr);let start=-Math.PI/2;cd.forEach(d=>{const sw=(d.value/total)*Math.PI*2;ctx.beginPath();ctx.arc(85,85,75,start,start+sw);ctx.arc(85,85,42,start+sw,start,true);ctx.closePath();ctx.fillStyle=CAT_COLORS[d.name]||"#7A7670";ctx.fill();start+=sw})}
 
 // ══════ YEAR IN REVIEW ══════
-// ═══ SVG icons for milestones ═══
-const MS_ICONS={book:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',star:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',brick:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="9" x2="15" y2="15"/><line x1="9" y1="15" x2="9" y2="21"/></svg>',bolt:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',rainbow:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a10 10 0 00-20 0"/><path d="M19 17a7 7 0 00-14 0"/><path d="M16 17a4 4 0 00-8 0"/></svg>',flame:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>',ruler:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 010 3.4l-2.6 2.6a2.4 2.4 0 01-3.4 0L2.7 8.7a2.4 2.4 0 010-3.4l2.6-2.6a2.4 2.4 0 013.4 0z"/><line x1="14.5" y1="12.5" x2="16.5" y2="10.5"/><line x1="10.5" y1="16.5" x2="12.5" y2="14.5"/></svg>',target:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',openbook:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>'};
-
-// ═══ Auto-milestones ═══
-function autoMilestones(comp,allBooks){
-const ms=[];const sorted=[...comp].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
-if(sorted.length>=1)ms.push({icon:'book',color:'var(--accent)',label:'First Book',detail:sorted[0].title});
-[5,10,15,20,25,30,40,50].forEach(n=>{if(sorted.length>=n)ms.push({icon:n>=25?'star':'book',color:n>=25?'var(--gold)':'var(--accent)',label:`${n} Books`,detail:`Reached with ${sorted[n-1].title}`})});
-const first5=sorted.find(b=>b.rating===5);if(first5)ms.push({icon:'star',color:'var(--gold)',label:'First 5-Star',detail:first5.title});
-const longest=comp.reduce((a,b)=>(b.pages||0)>(a.pages||0)?b:a,comp[0]);if(longest.pages>=400)ms.push({icon:'brick',color:'var(--blue)',label:'Marathon Read',detail:`${longest.title} \u2014 ${longest.pages.toLocaleString()} pages`});
-const withDays=comp.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:daysBetween(b.startDate,b.endDate)}));const fastest=withDays.length?withDays.reduce((a,b)=>a.days<b.days?a:b):null;
-if(fastest&&fastest.days<=14)ms.push({icon:'bolt',color:'#C46B5B',label:'Speed Reader',detail:`${fastest.title} in ${fastest.days} days`});
-const cats=new Set(comp.map(b=>b.category));if(cats.size>=5)ms.push({icon:'rainbow',color:'var(--green)',label:`${cats.size} Categories`,detail:'Renaissance reader'});
-const mc={};sorted.forEach(b=>{if(b.endDate){const k=b.endDate.slice(0,7);mc[k]=(mc[k]||0)+1}});const bestMonth=Object.entries(mc).sort((a,b)=>b[1]-a[1])[0];
-if(bestMonth&&bestMonth[1]>=2){const[y,m]=bestMonth[0].split('-');ms.push({icon:'flame',color:'#C45B5B',label:`${bestMonth[1]} in One Month`,detail:new Date(+y,+m-1).toLocaleDateString('en-US',{month:'long'})})}
-const tp=comp.reduce((s,b)=>s+(b.pages||0),0);if(tp>=5000)ms.push({icon:'ruler',color:'#8B6AAC',label:'5,000 Pages',detail:`${tp.toLocaleString()} total`});else if(tp>=2000)ms.push({icon:'ruler',color:'#8B6AAC',label:'2,000 Pages',detail:`${tp.toLocaleString()} total`});
-const nextTarget=[5,10,15,20,25,30,40,50].find(n=>n>sorted.length);
-if(nextTarget){const rem=nextTarget-sorted.length;ms.push({icon:'target',color:'var(--textD)',label:`${rem} to ${nextTarget} Books`,detail:`${sorted.length} of ${nextTarget}`,next:true,pct:Math.round(sorted.length/nextTarget*100)})}
-return ms;
-}
+const MS_ICONS={book:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',books:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8"/><path d="M8 11h6"/></svg>',star:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',brick:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="9" x2="15" y2="15"/><line x1="9" y1="15" x2="9" y2="21"/></svg>',bolt:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',rainbow:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a10 10 0 00-20 0"/><path d="M19 17a7 7 0 00-14 0"/><path d="M16 17a4 4 0 00-8 0"/></svg>',flame:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>',ruler:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 010 3.4l-2.6 2.6a2.4 2.4 0 01-3.4 0L2.7 8.7a2.4 2.4 0 010-3.4l2.6-2.6a2.4 2.4 0 013.4 0z"/><line x1="14.5" y1="12.5" x2="16.5" y2="10.5"/><line x1="10.5" y1="16.5" x2="12.5" y2="14.5"/></svg>',target:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',openbook:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>',clock:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',pencil:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5z"/></svg>',quote:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2z"/></svg>',grid:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',check:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',heart:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>',compass:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',calendar:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'};
 
 // ═══ Reader identity ═══
 const ID_LABELS={"Self-Awareness":"Seeker","Current America":"Citizen","Economics & Money":"Economist","Technology":"Technologist","American History":"Historian","Science":"Scientist","World History":"Historian","Philosophy & Ethics":"Philosopher","Religion":"Contemplative","Fiction":"Storyteller","Other":"Explorer"};
@@ -878,7 +962,45 @@ function getIdentityEvolution(comp){
   return steps;
 }
 
-// ══════ YEAR IN REVIEW ══════
+// ═══ Narrative engine (selects top 3 patterns) ═══
+function composeNarrative(comp){
+  if(comp.length<2)return'';const sorted=[...comp].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
+  const durs=sorted.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:Math.max(1,Math.round((new Date(b.endDate)-new Date(b.startDate))/86400000))}));
+  const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0);const cats=new Set(comp.map(b=>b.category));
+  const catCounts={};comp.forEach(b=>catCounts[b.category]=(catCounts[b.category]||0)+1);const topCat=Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];
+  const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const r=[];
+
+  // Opening
+  const first=sorted[0];const fMonth=monthNames[new Date(first.endDate).getMonth()];
+  r.push({s:5,t:`Your year started with <strong>${esc(first.title)}</strong> in ${fMonth}.`});
+
+  // Category shift
+  if(comp.length>=4){const half=Math.floor(comp.length/2);const fc={},sc={};sorted.slice(0,half).forEach(b=>fc[b.category]=(fc[b.category]||0)+1);sorted.slice(half).forEach(b=>sc[b.category]=(sc[b.category]||0)+1);const tf=Object.entries(fc).sort((a,b)=>b[1]-a[1])[0];const ts=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];if(tf&&ts&&tf[0]!==ts[0])r.push({s:7,t:`Your reading shifted from <em>${tf[0]}</em> to <em>${ts[0]}</em> as the year went on.`})}
+
+  // Fastest
+  if(durs.length){const fastest=durs.reduce((a,b)=>a.days<b.days?a:b);if(fastest.days<=14)r.push({s:6,t:`Your fastest was <em>${esc(fastest.title)}</em> at ${fastest.days} days.`})}
+
+  // Longest book
+  const longest=comp.reduce((a,b)=>(a.pages||0)>(b.pages||0)?a:b,comp[0]);if(longest.pages>=400)r.push({s:5,t:`The longest was <em>${esc(longest.title)}</em> at ${longest.pages.toLocaleString()} pages.`});
+
+  // Pace trend
+  if(durs.length>=4){const half=Math.floor(durs.length/2);const af=durs.slice(0,half).reduce((s,b)=>s+b.days,0)/half;const as=durs.slice(half).reduce((s,b)=>s+b.days,0)/(durs.length-half);if(as<af*0.7)r.push({s:6,t:`Your pace picked up \u2014 finishing books ${Math.round((1-as/af)*100)}% faster in the second half.`})}
+
+  // Breadth
+  if(cats.size>=5)r.push({s:4,t:`Across <em>${cats.size} categories</em>, you gravitated toward <em>${topCat[0]}</em>.`});
+  else if(cats.size>=3)r.push({s:3,t:`You read across ${cats.size} categories, favoring <em>${topCat[0]}</em>.`});
+
+  // Back to back
+  for(let i=1;i<sorted.length;i++){const gap=Math.round((new Date(sorted[i].endDate)-new Date(sorted[i-1].endDate))/86400000);if(gap<=7){r.push({s:5,t:`You finished <strong>${esc(sorted[i-1].title)}</strong> and <strong>${esc(sorted[i].title)}</strong> within a week of each other.`});break}}
+
+  r.sort((a,b)=>b.s-a.s);
+  // Always include opening, then top 2 others
+  const opening=r.find(x=>x.s===5&&x.t.includes('started'));
+  const others=r.filter(x=>x!==opening).slice(0,2);
+  return[opening,...others].filter(Boolean).map(x=>x.t).join(' ');
+}
+
 function renderReview(){
 const comp=getCompleted();if(comp.length<3){document.getElementById("viewReview").innerHTML=`<div class="empty"><p class="title">Complete at least 3 books to unlock Year in Review.</p></div>`;return}
 const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0),pct=Math.min(100,Math.round(comp.length/getGoal()*100));
@@ -892,29 +1014,26 @@ let html='';
 html+=`<div class="yr-hero"><div class="yr-hero-glow"></div><p class="yr-hero-label">Year in Review</p><p class="yr-hero-num">${comp.length}</p><p class="yr-hero-sub">books completed \u00B7 ${pct}% of goal</p><p class="yr-hero-pages">${totalPages.toLocaleString()} pages read</p></div>`;
 
 // 2. MONTHLY TIMELINE
-const monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const mNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const monthBooks={};comp.forEach(b=>{if(b.endDate){const d=new Date(b.endDate);const k=d.getFullYear()+'-'+String(d.getMonth()).padStart(2,'0');if(!monthBooks[k])monthBooks[k]=[];monthBooks[k].push(b)}});
 html+=`<div class="yr-months">`;
 for(let m=0;m<12;m++){const yr=new Date().getFullYear();const k=yr+'-'+String(m).padStart(2,'0');const k2=(yr-1)+'-'+String(m).padStart(2,'0');const mb=monthBooks[k]||monthBooks[k2]||[];
-html+=`<div class="yr-month"><div class="yr-month-dots">`;if(mb.length)mb.forEach(b=>{const col=CAT_COLORS[b.category]||CAT_COLORS.Other;html+=`<div class="yr-month-dot" style="background:${col}"></div>`});else html+=`<div class="yr-month-empty"></div>`;
-html+=`</div><span class="yr-month-label">${monthNames[m]}</span></div>`}
+html+=`<div class="yr-month"><div class="yr-month-dots">`;if(mb.length)mb.forEach(b=>{html+=`<div class="yr-month-dot" style="background:${CAT_COLORS[b.category]||CAT_COLORS.Other}"></div>`});else html+=`<div class="yr-month-empty"></div>`;
+html+=`</div><span class="yr-month-label">${mNames[m]}</span></div>`}
 html+=`</div>`;
 
-// 3. NARRATIVE (from insight engine)
-const insightText=composeInsightText(data.books);
-if(insightText)html+=`<div class="panel"><div class="panel-title">Your Reading Journey</div><p class="yr-narrative">${insightText}</p></div>`;
+// 3. NARRATIVE
+const narrative=composeNarrative(comp);
+if(narrative)html+=`<div class="panel"><div class="panel-title">Your Reading Journey</div><p class="yr-narrative">${narrative}</p></div>`;
 
 // 4. IDENTITY CARD
 const currentId=getReaderIdentity(comp);const evolution=getIdentityEvolution(comp);
 html+=`<div class="yr-identity"><div class="yr-id-bg"></div><div class="yr-id-accent-line"></div><div class="yr-id-content"><div class="yr-id-header"><div class="yr-id-icon">${MS_ICONS.openbook}</div><div class="yr-id-text"><p class="yr-id-label">Your reader identity</p><h2 class="yr-id-title">${currentId}</h2><p class="yr-id-desc">${cats.size} categories \u00B7 ${avgPages} avg pages \u00B7 ${fiveCount>=comp.length/2?'high standards':'wide-ranging taste'}</p></div></div>`;
-// Stats strip
 html+=`<div class="yr-id-stats"><div class="yr-id-stat"><p class="yr-id-stat-val">${comp.length}</p><p class="yr-id-stat-label">Books</p></div><div class="yr-id-stat"><p class="yr-id-stat-val">${avgPages}</p><p class="yr-id-stat-label">Avg pages</p></div><div class="yr-id-stat"><p class="yr-id-stat-val">${cats.size}</p><p class="yr-id-stat-label">Categories</p></div><div class="yr-id-stat"><p class="yr-id-stat-val yr-gold">${avgR||'\u2014'}</p><p class="yr-id-stat-label">Avg rating</p></div></div>`;
-// Rating bars
 html+=`<div class="yr-id-ratings"><div><div class="yr-id-rat-visual">`;
-for(let i=0;i<5;i++){const h=ratingCounts[i]>0?Math.max(4,Math.round(ratingCounts[i]/maxRat*18)):2;const col=i>=3?'var(--gold)':'var(--textDD)';html+=`<div class="yr-id-rat-bar" style="height:${h}px;background:${col}"></div>`}
+for(let i=0;i<5;i++){const h=ratingCounts[i]>0?Math.max(4,Math.round(ratingCounts[i]/maxRat*18)):2;html+=`<div class="yr-id-rat-bar" style="height:${h}px;background:${i>=3?'var(--gold)':'var(--textDD)'}"></div>`}
 html+=`</div><div class="yr-id-rat-labels">`;for(let i=0;i<5;i++)html+=`<span class="yr-id-rat-lbl">${i+1}</span>`;
 html+=`</div></div><span class="yr-id-rat-text"><strong>${avgR||'\u2014'}</strong>/5 avg \u00B7 ${fiveCount} of ${comp.length} got 5\u2605</span></div>`;
-// Evolution
 if(evolution.length>1){html+=`<div class="yr-evo"><p class="yr-evo-title">How your identity shifted</p><div class="yr-evo-flow">`;
 evolution.forEach((s,i)=>{html+=`<div style="text-align:center"><span class="yr-evo-chip${s.current?' yr-evo-now':''}">${s.id}</span><span class="yr-evo-period">${s.period}</span></div>`;if(i<evolution.length-1)html+=`<span class="yr-evo-arrow">\u2192</span>`});
 html+=`</div></div>`}
@@ -925,11 +1044,13 @@ const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.pus
 const bestQuote=allQuotes.sort((a,b)=>b.rating-a.rating)[0];
 if(bestQuote)html+=`<div class="yr-quote"><p class="yr-quote-text">\u201C${esc(bestQuote.text)}\u201D</p><p class="yr-quote-src">\u2014 <strong>${esc(bestQuote.title)}</strong> by ${esc(bestQuote.author)}</p></div>`;
 
-// 6. MILESTONES
-const ms=autoMilestones(comp,data.books);
+// 6. MILESTONES (from autoMilestones in data.js)
+const ms=autoMilestones();
 html+=`<div class="panel"><div class="panel-title">Milestones</div><div class="yr-ms-list">`;
-ms.forEach(m=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
-html+=`<div class="yr-ms-item${m.next?' yr-ms-next':''}"><div class="yr-ms-icon-wrap" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${m.label}</p><p class="yr-ms-detail">${m.detail}</p>${m.next?`<div class="yr-ms-bar"><div class="yr-ms-fill" style="width:${m.pct}%"></div></div>`:''}</div></div>`});
+ms.earned.forEach(m=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
+html+=`<div class="yr-ms-item"><div class="yr-ms-icon-wrap" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${m.label}</p><p class="yr-ms-detail">${m.detail}</p></div></div>`});
+if(ms.next){const icon=MS_ICONS[ms.next.icon]||MS_ICONS.target;
+html+=`<div class="yr-ms-item yr-ms-next"><div class="yr-ms-icon-wrap" style="background:${ms.next.color}15;color:${ms.next.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${ms.next.label}</p><p class="yr-ms-detail">${ms.next.detail}</p><div class="yr-ms-bar"><div class="yr-ms-fill" style="width:${ms.next.pct}%"></div></div></div></div>`}
 html+=`</div></div>`;
 
 document.getElementById("viewReview").innerHTML=html;

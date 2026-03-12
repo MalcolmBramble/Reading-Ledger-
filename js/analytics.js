@@ -85,26 +85,7 @@ requestAnimationFrame(()=>{
 function drawPie(cd,total){const c=document.getElementById("pieChart");if(!c)return;const dpr=window.devicePixelRatio||1;c.width=170*dpr;c.height=170*dpr;const ctx=c.getContext("2d");ctx.scale(dpr,dpr);let start=-Math.PI/2;cd.forEach(d=>{const sw=(d.value/total)*Math.PI*2;ctx.beginPath();ctx.arc(85,85,75,start,start+sw);ctx.arc(85,85,42,start+sw,start,true);ctx.closePath();ctx.fillStyle=CAT_COLORS[d.name]||"#7A7670";ctx.fill();start+=sw})}
 
 // ══════ YEAR IN REVIEW ══════
-// ═══ SVG icons for milestones ═══
-const MS_ICONS={book:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',star:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',brick:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="9" x2="15" y2="15"/><line x1="9" y1="15" x2="9" y2="21"/></svg>',bolt:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',rainbow:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a10 10 0 00-20 0"/><path d="M19 17a7 7 0 00-14 0"/><path d="M16 17a4 4 0 00-8 0"/></svg>',flame:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>',ruler:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 010 3.4l-2.6 2.6a2.4 2.4 0 01-3.4 0L2.7 8.7a2.4 2.4 0 010-3.4l2.6-2.6a2.4 2.4 0 013.4 0z"/><line x1="14.5" y1="12.5" x2="16.5" y2="10.5"/><line x1="10.5" y1="16.5" x2="12.5" y2="14.5"/></svg>',target:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',openbook:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>'};
-
-// ═══ Auto-milestones ═══
-function autoMilestones(comp,allBooks){
-const ms=[];const sorted=[...comp].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
-if(sorted.length>=1)ms.push({icon:'book',color:'var(--accent)',label:'First Book',detail:sorted[0].title});
-[5,10,15,20,25,30,40,50].forEach(n=>{if(sorted.length>=n)ms.push({icon:n>=25?'star':'book',color:n>=25?'var(--gold)':'var(--accent)',label:`${n} Books`,detail:`Reached with ${sorted[n-1].title}`})});
-const first5=sorted.find(b=>b.rating===5);if(first5)ms.push({icon:'star',color:'var(--gold)',label:'First 5-Star',detail:first5.title});
-const longest=comp.reduce((a,b)=>(b.pages||0)>(a.pages||0)?b:a,comp[0]);if(longest.pages>=400)ms.push({icon:'brick',color:'var(--blue)',label:'Marathon Read',detail:`${longest.title} \u2014 ${longest.pages.toLocaleString()} pages`});
-const withDays=comp.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:daysBetween(b.startDate,b.endDate)}));const fastest=withDays.length?withDays.reduce((a,b)=>a.days<b.days?a:b):null;
-if(fastest&&fastest.days<=14)ms.push({icon:'bolt',color:'#C46B5B',label:'Speed Reader',detail:`${fastest.title} in ${fastest.days} days`});
-const cats=new Set(comp.map(b=>b.category));if(cats.size>=5)ms.push({icon:'rainbow',color:'var(--green)',label:`${cats.size} Categories`,detail:'Renaissance reader'});
-const mc={};sorted.forEach(b=>{if(b.endDate){const k=b.endDate.slice(0,7);mc[k]=(mc[k]||0)+1}});const bestMonth=Object.entries(mc).sort((a,b)=>b[1]-a[1])[0];
-if(bestMonth&&bestMonth[1]>=2){const[y,m]=bestMonth[0].split('-');ms.push({icon:'flame',color:'#C45B5B',label:`${bestMonth[1]} in One Month`,detail:new Date(+y,+m-1).toLocaleDateString('en-US',{month:'long'})})}
-const tp=comp.reduce((s,b)=>s+(b.pages||0),0);if(tp>=5000)ms.push({icon:'ruler',color:'#8B6AAC',label:'5,000 Pages',detail:`${tp.toLocaleString()} total`});else if(tp>=2000)ms.push({icon:'ruler',color:'#8B6AAC',label:'2,000 Pages',detail:`${tp.toLocaleString()} total`});
-const nextTarget=[5,10,15,20,25,30,40,50].find(n=>n>sorted.length);
-if(nextTarget){const rem=nextTarget-sorted.length;ms.push({icon:'target',color:'var(--textD)',label:`${rem} to ${nextTarget} Books`,detail:`${sorted.length} of ${nextTarget}`,next:true,pct:Math.round(sorted.length/nextTarget*100)})}
-return ms;
-}
+const MS_ICONS={book:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',books:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8"/><path d="M8 11h6"/></svg>',star:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',brick:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="9" x2="15" y2="15"/><line x1="9" y1="15" x2="9" y2="21"/></svg>',bolt:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',rainbow:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a10 10 0 00-20 0"/><path d="M19 17a7 7 0 00-14 0"/><path d="M16 17a4 4 0 00-8 0"/></svg>',flame:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>',ruler:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 010 3.4l-2.6 2.6a2.4 2.4 0 01-3.4 0L2.7 8.7a2.4 2.4 0 010-3.4l2.6-2.6a2.4 2.4 0 013.4 0z"/><line x1="14.5" y1="12.5" x2="16.5" y2="10.5"/><line x1="10.5" y1="16.5" x2="12.5" y2="14.5"/></svg>',target:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',openbook:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>',clock:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',pencil:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5z"/></svg>',quote:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2z"/></svg>',grid:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',check:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',heart:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>',compass:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',calendar:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'};
 
 // ═══ Reader identity ═══
 const ID_LABELS={"Self-Awareness":"Seeker","Current America":"Citizen","Economics & Money":"Economist","Technology":"Technologist","American History":"Historian","Science":"Scientist","World History":"Historian","Philosophy & Ethics":"Philosopher","Religion":"Contemplative","Fiction":"Storyteller","Other":"Explorer"};
@@ -122,7 +103,45 @@ function getIdentityEvolution(comp){
   return steps;
 }
 
-// ══════ YEAR IN REVIEW ══════
+// ═══ Narrative engine (selects top 3 patterns) ═══
+function composeNarrative(comp){
+  if(comp.length<2)return'';const sorted=[...comp].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
+  const durs=sorted.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:Math.max(1,Math.round((new Date(b.endDate)-new Date(b.startDate))/86400000))}));
+  const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0);const cats=new Set(comp.map(b=>b.category));
+  const catCounts={};comp.forEach(b=>catCounts[b.category]=(catCounts[b.category]||0)+1);const topCat=Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];
+  const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const r=[];
+
+  // Opening
+  const first=sorted[0];const fMonth=monthNames[new Date(first.endDate).getMonth()];
+  r.push({s:5,t:`Your year started with <strong>${esc(first.title)}</strong> in ${fMonth}.`});
+
+  // Category shift
+  if(comp.length>=4){const half=Math.floor(comp.length/2);const fc={},sc={};sorted.slice(0,half).forEach(b=>fc[b.category]=(fc[b.category]||0)+1);sorted.slice(half).forEach(b=>sc[b.category]=(sc[b.category]||0)+1);const tf=Object.entries(fc).sort((a,b)=>b[1]-a[1])[0];const ts=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];if(tf&&ts&&tf[0]!==ts[0])r.push({s:7,t:`Your reading shifted from <em>${tf[0]}</em> to <em>${ts[0]}</em> as the year went on.`})}
+
+  // Fastest
+  if(durs.length){const fastest=durs.reduce((a,b)=>a.days<b.days?a:b);if(fastest.days<=14)r.push({s:6,t:`Your fastest was <em>${esc(fastest.title)}</em> at ${fastest.days} days.`})}
+
+  // Longest book
+  const longest=comp.reduce((a,b)=>(a.pages||0)>(b.pages||0)?a:b,comp[0]);if(longest.pages>=400)r.push({s:5,t:`The longest was <em>${esc(longest.title)}</em> at ${longest.pages.toLocaleString()} pages.`});
+
+  // Pace trend
+  if(durs.length>=4){const half=Math.floor(durs.length/2);const af=durs.slice(0,half).reduce((s,b)=>s+b.days,0)/half;const as=durs.slice(half).reduce((s,b)=>s+b.days,0)/(durs.length-half);if(as<af*0.7)r.push({s:6,t:`Your pace picked up \u2014 finishing books ${Math.round((1-as/af)*100)}% faster in the second half.`})}
+
+  // Breadth
+  if(cats.size>=5)r.push({s:4,t:`Across <em>${cats.size} categories</em>, you gravitated toward <em>${topCat[0]}</em>.`});
+  else if(cats.size>=3)r.push({s:3,t:`You read across ${cats.size} categories, favoring <em>${topCat[0]}</em>.`});
+
+  // Back to back
+  for(let i=1;i<sorted.length;i++){const gap=Math.round((new Date(sorted[i].endDate)-new Date(sorted[i-1].endDate))/86400000);if(gap<=7){r.push({s:5,t:`You finished <strong>${esc(sorted[i-1].title)}</strong> and <strong>${esc(sorted[i].title)}</strong> within a week of each other.`});break}}
+
+  r.sort((a,b)=>b.s-a.s);
+  // Always include opening, then top 2 others
+  const opening=r.find(x=>x.s===5&&x.t.includes('started'));
+  const others=r.filter(x=>x!==opening).slice(0,2);
+  return[opening,...others].filter(Boolean).map(x=>x.t).join(' ');
+}
+
 function renderReview(){
 const comp=getCompleted();if(comp.length<3){document.getElementById("viewReview").innerHTML=`<div class="empty"><p class="title">Complete at least 3 books to unlock Year in Review.</p></div>`;return}
 const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0),pct=Math.min(100,Math.round(comp.length/getGoal()*100));
@@ -136,29 +155,26 @@ let html='';
 html+=`<div class="yr-hero"><div class="yr-hero-glow"></div><p class="yr-hero-label">Year in Review</p><p class="yr-hero-num">${comp.length}</p><p class="yr-hero-sub">books completed \u00B7 ${pct}% of goal</p><p class="yr-hero-pages">${totalPages.toLocaleString()} pages read</p></div>`;
 
 // 2. MONTHLY TIMELINE
-const monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const mNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const monthBooks={};comp.forEach(b=>{if(b.endDate){const d=new Date(b.endDate);const k=d.getFullYear()+'-'+String(d.getMonth()).padStart(2,'0');if(!monthBooks[k])monthBooks[k]=[];monthBooks[k].push(b)}});
 html+=`<div class="yr-months">`;
 for(let m=0;m<12;m++){const yr=new Date().getFullYear();const k=yr+'-'+String(m).padStart(2,'0');const k2=(yr-1)+'-'+String(m).padStart(2,'0');const mb=monthBooks[k]||monthBooks[k2]||[];
-html+=`<div class="yr-month"><div class="yr-month-dots">`;if(mb.length)mb.forEach(b=>{const col=CAT_COLORS[b.category]||CAT_COLORS.Other;html+=`<div class="yr-month-dot" style="background:${col}"></div>`});else html+=`<div class="yr-month-empty"></div>`;
-html+=`</div><span class="yr-month-label">${monthNames[m]}</span></div>`}
+html+=`<div class="yr-month"><div class="yr-month-dots">`;if(mb.length)mb.forEach(b=>{html+=`<div class="yr-month-dot" style="background:${CAT_COLORS[b.category]||CAT_COLORS.Other}"></div>`});else html+=`<div class="yr-month-empty"></div>`;
+html+=`</div><span class="yr-month-label">${mNames[m]}</span></div>`}
 html+=`</div>`;
 
-// 3. NARRATIVE (from insight engine)
-const insightText=composeInsightText(data.books);
-if(insightText)html+=`<div class="panel"><div class="panel-title">Your Reading Journey</div><p class="yr-narrative">${insightText}</p></div>`;
+// 3. NARRATIVE
+const narrative=composeNarrative(comp);
+if(narrative)html+=`<div class="panel"><div class="panel-title">Your Reading Journey</div><p class="yr-narrative">${narrative}</p></div>`;
 
 // 4. IDENTITY CARD
 const currentId=getReaderIdentity(comp);const evolution=getIdentityEvolution(comp);
 html+=`<div class="yr-identity"><div class="yr-id-bg"></div><div class="yr-id-accent-line"></div><div class="yr-id-content"><div class="yr-id-header"><div class="yr-id-icon">${MS_ICONS.openbook}</div><div class="yr-id-text"><p class="yr-id-label">Your reader identity</p><h2 class="yr-id-title">${currentId}</h2><p class="yr-id-desc">${cats.size} categories \u00B7 ${avgPages} avg pages \u00B7 ${fiveCount>=comp.length/2?'high standards':'wide-ranging taste'}</p></div></div>`;
-// Stats strip
 html+=`<div class="yr-id-stats"><div class="yr-id-stat"><p class="yr-id-stat-val">${comp.length}</p><p class="yr-id-stat-label">Books</p></div><div class="yr-id-stat"><p class="yr-id-stat-val">${avgPages}</p><p class="yr-id-stat-label">Avg pages</p></div><div class="yr-id-stat"><p class="yr-id-stat-val">${cats.size}</p><p class="yr-id-stat-label">Categories</p></div><div class="yr-id-stat"><p class="yr-id-stat-val yr-gold">${avgR||'\u2014'}</p><p class="yr-id-stat-label">Avg rating</p></div></div>`;
-// Rating bars
 html+=`<div class="yr-id-ratings"><div><div class="yr-id-rat-visual">`;
-for(let i=0;i<5;i++){const h=ratingCounts[i]>0?Math.max(4,Math.round(ratingCounts[i]/maxRat*18)):2;const col=i>=3?'var(--gold)':'var(--textDD)';html+=`<div class="yr-id-rat-bar" style="height:${h}px;background:${col}"></div>`}
+for(let i=0;i<5;i++){const h=ratingCounts[i]>0?Math.max(4,Math.round(ratingCounts[i]/maxRat*18)):2;html+=`<div class="yr-id-rat-bar" style="height:${h}px;background:${i>=3?'var(--gold)':'var(--textDD)'}"></div>`}
 html+=`</div><div class="yr-id-rat-labels">`;for(let i=0;i<5;i++)html+=`<span class="yr-id-rat-lbl">${i+1}</span>`;
 html+=`</div></div><span class="yr-id-rat-text"><strong>${avgR||'\u2014'}</strong>/5 avg \u00B7 ${fiveCount} of ${comp.length} got 5\u2605</span></div>`;
-// Evolution
 if(evolution.length>1){html+=`<div class="yr-evo"><p class="yr-evo-title">How your identity shifted</p><div class="yr-evo-flow">`;
 evolution.forEach((s,i)=>{html+=`<div style="text-align:center"><span class="yr-evo-chip${s.current?' yr-evo-now':''}">${s.id}</span><span class="yr-evo-period">${s.period}</span></div>`;if(i<evolution.length-1)html+=`<span class="yr-evo-arrow">\u2192</span>`});
 html+=`</div></div>`}
@@ -169,11 +185,13 @@ const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.pus
 const bestQuote=allQuotes.sort((a,b)=>b.rating-a.rating)[0];
 if(bestQuote)html+=`<div class="yr-quote"><p class="yr-quote-text">\u201C${esc(bestQuote.text)}\u201D</p><p class="yr-quote-src">\u2014 <strong>${esc(bestQuote.title)}</strong> by ${esc(bestQuote.author)}</p></div>`;
 
-// 6. MILESTONES
-const ms=autoMilestones(comp,data.books);
+// 6. MILESTONES (from autoMilestones in data.js)
+const ms=autoMilestones();
 html+=`<div class="panel"><div class="panel-title">Milestones</div><div class="yr-ms-list">`;
-ms.forEach(m=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
-html+=`<div class="yr-ms-item${m.next?' yr-ms-next':''}"><div class="yr-ms-icon-wrap" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${m.label}</p><p class="yr-ms-detail">${m.detail}</p>${m.next?`<div class="yr-ms-bar"><div class="yr-ms-fill" style="width:${m.pct}%"></div></div>`:''}</div></div>`});
+ms.earned.forEach(m=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
+html+=`<div class="yr-ms-item"><div class="yr-ms-icon-wrap" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${m.label}</p><p class="yr-ms-detail">${m.detail}</p></div></div>`});
+if(ms.next){const icon=MS_ICONS[ms.next.icon]||MS_ICONS.target;
+html+=`<div class="yr-ms-item yr-ms-next"><div class="yr-ms-icon-wrap" style="background:${ms.next.color}15;color:${ms.next.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${ms.next.label}</p><p class="yr-ms-detail">${ms.next.detail}</p><div class="yr-ms-bar"><div class="yr-ms-fill" style="width:${ms.next.pct}%"></div></div></div></div>`}
 html+=`</div></div>`;
 
 document.getElementById("viewReview").innerHTML=html;
