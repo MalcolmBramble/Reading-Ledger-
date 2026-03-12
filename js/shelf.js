@@ -53,17 +53,14 @@ function renderShelf(){
     });
     html+=`</div>`;
   }
-  html+=`<div class="tooltip" id="shelfTooltip"><p class="tooltip-title" id="ttTitle"></p><p class="tooltip-author" id="ttAuthor"></p><div class="tooltip-meta" id="ttMeta"></div><button class="tooltip-open" id="ttOpen">Open &rarr;</button></div>`;
   document.getElementById("viewShelf").innerHTML=html;
   bindShelfEvents();
 }
 
 function bindShelfEvents(){
   document.querySelectorAll("#viewShelf .sort-pill").forEach(b=>b.onclick=()=>{currentSort=b.dataset.sort;renderShelf()});
-  const tt=document.getElementById("shelfTooltip");let aid=null;
-  const dismiss=()=>{tt.classList.remove("show");aid=null};
-  document.querySelectorAll("#viewShelf .spine").forEach(s=>s.onclick=e=>{e.stopPropagation();const id=s.dataset.id;if(aid===id){dismiss();return}const bk=data.books.find(b=>b.id===id);if(!bk)return;aid=id;document.getElementById("ttTitle").textContent=bk.title;document.getElementById("ttAuthor").textContent=bk.author||"";const lc=CAT_COLORS[bk.category]||CAT_COLORS.Other;let m=`<span class="cat-dot" style="background:${lc}"></span><span>${bk.category}</span>`;if(bk.pages)m+=`<span>\u00B7 ${bk.pages}p</span>`;if(bk.rating)m+=`<span class="tooltip-stars">${"\u2605".repeat(bk.rating)}</span>`;m+=`<span class="status-badge ${bk.status}">${STATUS_LABELS[bk.status]}</span>`;document.getElementById("ttMeta").innerHTML=m;document.getElementById("ttOpen").onclick=()=>{dismiss();openDetail(id)};tt.classList.add("show")});
-  document.addEventListener("click",dismiss);
+  // Spine → direct to detail (skip tooltip)
+  document.querySelectorAll("#viewShelf .spine").forEach(s=>s.onclick=e=>{e.stopPropagation();openDetail(s.dataset.id)});
   const qr=document.getElementById("quoteRefresh");if(qr)qr.onclick=()=>{pickRandomQuote();renderShelf()};
   // Backup banner
   const bbExp=document.getElementById("bbExport");if(bbExp)bbExp.onclick=()=>{const json=JSON.stringify(data,null,2);const b=new Blob([json],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`reading-ledger-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);data.settings.lastExport=new Date().toISOString();save();renderShelf()};

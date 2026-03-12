@@ -78,11 +78,14 @@ let nudgeDismissed=false;
 function checkOnboarding(){
   if(localStorage.getItem("rl-onboarded"))return;
   if(data.books.length>0){localStorage.setItem("rl-onboarded","1");return}
-  const ob=document.getElementById("onboarding");ob.style.display="flex";
+  // Inject onboarding overlay
+  const ob=document.createElement("div");ob.id="onboarding";ob.className="onboarding-overlay";
+  ob.innerHTML=`<div class="onb-slide active"><div class="onb-icon">\u{1F4DA}</div><h2 class="onb-title">Your Personal Library</h2><p class="onb-desc">Book spines on wooden shelves, color-coded by category. Tap any spine to explore. Gold edges mark your favorites.</p><div class="onb-dots"><span class="onb-dot active"></span><span class="onb-dot"></span><span class="onb-dot"></span></div><button class="onb-btn" id="onbNext0">Next</button><button class="onb-skip" id="onbSkip">Skip intro</button></div><div class="onb-slide"><div class="onb-icon">\u23F1</div><h2 class="onb-title">Track Your Reading</h2><p class="onb-desc">Log sessions with a built-in timer. See your progress, pace, and streaks on the Timeline. Quick-update pages right from the shelf.</p><div class="onb-dots"><span class="onb-dot"></span><span class="onb-dot active"></span><span class="onb-dot"></span></div><button class="onb-btn" id="onbNext1">Next</button><button class="onb-skip" id="onbSkip1">Skip intro</button></div><div class="onb-slide"><div class="onb-icon">\u{1F31F}</div><h2 class="onb-title">Review Your Year</h2><p class="onb-desc">Analytics, category breakdowns, reading habits, and a Year in Review that celebrates your progress.</p><div class="onb-dots"><span class="onb-dot"></span><span class="onb-dot"></span><span class="onb-dot active"></span></div><button class="onb-btn" id="onbStart">Start Fresh</button><button class="onb-demo" id="onbDemo">Load Demo Library (12 books)</button></div>`;
+  document.body.appendChild(ob);
   function goSlide(n){ob.querySelectorAll(".onb-slide").forEach((s,i)=>{s.classList.toggle("active",i===n)})}
   function finish(loadDemo){
     if(loadDemo){data=makeDemoData();save();pickRandomQuote()}
-    localStorage.setItem("rl-onboarded","1");ob.style.display="none";renderAll();
+    localStorage.setItem("rl-onboarded","1");ob.remove();renderAll();
   }
   document.getElementById("onbNext0").onclick=()=>goSlide(1);
   document.getElementById("onbNext1").onclick=()=>goSlide(2);
@@ -112,10 +115,10 @@ function getNudge(){
 // ─── Quick-add helper ───
 // ─── Header ───
 function updateHeader(){
-  const c=getCompleted().length,g=getGoal(),pct=Math.min(100,Math.round(c/g*100)),streak=getStreak(),reading=getReading().length;
+  const c=getCompleted().length,g=getGoal(),pct=Math.min(100,Math.round(c/g*100)),streak=getDayStreak(),reading=getReading().length;
   const R=11,C=2*Math.PI*R;
   let h=`<div class="goal-pill"><svg width="28" height="28" viewBox="0 0 28 28" style="transform:rotate(-90deg)"><circle cx="14" cy="14" r="${R}" fill="none" stroke="#2A2419" stroke-width="3"/><circle cx="14" cy="14" r="${R}" fill="none" stroke="#C4956A" stroke-width="3" stroke-dasharray="${(pct/100)*C} ${C}" stroke-linecap="round"/></svg><span class="goal-pill-text">${c}<span>/${g}</span></span></div>`;
-  if(streak.weeks>0)h+=`<div class="streak-pill">\u{1F525} ${streak.weeks}w streak</div>`;
+  if(streak.current>0)h+=`<div class="streak-pill">\u{1F525} ${streak.current}d streak</div>`;
   if(reading>0)h+=`<span style="font-family:var(--ui);font-size:12px;color:var(--textD)">${reading} in progress</span>`;
   document.getElementById("hdrPills").innerHTML=h;
 }

@@ -21,15 +21,18 @@ function getReading(){return data.books.filter(b=>b.status==="reading")}
 function load(){try{const r=localStorage.getItem(SK);if(r){const d=JSON.parse(r);if(d.books&&d.books.length>0)return d}}catch(e){}return null}
 function save(){localStorage.setItem(SK,JSON.stringify(data))}
 
-function getStreak(){
-  const reading=getReading(),completed=getCompleted().filter(b=>b.endDate);
-  if(!reading.length&&!completed.length)return{weeks:0,active:false};
-  const now=Date.now(),weeks=new Set();
-  completed.forEach(b=>{if(b.endDate){const s=new Date(b.startDate||b.endDate).getTime(),e=new Date(b.endDate).getTime();for(let t=s;t<=e;t+=7*86400000)weeks.add(Math.floor(t/(7*86400000)))}});
-  reading.forEach(b=>{if(b.startDate){const s=new Date(b.startDate).getTime();for(let t=s;t<=now;t+=7*86400000)weeks.add(Math.floor(t/(7*86400000)))}});
-  const cw=Math.floor(now/(7*86400000));let streak=0;
-  for(let w=cw;w>=cw-52;w--){if(weeks.has(w))streak++;else break}
-  return{weeks:streak,active:reading.length>0};
+function getDayStreak(){
+  const sessionDays={};data.books.forEach(b=>(b.sessions||[]).forEach(s=>{if(!s.date)return;const k=s.date.slice(0,10);sessionDays[k]=(sessionDays[k]||0)+1}));
+  const today=new Date();today.setHours(0,0,0,0);
+  let current=0;for(let d=new Date(today);;d.setDate(d.getDate()-1)){if(sessionDays[d.toISOString().slice(0,10)])current++;else break}
+  let best=0,run=0;const keys=Object.keys(sessionDays).sort();keys.forEach((k,i)=>{if(i===0)run=1;else{const prev=new Date(keys[i-1]);prev.setDate(prev.getDate()+1);run=prev.toISOString().slice(0,10)===k?run+1:1}if(run>best)best=run});
+  // This week (Mon-Sun)
+  const dow=today.getDay()===0?6:today.getDay()-1;const weekStart=new Date(today);weekStart.setDate(weekStart.getDate()-dow);let weekRead=0;
+  for(let i=0;i<7;i++){const wd=new Date(weekStart);wd.setDate(wd.getDate()+i);if(sessionDays[wd.toISOString().slice(0,10)])weekRead++}
+  // This month
+  const cm=today.getMonth(),cy=today.getFullYear(),dim=new Date(cy,cm+1,0).getDate();let monthRead=0;
+  for(let d=1;d<=dim;d++){const dk=`${cy}-${String(cm+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;if(sessionDays[dk])monthRead++}
+  return{current,best,weekRead,monthRead,monthDays:dim,sessionDays};
 }
 
 function getMilestones(){
