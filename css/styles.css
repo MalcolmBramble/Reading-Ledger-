@@ -309,7 +309,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .tl-feed-day{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
 .tl-feed-day:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .tl-feed-day-label{margin-bottom:10px}
-.tl-fi{padding:8px 0;margin-bottom:2px}
+.tl-fi{padding:8px 0 8px 14px;margin-bottom:2px}
 
 /* 9. Modal form spacing */
 .form-stack>div{margin-bottom:16px}
