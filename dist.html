@@ -89,7 +89,7 @@ nav.tabs{display:flex;gap:0;margin-top:24px;border-bottom:1px solid var(--border
 .tl-next{background:linear-gradient(135deg,rgba(46,68,96,0.12),rgba(196,149,106,0.06));border:1px solid var(--border);border-radius:14px;padding:20px 24px}.tl-next-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}.tl-next-icon{font-size:20px}.tl-next-title{font-family:var(--ui);font-size:13px;font-weight:600}
 .tl-next-card{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:border-color 0.2s}.tl-next-card:hover{border-color:var(--accent)}.tl-next-spine{width:10px;height:50px;border-radius:3px;flex-shrink:0}.tl-next-info{flex:1;min-width:0}.tl-next-book-title{font-family:var(--ui);font-size:14px;font-weight:500}.tl-next-author{font-family:var(--ui);font-size:11px;color:var(--textD);margin-top:2px}.tl-next-meta{font-family:var(--ui);font-size:11px;color:var(--textDD);margin-top:4px}.tl-next-meta .rec{color:var(--accent)}.tl-next-start{background:var(--blue);color:#EDE6D8;border:none;border-radius:8px;padding:8px 18px;font-family:var(--ui);font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0}
 /* Gantt */
-.tl-gantt-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;padding:0;background:none;border:none;width:100%;text-align:left;margin-bottom:16px}.tl-gantt-toggle .tl-section-title{margin:0;cursor:pointer}.tl-gantt-arrow{font-family:var(--ui);font-size:12px;color:var(--textD);transition:transform 0.25s;display:inline-block}.tl-gantt-toggle.open .tl-gantt-arrow{transform:rotate(90deg)}.tl-gantt-body{overflow:hidden;max-height:0;opacity:0;transition:max-height 0.35s,opacity 0.25s}.tl-gantt-body.open{max-height:2000px;opacity:1}.tl-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer}.tl-row:hover{background:rgba(255,255,255,0.02)}.tl-row-label{font-family:var(--ui);font-size:12px;color:var(--textM);width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tl-row-track{flex:1;height:16px;position:relative;border-radius:4px}.tl-row-bar{position:absolute;height:100%;border-radius:4px;min-width:6px}.tl-row-dates{font-family:var(--ui);font-size:11px;color:var(--textDD);width:130px;flex-shrink:0;text-align:right;padding-left:8px}
+
 .tls-show-more{display:block;margin:12px auto 0;background:none;border:1px solid var(--border);border-radius:8px;padding:8px 24px;font-family:var(--ui);font-size:12px;color:var(--textD);cursor:pointer}
 
 /* Analytics */
@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .nudge-sub{font-family:var(--ui);font-size:12px;color:var(--textD)}
 .nudge-dismiss{background:none;border:none;color:var(--textDD);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0}
 
-@media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}.tl-row-label{width:80px;font-size:11px}.tl-row-dates{width:100px;font-size:11px}}
+@media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}}
 
 /* Reading DNA */
 .dna{background:linear-gradient(135deg,var(--surface),rgba(196,149,106,0.06));border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:24px}
@@ -800,12 +800,6 @@ if(wantToRead.length){const nx=wantToRead[0];const nxCol=CAT_COLORS[nx.category]
 html+=`<hr class="tl-divider"><div class="tl-next"><div class="tl-next-header"><span class="tl-next-icon">\u{1F4DA}</span><span class="tl-next-title">Up Next</span></div>`;
 html+=`<div class="tl-next-card" data-id="${nx.id}"><div class="tl-next-spine" style="background:linear-gradient(180deg,${nxCol},${nxCol}80)"></div><div class="tl-next-info"><p class="tl-next-book-title">${esc(nx.title)}</p><p class="tl-next-author">${esc(nx.author||'')}${nx.pages?' \u00B7 '+nx.pages+' pages':''}</p>${nx.recommendedBy?`<p class="tl-next-meta">Recommended by <span class="rec">${esc(nx.recommendedBy)}</span>${nx.recommendationNote?' \u00B7 '+esc(nx.recommendationNote):''}</p>`:''}</div><button class="tl-next-start" data-id="${nx.id}">Start \u25B8</button></div></div>`}
 
-// Gantt
-const ganttBooks=data.books.filter(b=>b.startDate).sort((a,b)=>new Date(a.startDate)-new Date(b.startDate));
-if(ganttBooks.length){const ganttOpen=window._ganttOpen||false;const dates=ganttBooks.map(b=>[new Date(b.startDate),new Date(b.endDate||new Date())]).flat();const minD=new Date(Math.min(...dates)),maxD=new Date(Math.max(...dates)),span=Math.max(1,(maxD-minD)/86400000);
-html+=`<hr class="tl-divider"><div><button class="tl-gantt-toggle${ganttOpen?' open':''}" id="ganttToggle"><span class="tl-gantt-arrow">\u25B6</span><p class="tl-section-title">Timeline</p><span style="font-family:var(--ui);font-size:11px;color:var(--textDD);margin-left:auto">${ganttBooks.length} books</span></button><div class="tl-gantt-body${ganttOpen?' open':''}" id="ganttBody">`;
-ganttBooks.forEach(b=>{const s=new Date(b.startDate),e=new Date(b.endDate||new Date()),left=((s-minD)/86400000)/span*100,w=Math.max(1,((e-s)/86400000)/span*100),col=CAT_COLORS[b.category]||CAT_COLORS.Other;html+=`<div class="tl-row" data-id="${b.id}"><span class="tl-row-label">${esc(b.title)}</span><div class="tl-row-track"><div class="tl-row-bar" style="left:${left}%;width:${w}%;background:${col}88"></div></div><span class="tl-row-dates">${fmtShort(b.startDate)} \u2013 ${b.endDate?fmtShort(b.endDate):'now'}</span></div>`});
-html+=`</div></div>`}
 el.innerHTML=html;
 bindTimelineEvents(el);
 }
@@ -832,9 +826,6 @@ function bindTimelineEvents(el){
   // Up Next: Start button
   el.querySelectorAll('.tl-next-start').forEach(btn=>btn.onclick=e=>{e.stopPropagation();const bk=data.books.find(b=>b.id===btn.dataset.id);if(!bk)return;bk.status='reading';bk.startDate=new Date().toISOString().slice(0,10);bk.updatedAt=new Date().toISOString();save();showToast(`Started "${bk.title}"`);renderTimeline();renderShelf();updateHeader()});
   el.querySelectorAll('.tl-next-card').forEach(card=>card.onclick=()=>openDetail(card.dataset.id));
-  // Gantt toggle
-  const ganttToggle=document.getElementById('ganttToggle');if(ganttToggle)ganttToggle.onclick=()=>{window._ganttOpen=!window._ganttOpen;ganttToggle.classList.toggle('open');document.getElementById('ganttBody').classList.toggle('open')};
-  el.querySelectorAll('.tl-row[data-id]').forEach(row=>row.onclick=()=>openDetail(row.dataset.id));
 }
 
 /* ═══ INSIGHT ENGINE — 50 pattern detectors for Year in Review ═══ */

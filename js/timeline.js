@@ -45,12 +45,6 @@ if(wantToRead.length){const nx=wantToRead[0];const nxCol=CAT_COLORS[nx.category]
 html+=`<hr class="tl-divider"><div class="tl-next"><div class="tl-next-header"><span class="tl-next-icon">\u{1F4DA}</span><span class="tl-next-title">Up Next</span></div>`;
 html+=`<div class="tl-next-card" data-id="${nx.id}"><div class="tl-next-spine" style="background:linear-gradient(180deg,${nxCol},${nxCol}80)"></div><div class="tl-next-info"><p class="tl-next-book-title">${esc(nx.title)}</p><p class="tl-next-author">${esc(nx.author||'')}${nx.pages?' \u00B7 '+nx.pages+' pages':''}</p>${nx.recommendedBy?`<p class="tl-next-meta">Recommended by <span class="rec">${esc(nx.recommendedBy)}</span>${nx.recommendationNote?' \u00B7 '+esc(nx.recommendationNote):''}</p>`:''}</div><button class="tl-next-start" data-id="${nx.id}">Start \u25B8</button></div></div>`}
 
-// Gantt
-const ganttBooks=data.books.filter(b=>b.startDate).sort((a,b)=>new Date(a.startDate)-new Date(b.startDate));
-if(ganttBooks.length){const ganttOpen=window._ganttOpen||false;const dates=ganttBooks.map(b=>[new Date(b.startDate),new Date(b.endDate||new Date())]).flat();const minD=new Date(Math.min(...dates)),maxD=new Date(Math.max(...dates)),span=Math.max(1,(maxD-minD)/86400000);
-html+=`<hr class="tl-divider"><div><button class="tl-gantt-toggle${ganttOpen?' open':''}" id="ganttToggle"><span class="tl-gantt-arrow">\u25B6</span><p class="tl-section-title">Timeline</p><span style="font-family:var(--ui);font-size:11px;color:var(--textDD);margin-left:auto">${ganttBooks.length} books</span></button><div class="tl-gantt-body${ganttOpen?' open':''}" id="ganttBody">`;
-ganttBooks.forEach(b=>{const s=new Date(b.startDate),e=new Date(b.endDate||new Date()),left=((s-minD)/86400000)/span*100,w=Math.max(1,((e-s)/86400000)/span*100),col=CAT_COLORS[b.category]||CAT_COLORS.Other;html+=`<div class="tl-row" data-id="${b.id}"><span class="tl-row-label">${esc(b.title)}</span><div class="tl-row-track"><div class="tl-row-bar" style="left:${left}%;width:${w}%;background:${col}88"></div></div><span class="tl-row-dates">${fmtShort(b.startDate)} \u2013 ${b.endDate?fmtShort(b.endDate):'now'}</span></div>`});
-html+=`</div></div>`}
 el.innerHTML=html;
 bindTimelineEvents(el);
 }
@@ -77,7 +71,4 @@ function bindTimelineEvents(el){
   // Up Next: Start button
   el.querySelectorAll('.tl-next-start').forEach(btn=>btn.onclick=e=>{e.stopPropagation();const bk=data.books.find(b=>b.id===btn.dataset.id);if(!bk)return;bk.status='reading';bk.startDate=new Date().toISOString().slice(0,10);bk.updatedAt=new Date().toISOString();save();showToast(`Started "${bk.title}"`);renderTimeline();renderShelf();updateHeader()});
   el.querySelectorAll('.tl-next-card').forEach(card=>card.onclick=()=>openDetail(card.dataset.id));
-  // Gantt toggle
-  const ganttToggle=document.getElementById('ganttToggle');if(ganttToggle)ganttToggle.onclick=()=>{window._ganttOpen=!window._ganttOpen;ganttToggle.classList.toggle('open');document.getElementById('ganttBody').classList.toggle('open')};
-  el.querySelectorAll('.tl-row[data-id]').forEach(row=>row.onclick=()=>openDetail(row.dataset.id));
 }
