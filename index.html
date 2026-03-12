@@ -124,15 +124,22 @@ canvas.pace-chart{width:100%;height:200px;display:block}
 
 button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-/* Quick-increment swipe strip */
-.nr-quick{display:flex;gap:6px;margin-bottom:8px;align-items:center}
-.nr-quick-btn{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 4px;font-family:var(--ui);font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;text-align:center;transition:all 0.15s}
-.nr-quick-btn:active{transform:scale(0.95);background:var(--accentGlow)}
-.nr-quick-btn.done{background:rgba(125,139,110,0.12);border-color:rgba(125,139,110,0.3);color:var(--green)}
-.nr-quick-custom{display:flex;align-items:center;gap:4px}
-.nr-quick-input{width:48px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 4px;color:var(--text);font-family:var(--ui);font-size:12px;text-align:center;outline:none}
-.nr-quick-input:focus{border-color:var(--accent)}
-.nr-quick-go{background:var(--accent);color:var(--bg);border:none;border-radius:6px;padding:6px 8px;font-family:var(--ui);font-size:11px;font-weight:600;cursor:pointer}
+/* Stepper strip */
+.nr-stepper{display:flex;align-items:center;background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:8px}
+.nr-stepper button{background:none;border:none;color:var(--accent);font-family:var(--ui);font-weight:600;padding:9px 0;cursor:pointer;flex:1;font-size:13px;-webkit-tap-highlight-color:transparent;transition:background 0.12s}
+.nr-stepper button:active{background:var(--surfaceH)}
+.nr-stepper button:not(:last-child){border-right:1px solid var(--border)}
+.nr-stepper .nr-val{flex:1.6;text-align:center;font-family:var(--ui);font-size:15px;font-weight:700;color:var(--text);padding:9px 0;border-right:1px solid var(--border);border-left:1px solid var(--border);position:relative;cursor:text}
+.nr-stepper .nr-val input{position:absolute;inset:0;width:100%;background:var(--surface);border:none;color:var(--text);font-family:var(--ui);font-size:15px;font-weight:700;text-align:center;outline:none;opacity:0;z-index:1}
+.nr-stepper .nr-val input:focus{opacity:1}
+.nr-stepper .nr-val input:focus+span{opacity:0}
+.nr-stepper .nr-val span{transition:opacity 0.15s}
+.nr-of{font-family:var(--ui);font-size:11px;color:var(--textDD);text-align:center;margin-top:4px}
+.nr-pending{font-family:var(--ui);font-size:11px;text-align:center;margin-top:5px;min-height:18px}
+.nr-pending .pos{color:var(--accent)}
+.nr-pending .cancelled{color:var(--textDD);font-style:italic}
+.nr-pending .countdown-bar{display:inline-block;width:40px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;vertical-align:middle;margin-left:6px}
+.nr-pending .countdown-bar-inner{height:100%;background:var(--accent);border-radius:2px;transition:width 0.1s linear}
 
 /* Onboarding overlay */
 .onboarding-overlay{position:fixed;inset:0;background:var(--bg);z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;opacity:0;animation:fadeIn 400ms ease forwards}
@@ -327,7 +334,79 @@ data.books.forEach(b=>{if(!b.sessions)b.sessions=[];if(!b.themes)b.themes=[];if(
 save();pickRandomQuote();
 
 // ─── Toast ───
-function showToast(msg){const t=document.getElementById("qaToast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2000)}
+function showToast(msg,type){const t=document.getElementById("qaToast");t.textContent=msg;t.classList.add("show");if(type)t.style.background=type==="gold"?"var(--gold)":type==="dim"?"var(--border)":"";else t.style.background="";setTimeout(()=>{t.classList.remove("show");t.style.background=""},2000)}
+
+// ─── Debounce Session Engine ───
+const DEBOUNCE_MS=30000; // 30 seconds
+let _pendingSessions={}; // keyed by bookId: {startPage, endPage, timer, countdownInterval, countdownLeft}
+
+function _updateNRDisplay(bk){
+  const pg=bk.pages||1,cur=bk.currentPage||0,pct=Math.min(100,Math.round(cur/pg*100));
+  const col=CAT_COLORS[bk.category]||CAT_COLORS.Other;
+  const pctEl=document.getElementById("nrPct_"+bk.id);if(pctEl)pctEl.textContent=pct+"%";
+  const fillEl=document.getElementById("nrFill_"+bk.id);if(fillEl)fillEl.style.width=pct+"%";
+  const stepper=document.querySelector(`.nr-stepper[data-book="${bk.id}"]`);
+  if(stepper){const lbl=stepper.querySelector(".nr-val span");if(lbl)lbl.textContent=cur;const inp=stepper.querySelector(".nr-val input");if(inp)inp.value=cur}
+}
+
+function _updatePendingUI(bookId){
+  const el=document.getElementById("nrPending_"+bookId);if(!el)return;
+  const ps=_pendingSessions[bookId];
+  if(!ps){el.innerHTML="";return}
+  const pages=ps.endPage-ps.startPage;
+  const pctLeft=Math.round((ps.countdownLeft/DEBOUNCE_MS)*100);
+  if(pages>0)el.innerHTML=`<span class="pos">+${pages}p pending</span> <span class="countdown-bar"><span class="countdown-bar-inner" style="width:${pctLeft}%"></span></span>`;
+  else el.innerHTML=`<span class="cancelled">back to start \u2014 will cancel</span> <span class="countdown-bar"><span class="countdown-bar-inner" style="width:${pctLeft}%"></span></span>`;
+}
+
+function _commitPending(bookId){
+  const ps=_pendingSessions[bookId];if(!ps)return;
+  clearTimeout(ps.timer);clearInterval(ps.countdownInterval);
+  const pages=ps.endPage-ps.startPage;
+  const bk=data.books.find(b=>b.id===bookId);
+  if(pages>0&&bk){
+    if(!bk.sessions)bk.sessions=[];
+    bk.sessions.push({id:uid(),date:new Date().toISOString(),startPage:ps.startPage,endPage:ps.endPage,duration:0,notes:""});
+    bk.updatedAt=new Date().toISOString();save();
+    showToast(`Logged: pg ${ps.startPage} \u2192 ${ps.endPage}  (+${pages}p)`);
+  }else if(pages<=0){
+    showToast("Session cancelled","dim");
+  }
+  delete _pendingSessions[bookId];
+  _updatePendingUI(bookId);
+}
+
+function _resetPendingTimer(bookId){
+  const ps=_pendingSessions[bookId];if(!ps)return;
+  clearTimeout(ps.timer);clearInterval(ps.countdownInterval);
+  ps.countdownLeft=DEBOUNCE_MS;
+  ps.countdownInterval=setInterval(()=>{ps.countdownLeft=Math.max(0,ps.countdownLeft-100);_updatePendingUI(bookId)},100);
+  ps.timer=setTimeout(()=>_commitPending(bookId),DEBOUNCE_MS);
+}
+
+function nrMovePage(bookId,newPage){
+  const bk=data.books.find(b=>b.id===bookId);if(!bk)return;
+  const pg=bk.pages||9999;newPage=Math.max(0,Math.min(pg,newPage));
+  if(newPage===bk.currentPage)return;
+  const ps=_pendingSessions[bookId];
+  if(!ps){
+    if(newPage>bk.currentPage){
+      _pendingSessions[bookId]={startPage:bk.currentPage,endPage:newPage,timer:null,countdownInterval:null,countdownLeft:DEBOUNCE_MS};
+      bk.currentPage=newPage;bk.updatedAt=new Date().toISOString();save();
+      _updateNRDisplay(bk);_resetPendingTimer(bookId);_updatePendingUI(bookId);
+    }else{
+      bk.currentPage=newPage;bk.updatedAt=new Date().toISOString();save();_updateNRDisplay(bk);
+    }
+  }else{
+    bk.currentPage=newPage;bk.updatedAt=new Date().toISOString();save();_updateNRDisplay(bk);
+    if(bk.currentPage<=ps.startPage){ps.endPage=ps.startPage}
+    else{ps.endPage=bk.currentPage}
+    _resetPendingTimer(bookId);_updatePendingUI(bookId);
+  }
+  // Book completion
+  if(bk.currentPage>=pg){bk.status="completed";bk.endDate=new Date().toISOString().slice(0,10);bk.updatedAt=new Date().toISOString();save();_commitPending(bookId);showToast(`Finished "${bk.title}"! \u{1F389}`,"gold");setTimeout(()=>{renderShelf();updateHeader()},500);return}
+  updateHeader();
+}
 
 // ─── Onboarding ───
 let quickAddOpen=false;
@@ -430,15 +509,11 @@ function renderShelf(){
     html+=`<div class="nr-section"><p class="nr-section-title">Now Reading</p>`;
     nr.forEach(b=>{
       const col=CAT_COLORS[b.category]||CAT_COLORS.Other,pg=b.pages||1,cur=b.currentPage||0,pct=Math.min(100,Math.round(cur/pg*100));
-      const stars=[1,2,3,4,5].map(s=>`<div class="nr-star${s<=(b.rating||0)?" filled":""}" data-book="${b.id}" data-star="${s}">${s<=(b.rating||0)?"\u2605":"\u2606"}</div>`).join('');
-      html+=`<div class="nr-card"><div class="nr-card-header"><div class="nr-card-accent" style="background:linear-gradient(180deg,${col},${col}80)"></div><div class="nr-card-info"><div class="nr-card-title" data-id="${b.id}">${esc(b.title)}</div><div class="nr-card-author">${esc(b.author||'')}</div></div><span class="nr-card-pct" style="color:${col}">${pct}%</span></div>`;
-      html+=`<div class="nr-bar" data-book="${b.id}"><div class="nr-bar-fill" style="width:${pct}%;background:linear-gradient(90deg,${col}90,${col})"></div><div class="nr-bar-label">pg ${cur} of ${pg} \u2014 tap to update</div></div>`;
-      // Quick-increment buttons
-      const avgSes=(b.sessions||[]).length?Math.round((b.sessions||[]).reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0)/(b.sessions||[]).length):20;
-      const inc1=Math.min(10,pg-cur),inc2=Math.min(avgSes,pg-cur),inc3=pg-cur;
-      if(cur<pg)html+=`<div class="nr-quick"><button class="nr-quick-btn" data-book="${b.id}" data-inc="10">+10p</button><button class="nr-quick-btn" data-book="${b.id}" data-inc="${avgSes}">+${avgSes}p</button><div class="nr-quick-custom"><input class="nr-quick-input" type="number" placeholder="#" data-book="${b.id}"><button class="nr-quick-go" data-book="${b.id}">+</button></div>${inc3<=50?`<button class="nr-quick-btn done" data-book="${b.id}" data-inc="${inc3}">\u2713 Finish</button>`:""}</div>`;
-      html+=`<div class="nr-actions"><div class="nr-status" data-book="${b.id}" style="background:rgba(125,139,110,0.12);border:1px solid rgba(125,139,110,0.25);color:var(--green)">Reading</div><div style="flex:1"></div><div class="nr-log-btn" data-book="${b.id}">\u{1F554} Log</div><div class="nr-stars">${stars}</div></div>`;
-      html+=`<div class="nr-session-form" id="nrSession_${b.id}"><div class="nr-sf-row"><input class="nr-sf-input" type="number" inputmode="numeric" placeholder="min" data-field="dur" data-book="${b.id}"><input class="nr-sf-input" type="number" inputmode="numeric" placeholder="pages" data-field="pg" data-book="${b.id}"><button class="nr-sf-submit" data-book="${b.id}">Log</button><button class="nr-sf-close" data-book="${b.id}">\u2715</button></div><p class="nr-sf-hint">Pages read will advance your current page</p></div>`;
+      html+=`<div class="nr-card" data-book="${b.id}"><div class="nr-card-header"><div class="nr-card-accent" style="background:linear-gradient(180deg,${col},${col}80)"></div><div class="nr-card-info"><div class="nr-card-title" data-id="${b.id}">${esc(b.title)}</div><div class="nr-card-author">${esc(b.author||'')}</div></div><span class="nr-card-pct" style="color:${col}" id="nrPct_${b.id}">${pct}%</span></div>`;
+      html+=`<div class="nr-bar"><div class="nr-bar-fill" id="nrFill_${b.id}" style="width:${pct}%;background:linear-gradient(90deg,${col}90,${col})"></div></div>`;
+      html+=`<div class="nr-stepper" data-book="${b.id}" data-pages="${pg}"><button data-inc="-10">\u221210</button><button data-inc="-1">\u22121</button><div class="nr-val"><input type="number" value="${cur}" min="0" max="${pg}" data-book="${b.id}"><span>${cur}</span></div><button data-inc="1">+1</button><button data-inc="10">+10</button></div>`;
+      html+=`<div class="nr-of">of ${pg} pages</div>`;
+      html+=`<div class="nr-pending" id="nrPending_${b.id}"></div>`;
       html+=`</div>`;
     });
     html+=`</div>`;
@@ -460,20 +535,10 @@ function bindShelfEvents(){
   const bbDis=document.getElementById("bbDismiss");if(bbDis)bbDis.onclick=()=>{document.getElementById("backupBanner")?.remove()};
   // Now Reading events
   document.querySelectorAll("#viewShelf .nr-card-title[data-id]").forEach(t=>t.onclick=()=>openDetail(t.dataset.id));
-  document.querySelectorAll("#viewShelf .nr-bar").forEach(bar=>bar.onclick=e=>{const bk=data.books.find(b=>b.id===bar.dataset.book);if(!bk)return;const rect=bar.getBoundingClientRect(),pct=Math.max(0,Math.min(100,Math.round((e.clientX-rect.left)/rect.width*100)));bk.currentPage=Math.round(pct/100*(bk.pages||1));bk.updatedAt=new Date().toISOString();save();renderShelf();updateHeader()});
-  // Status cycle
-  document.querySelectorAll("#viewShelf .nr-status[data-book]").forEach(btn=>btn.onclick=()=>{const bk=data.books.find(b=>b.id===btn.dataset.book);if(!bk)return;const cycle=["reading","completed","want-to-read"];const ci=(cycle.indexOf(bk.status)+1)%cycle.length;bk.status=cycle[ci];if(cycle[ci]==="completed"){bk.endDate=bk.endDate||new Date().toISOString().slice(0,10);bk.currentPage=bk.pages||bk.currentPage}bk.updatedAt=new Date().toISOString();save();renderShelf();updateHeader()});
-  // Star rating
-  document.querySelectorAll("#viewShelf .nr-star").forEach(s=>s.onclick=()=>{const bk=data.books.find(b=>b.id===s.dataset.book);if(!bk)return;const star=parseInt(s.dataset.star)||0;bk.rating=bk.rating===star?0:star;bk.updatedAt=new Date().toISOString();save();renderShelf()});
-  // Log session toggle
-  document.querySelectorAll("#viewShelf .nr-log-btn").forEach(btn=>btn.onclick=()=>{const form=document.getElementById("nrSession_"+btn.dataset.book);if(form)form.style.display=form.style.display==="none"||!form.style.display?"block":"none"});
-  document.querySelectorAll("#viewShelf .nr-sf-close").forEach(btn=>btn.onclick=()=>{const form=document.getElementById("nrSession_"+btn.dataset.book);if(form)form.style.display="none"});
-  // Submit session
-  document.querySelectorAll("#viewShelf .nr-sf-submit").forEach(btn=>btn.onclick=()=>{const bk=data.books.find(b=>b.id===btn.dataset.book);if(!bk)return;const form=document.getElementById("nrSession_"+btn.dataset.book);if(!form)return;const dur=parseInt(form.querySelector('[data-field="dur"]')?.value)||0;const pagesRead=parseInt(form.querySelector('[data-field="pg"]')?.value)||0;if(!dur&&!pagesRead)return;const startPg=bk.currentPage||0;const endPg=Math.min((bk.pages||9999),startPg+pagesRead);if(!bk.sessions)bk.sessions=[];bk.sessions.push({id:uid(),date:new Date().toISOString(),startPage:startPg,endPage:endPg,duration:dur,notes:""});if(pagesRead>0)bk.currentPage=endPg;bk.updatedAt=new Date().toISOString();save();renderShelf();updateHeader()});
-  // Quick-increment buttons
-  document.querySelectorAll("#viewShelf .nr-quick-btn").forEach(btn=>btn.onclick=()=>{const bk=data.books.find(b=>b.id===btn.dataset.book);if(!bk)return;const inc=parseInt(btn.dataset.inc)||0;const startPg=bk.currentPage||0;bk.currentPage=Math.min((bk.pages||9999),startPg+inc);if(bk.currentPage>=(bk.pages||9999)){bk.status="completed";bk.endDate=new Date().toISOString().slice(0,10);showToast(`Finished "${bk.title}"!`)}else{showToast(`+${inc} pages`)}if(!bk.sessions)bk.sessions=[];bk.sessions.push({id:uid(),date:new Date().toISOString(),startPage:startPg,endPage:bk.currentPage,duration:0,notes:""});bk.updatedAt=new Date().toISOString();save();renderShelf();updateHeader()});
-  // Quick-increment custom
-  document.querySelectorAll("#viewShelf .nr-quick-go").forEach(btn=>btn.onclick=()=>{const bk=data.books.find(b=>b.id===btn.dataset.book);if(!bk)return;const inp=btn.parentElement.querySelector('.nr-quick-input');const inc=parseInt(inp?.value)||0;if(!inc)return;const startPg=bk.currentPage||0;bk.currentPage=Math.min((bk.pages||9999),startPg+inc);if(!bk.sessions)bk.sessions=[];bk.sessions.push({id:uid(),date:new Date().toISOString(),startPage:startPg,endPage:bk.currentPage,duration:0,notes:""});bk.updatedAt=new Date().toISOString();save();showToast(`+${inc} pages`);renderShelf();updateHeader()});
+  // Stepper buttons
+  document.querySelectorAll("#viewShelf .nr-stepper button[data-inc]").forEach(btn=>{const stepper=btn.closest(".nr-stepper");const bookId=stepper.dataset.book;btn.onclick=()=>{const bk=data.books.find(b=>b.id===bookId);if(!bk)return;nrMovePage(bookId,bk.currentPage+parseInt(btn.dataset.inc))}});
+  // Stepper direct input
+  document.querySelectorAll("#viewShelf .nr-stepper .nr-val input").forEach(inp=>{inp.onfocus=()=>inp.select();inp.onblur=()=>{nrMovePage(inp.dataset.book,parseInt(inp.value)||0);inp.style.opacity="0";inp.nextElementSibling.style.opacity="1"};inp.onkeydown=e=>{if(e.key==="Enter")inp.blur()}});
   // Quick-add toggle
   const qaToggle=document.getElementById("qaToggle");if(qaToggle)qaToggle.onclick=e=>{e.stopPropagation();quickAddOpen=!quickAddOpen;renderShelf()};
   // Quick-add submit
