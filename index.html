@@ -123,7 +123,58 @@ canvas.pace-chart{width:100%;height:200px;display:block}
 .empty{text-align:center;padding:80px 20px}.empty p.title{font-size:20px;font-style:italic;color:var(--textD)}.empty p.sub{font-family:var(--ui);font-size:13px;color:var(--textDD);margin-top:6px}.empty .empty-cta{margin-top:24px;display:inline-block;background:var(--accent);color:var(--bg);border:none;border-radius:10px;padding:12px 28px;font-family:var(--ui);font-size:14px;font-weight:600;cursor:pointer}
 
 button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.yr-grid{grid-template-columns:1fr}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}.tl-hm-days{display:none}.tl-row-label{width:80px;font-size:11px}.tl-row-dates{width:100px;font-size:9px}.tl-hm-streaks{flex-direction:column;gap:4px}}
+
+/* Quick-increment swipe strip */
+.nr-quick{display:flex;gap:6px;margin-bottom:8px;align-items:center}
+.nr-quick-btn{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 4px;font-family:var(--ui);font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;text-align:center;transition:all 0.15s}
+.nr-quick-btn:active{transform:scale(0.95);background:var(--accentGlow)}
+.nr-quick-btn.done{background:rgba(125,139,110,0.12);border-color:rgba(125,139,110,0.3);color:var(--green)}
+.nr-quick-custom{display:flex;align-items:center;gap:4px}
+.nr-quick-input{width:48px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:6px 4px;color:var(--text);font-family:var(--ui);font-size:12px;text-align:center;outline:none}
+.nr-quick-input:focus{border-color:var(--accent)}
+.nr-quick-go{background:var(--accent);color:var(--bg);border:none;border-radius:6px;padding:6px 8px;font-family:var(--ui);font-size:11px;font-weight:600;cursor:pointer}
+
+/* Onboarding overlay */
+.onboarding-overlay{position:fixed;inset:0;background:var(--bg);z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;opacity:0;animation:fadeIn 400ms ease forwards}
+@keyframes fadeIn{to{opacity:1}}
+.onb-slide{text-align:center;max-width:360px;display:none}
+.onb-slide.active{display:block;animation:slideUp 300ms ease}
+.onb-icon{font-size:56px;margin-bottom:20px}
+.onb-title{font-size:28px;font-weight:600;margin-bottom:12px}
+.onb-desc{font-family:var(--ui);font-size:15px;color:var(--textM);line-height:1.6;margin-bottom:32px}
+.onb-dots{display:flex;gap:8px;justify-content:center;margin-bottom:28px}
+.onb-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all 0.2s}
+.onb-dot.active{background:var(--accent);width:24px;border-radius:4px}
+.onb-btn{background:var(--accent);color:var(--bg);border:none;border-radius:10px;padding:14px 40px;font-family:var(--ui);font-size:15px;font-weight:600;cursor:pointer;transition:opacity 0.2s}
+.onb-btn:hover{opacity:0.88}
+.onb-skip{background:none;border:none;color:var(--textD);font-family:var(--ui);font-size:13px;cursor:pointer;margin-top:16px;padding:8px}
+.onb-skip:hover{color:var(--textM)}
+.onb-demo{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 24px;font-family:var(--ui);font-size:14px;font-weight:600;color:var(--text);cursor:pointer;margin-top:12px;display:block;width:100%;text-align:center}
+
+/* Quick-add mode */
+.quick-add-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:16px}
+.quick-add-bar .qa-row{display:flex;gap:8px;align-items:center}
+.qa-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--ui);font-size:14px;outline:none}
+.qa-input:focus{border-color:var(--accent)}
+.qa-input::placeholder{color:var(--textD)}
+.qa-submit{background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:10px 16px;font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.qa-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.qa-fields select,.qa-fields input{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-family:var(--ui);font-size:12px;outline:none}
+.qa-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#EDE6D8;font-family:var(--ui);font-size:13px;font-weight:600;padding:10px 24px;border-radius:100px;opacity:0;transition:all 0.3s;z-index:100;pointer-events:none}
+.qa-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.qa-toggle{background:none;border:1px solid var(--border);border-radius:8px;padding:4px 12px;font-family:var(--ui);font-size:11px;color:var(--textD);cursor:pointer;margin-left:8px}
+.qa-toggle.active{background:var(--surfaceH);border-color:var(--borderL);color:var(--text)}
+
+/* Nudge banner */
+.nudge-banner{background:linear-gradient(135deg,rgba(46,68,96,0.15),rgba(125,139,110,0.1));border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color 0.2s}
+.nudge-banner:hover{border-color:var(--borderL)}
+.nudge-icon{font-size:28px;flex-shrink:0}
+.nudge-body{flex:1;min-width:0}
+.nudge-title{font-family:var(--ui);font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.nudge-sub{font-family:var(--ui);font-size:12px;color:var(--textD)}
+.nudge-dismiss{background:none;border:none;color:var(--textDD);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0}
+
+@media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.yr-grid{grid-template-columns:1fr}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}.tl-hm-days{display:none}.tl-row-label{width:80px;font-size:11px}.tl-row-dates{width:100px;font-size:9px}.tl-hm-streaks{flex-direction:column;gap:4px}.qa-fields{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -151,6 +202,33 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 <button data-tab="review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.09 6.26L21 9.27l-5 3.64L17.18 20 12 16.77 6.82 20 8 12.91l-5-3.64 6.91-1.01z"/></svg><span>Review</span></button>
 </nav>
 <button class="fab" id="fab" title="Add Book"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+<div class="qa-toast" id="qaToast"></div>
+<div class="onboarding-overlay" id="onboarding" style="display:none">
+  <div class="onb-slide active" data-slide="0">
+    <div class="onb-icon">&#128218;</div>
+    <h2 class="onb-title">Your Personal Library</h2>
+    <p class="onb-desc">Book spines on wooden shelves, color-coded by category. Tap any spine to explore. Gold edges mark your favorites.</p>
+    <div class="onb-dots"><span class="onb-dot active"></span><span class="onb-dot"></span><span class="onb-dot"></span></div>
+    <button class="onb-btn" id="onbNext0">Next</button>
+    <button class="onb-skip" id="onbSkip">Skip intro</button>
+  </div>
+  <div class="onb-slide" data-slide="1">
+    <div class="onb-icon">&#9201;</div>
+    <h2 class="onb-title">Track Your Reading</h2>
+    <p class="onb-desc">Log sessions with a built-in timer. See your progress, pace, and streaks on the Timeline. Quick-update pages right from the shelf.</p>
+    <div class="onb-dots"><span class="onb-dot"></span><span class="onb-dot active"></span><span class="onb-dot"></span></div>
+    <button class="onb-btn" id="onbNext1">Next</button>
+    <button class="onb-skip" id="onbSkip1">Skip intro</button>
+  </div>
+  <div class="onb-slide" data-slide="2">
+    <div class="onb-icon">&#127775;</div>
+    <h2 class="onb-title">Review Your Year</h2>
+    <p class="onb-desc">Analytics, category breakdowns, reading habits, and a Year in Review that celebrates your progress. Let's get started.</p>
+    <div class="onb-dots"><span class="onb-dot"></span><span class="onb-dot"></span><span class="onb-dot active"></span></div>
+    <button class="onb-btn" id="onbStart">Start Fresh</button>
+    <button class="onb-demo" id="onbDemo">Load Demo Library (12 books)</button>
+  </div>
+</div>
 <script>
 /* ═══ THE READING LEDGER — Complete Build ═══ */
 const CATEGORIES=["Self-Awareness","Current America","Economics & Money","Technology","American History","Science","World History","Philosophy & Ethics","Religion","Fiction","Other"];
@@ -247,6 +325,53 @@ if(!data.settings.goals)data.settings.goals={annual:data.settings.goal||50,categ
 if(!data.settings.goals.challenges)data.settings.goals.challenges=[];
 data.books.forEach(b=>{if(!b.sessions)b.sessions=[];if(!b.themes)b.themes=[];if(!b.quotes)b.quotes=[];if(!b.connections)b.connections=[];if(b.priority===undefined)b.priority=0;if(!b.recommendedBy)b.recommendedBy="";if(!b.recommendationNote)b.recommendationNote="";if(!b.recommendationSource)b.recommendationSource=""});
 save();pickRandomQuote();
+
+// ─── Toast ───
+function showToast(msg){const t=document.getElementById("qaToast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2000)}
+
+// ─── Onboarding ───
+let quickAddOpen=false;
+let nudgeDismissed=false;
+function checkOnboarding(){
+  if(localStorage.getItem("rl-onboarded"))return;
+  if(data.books.length>0){localStorage.setItem("rl-onboarded","1");return}
+  const ob=document.getElementById("onboarding");ob.style.display="flex";
+  function goSlide(n){ob.querySelectorAll(".onb-slide").forEach((s,i)=>{s.classList.toggle("active",i===n)})}
+  function finish(loadDemo){
+    if(loadDemo){data=makeDemoData();save();pickRandomQuote()}
+    localStorage.setItem("rl-onboarded","1");ob.style.display="none";renderAll();
+  }
+  document.getElementById("onbNext0").onclick=()=>goSlide(1);
+  document.getElementById("onbNext1").onclick=()=>goSlide(2);
+  document.getElementById("onbSkip").onclick=()=>finish(false);
+  document.getElementById("onbSkip1").onclick=()=>finish(false);
+  document.getElementById("onbStart").onclick=()=>finish(false);
+  document.getElementById("onbDemo").onclick=()=>finish(true);
+}
+
+// ─── Nudge Banner ───
+function getNudge(){
+  if(nudgeDismissed)return null;
+  const reading=getReading();if(!reading.length)return null;
+  const b=reading[0],pages=b.pages||1,cur=b.currentPage||0,remaining=pages-cur,pct=Math.min(100,Math.round(cur/pages*100));
+  if(pct<5)return null; // don't nudge if barely started
+  const sesPages=(b.sessions||[]).reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0);
+  const daysReading=b.startDate?daysBetween(b.startDate,new Date().toISOString()):0;
+  const pgDay=daysReading>0?sesPages/daysReading:0;
+  const estDays=pgDay>0?Math.ceil(remaining/pgDay):0;
+  let sub="";
+  if(remaining<=50)sub=`Only ${remaining} pages left \u2014 finish it today?`;
+  else if(estDays>0)sub=`At your pace, ~${estDays} day${estDays!==1?"s":""} to finish`;
+  else sub=`${remaining} pages remaining`;
+  return{bookId:b.id,title:b.title,pct,sub,icon:pct>=75?"\u{1F525}":pct>=50?"\u{1F4D6}":"\u2615"};
+}
+
+// ─── Quick-add helper ───
+function quickAddBook(title,author,category,status){
+  if(!title.trim())return;const now=new Date().toISOString();
+  data.books.push({id:uid(),title:title.trim(),author:(author||"").trim(),category:category||"Other",status:status||"want-to-read",pages:null,currentPage:0,rating:0,startDate:status==="reading"?now.slice(0,10):"",endDate:"",notes:"",themes:[],quotes:[],connections:[],coreArgument:"",impact:"",sessions:[],recommendedBy:"",recommendationNote:"",recommendationSource:"",priority:0,addedAt:now,updatedAt:now});
+  save();showToast(`Added "${title.trim()}"`);renderShelf();updateHeader();
+}
 // ─── Header ───
 function updateHeader(){
   const c=getCompleted().length,g=getGoal(),pct=Math.min(100,Math.round(c/g*100)),streak=getStreak(),reading=getReading().length;
@@ -261,6 +386,13 @@ function updateHeader(){
 function renderShelf(){
   const books=searchQuery?data.books.filter(b=>{const q=searchQuery.toLowerCase();return(b.title||"").toLowerCase().includes(q)||(b.author||"").toLowerCase().includes(q)||(b.category||"").toLowerCase().includes(q)||(b.notes||"").toLowerCase().includes(q)||(b.themes||[]).some(t=>t.toLowerCase().includes(q))||(b.quotes||[]).some(qt=>(qt.text||"").toLowerCase().includes(q))}):data.books;
   let html="";
+  // Nudge banner
+  const nudge=getNudge();
+  if(nudge&&!searchQuery)
+    html+=`<div class="nudge-banner" id="nudgeBanner" data-id="${nudge.bookId}"><span class="nudge-icon">${nudge.icon}</span><div class="nudge-body"><p class="nudge-title">${esc(nudge.title)} \u2014 ${nudge.pct}%</p><p class="nudge-sub">${nudge.sub}</p></div><button class="nudge-dismiss" id="nudgeDismiss">\u2715</button></div>`;
+  // Quick-add bar
+  if(quickAddOpen&&!searchQuery)
+    html+=`<div class="quick-add-bar" id="quickAddBar"><div class="qa-row"><input class="qa-input" id="qaTitle" placeholder="Title"><input class="qa-input" id="qaAuthor" placeholder="Author" style="max-width:140px"><button class="qa-submit" id="qaSubmit">+ Add</button></div><div class="qa-fields"><select id="qaCat">${CATEGORIES.map(c=>`<option value="${c}">${c}</option>`).join("")}</select><select id="qaStatus"><option value="want-to-read">To Read</option><option value="reading">Reading</option><option value="completed">Completed</option></select></div></div>`;
   // Backup reminder
   const lastExp=data.settings.lastExport?new Date(data.settings.lastExport):null;
   const daysSinceExport=lastExp?Math.floor((Date.now()-lastExp.getTime())/86400000):999;
@@ -274,7 +406,7 @@ function renderShelf(){
   if(ms.length&&!searchQuery) html+=`<div class="milestones">${ms.slice(-4).map(m=>`<div class="milestone"><span>${m.icon}</span> ${m.label}</div>`).join("")}</div>`;
   // Sort bar
   const sorts=[["date","Date"],["category","Category"],["rating","Rating"],["length","Length"],["status","Status"],["title","Title"]];
-  html+=`<div class="shelf-header"><p class="shelf-count">${books.length} book${books.length!==1?"s":""}</p><div class="sort-bar">${sorts.map(([k,l])=>`<button class="sort-pill${currentSort===k?" active":""}" data-sort="${k}">${l}</button>`).join("")}</div></div>`;
+  html+=`<div class="shelf-header"><p class="shelf-count">${books.length} book${books.length!==1?"s":""}<button class="qa-toggle${quickAddOpen?" active":""}" id="qaToggle">${quickAddOpen?"\u2715 Close":"+ Quick Add"}</button></p><div class="sort-bar">${sorts.map(([k,l])=>`<button class="sort-pill${currentSort===k?" active":""}" data-sort="${k}">${l}</button>`).join("")}</div></div>`;
   if(!books.length){
     html+=`<div class="empty"><p class="title">Your shelves are empty.</p><p class="sub">Add your first book to begin.</p><button class="empty-cta" onclick="openForm(null)">+ Add a Book</button></div>`;
   } else {
@@ -301,6 +433,10 @@ function renderShelf(){
       const stars=[1,2,3,4,5].map(s=>`<div class="nr-star${s<=(b.rating||0)?" filled":""}" data-book="${b.id}" data-star="${s}">${s<=(b.rating||0)?"\u2605":"\u2606"}</div>`).join('');
       html+=`<div class="nr-card"><div class="nr-card-header"><div class="nr-card-accent" style="background:linear-gradient(180deg,${col},${col}80)"></div><div class="nr-card-info"><div class="nr-card-title" data-id="${b.id}">${esc(b.title)}</div><div class="nr-card-author">${esc(b.author||'')}</div></div><span class="nr-card-pct" style="color:${col}">${pct}%</span></div>`;
       html+=`<div class="nr-bar" data-book="${b.id}"><div class="nr-bar-fill" style="width:${pct}%;background:linear-gradient(90deg,${col}90,${col})"></div><div class="nr-bar-label">pg ${cur} of ${pg} \u2014 tap to update</div></div>`;
+      // Quick-increment buttons
+      const avgSes=(b.sessions||[]).length?Math.round((b.sessions||[]).reduce((s,se)=>s+Math.max(0,(se.endPage||0)-(se.startPage||0)),0)/(b.sessions||[]).length):20;
+      const inc1=Math.min(10,pg-cur),inc2=Math.min(avgSes,pg-cur),inc3=pg-cur;
+      if(cur<pg)html+=`<div class="nr-quick"><button class="nr-quick-btn" data-book="${b.id}" data-inc="10">+10p</button><button class="nr-quick-btn" data-book="${b.id}" data-inc="${avgSes}">+${avgSes}p</button><div class="nr-quick-custom"><input class="nr-quick-input" type="number" placeholder="#" data-book="${b.id}"><button class="nr-quick-go" data-book="${b.id}">+</button></div>${inc3<=50?`<button class="nr-quick-btn done" data-book="${b.id}" data-inc="${inc3}">\u2713 Finish</button>`:""}</div>`;
       html+=`<div class="nr-actions"><div class="nr-status" data-book="${b.id}" style="background:rgba(125,139,110,0.12);border:1px solid rgba(125,139,110,0.25);color:var(--green)">Reading</div><div style="flex:1"></div><div class="nr-log-btn" data-book="${b.id}">\u{1F554} Log</div><div class="nr-stars">${stars}</div></div>`;
       html+=`<div class="nr-session-form" id="nrSession_${b.id}"><div class="nr-sf-row"><input class="nr-sf-input" type="number" inputmode="numeric" placeholder="min" data-field="dur" data-book="${b.id}"><input class="nr-sf-input" type="number" inputmode="numeric" placeholder="pages" data-field="pg" data-book="${b.id}"><button class="nr-sf-submit" data-book="${b.id}">Log</button><button class="nr-sf-close" data-book="${b.id}">\u2715</button></div><p class="nr-sf-hint">Pages read will advance your current page</p></div>`;
       html+=`</div>`;
@@ -334,6 +470,18 @@ function bindShelfEvents(){
   document.querySelectorAll("#viewShelf .nr-sf-close").forEach(btn=>btn.onclick=()=>{const form=document.getElementById("nrSession_"+btn.dataset.book);if(form)form.style.display="none"});
   // Submit session
   document.querySelectorAll("#viewShelf .nr-sf-submit").forEach(btn=>btn.onclick=()=>{const bk=data.books.find(b=>b.id===btn.dataset.book);if(!bk)return;const form=document.getElementById("nrSession_"+btn.dataset.book);if(!form)return;const dur=parseInt(form.querySelector('[data-field="dur"]')?.value)||0;const pagesRead=parseInt(form.querySelector('[data-field="pg"]')?.value)||0;if(!dur&&!pagesRead)return;const startPg=bk.currentPage||0;const endPg=Math.min((bk.pages||9999),startPg+pagesRead);if(!bk.sessions)bk.sessions=[];bk.sessions.push({id:uid(),date:new Date().toISOString(),startPage:startPg,endPage:endPg,duration:dur,notes:""});if(pagesRead>0)bk.currentPage=endPg;bk.updatedAt=new Date().toISOString();save();renderShelf();updateHeader()});
+  // Quick-increment buttons
+  document.querySelectorAll("#viewShelf .nr-quick-btn").forEach(btn=>btn.onclick=()=>{const bk=data.books.find(b=>b.id===btn.dataset.book);if(!bk)return;const inc=parseInt(btn.dataset.inc)||0;const startPg=bk.currentPage||0;bk.currentPage=Math.min((bk.pages||9999),startPg+inc);if(bk.currentPage>=(bk.pages||9999)){bk.status="completed";bk.endDate=new Date().toISOString().slice(0,10);showToast(`Finished "${bk.title}"!`)}else{showToast(`+${inc} pages`)}if(!bk.sessions)bk.sessions=[];bk.sessions.push({id:uid(),date:new Date().toISOString(),startPage:startPg,endPage:bk.currentPage,duration:0,notes:""});bk.updatedAt=new Date().toISOString();save();renderShelf();updateHeader()});
+  // Quick-increment custom
+  document.querySelectorAll("#viewShelf .nr-quick-go").forEach(btn=>btn.onclick=()=>{const bk=data.books.find(b=>b.id===btn.dataset.book);if(!bk)return;const inp=btn.parentElement.querySelector('.nr-quick-input');const inc=parseInt(inp?.value)||0;if(!inc)return;const startPg=bk.currentPage||0;bk.currentPage=Math.min((bk.pages||9999),startPg+inc);if(!bk.sessions)bk.sessions=[];bk.sessions.push({id:uid(),date:new Date().toISOString(),startPage:startPg,endPage:bk.currentPage,duration:0,notes:""});bk.updatedAt=new Date().toISOString();save();showToast(`+${inc} pages`);renderShelf();updateHeader()});
+  // Quick-add toggle
+  const qaToggle=document.getElementById("qaToggle");if(qaToggle)qaToggle.onclick=e=>{e.stopPropagation();quickAddOpen=!quickAddOpen;renderShelf()};
+  // Quick-add submit
+  const qaSubmit=document.getElementById("qaSubmit");if(qaSubmit)qaSubmit.onclick=()=>{const title=document.getElementById("qaTitle")?.value;const author=document.getElementById("qaAuthor")?.value;const cat=document.getElementById("qaCat")?.value;const status=document.getElementById("qaStatus")?.value;quickAddBook(title,author,cat,status);document.getElementById("qaTitle").value="";document.getElementById("qaAuthor").value="";document.getElementById("qaTitle").focus()};
+  // Quick-add enter key
+  const qaTitle=document.getElementById("qaTitle");if(qaTitle)qaTitle.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();document.getElementById("qaSubmit")?.click()}};
+  // Nudge banner
+  const nudgeBanner=document.getElementById("nudgeBanner");if(nudgeBanner)nudgeBanner.onclick=e=>{if(e.target.id==="nudgeDismiss"){nudgeDismissed=true;renderShelf();return}openDetail(nudgeBanner.dataset.id)};
 }
 // ══════ TIMELINE ══════
 function renderTimeline(){const el=document.getElementById("viewTimeline");const reading=getReading();let html='';
@@ -565,8 +713,17 @@ async function searchBooks(query){const q=encodeURIComponent(query.trim());const
 
 // ══════ ADD/EDIT FORM ══════
 function openForm(book){const isEdit=!!book;
-document.getElementById("formPanel").innerHTML=`<div class="modal-header"><h2>${isEdit?"Edit":"Add"} Book</h2><button class="modal-close" id="formClose">&times;</button></div><div class="form-stack">${!isEdit?`<div class="book-search-section"><p class="form-label">Search &amp; Auto-fill</p><div class="book-search-row"><input id="fSearchInput" placeholder="Search by title or author..."><button class="book-search-btn" id="fSearchBtn">Search</button></div><div id="fSearchResults"></div></div>`:""}<div><p class="form-label">Title *</p><input class="form-input" id="fTitle" placeholder="Book title" value="${esc(book?.title||"")}"></div><div><p class="form-label">Author</p><input class="form-input" id="fAuthor" placeholder="Author name" value="${esc(book?.author||"")}"></div><div class="form-row"><div><p class="form-label">Category</p><select class="form-input" id="fCategory">${CATEGORIES.map(c=>`<option value="${c}"${book?.category===c?" selected":""}>${c}</option>`).join("")}</select></div><div><p class="form-label">Status</p><select class="form-input" id="fStatus"><option value="want-to-read"${book?.status==="want-to-read"?" selected":""}>To Read</option><option value="reading"${book?.status==="reading"?" selected":""}>Reading</option><option value="completed"${book?.status==="completed"?" selected":""}>Completed</option><option value="abandoned"${book?.status==="abandoned"?" selected":""}>Dropped</option></select></div></div><div class="form-row three"><div><p class="form-label">Pages</p><input class="form-input" type="number" id="fPages" value="${book?.pages||""}"></div><div><p class="form-label">Started</p><input class="form-input" type="date" id="fStart" value="${book?.startDate||""}"></div><div><p class="form-label">Finished</p><input class="form-input" type="date" id="fEnd" value="${book?.endDate||""}"></div></div><div><p class="form-label">Notes</p><textarea class="form-input" id="fNotes">${esc(book?.notes||"")}</textarea></div></div><button class="form-submit" id="formSave">${isEdit?"Save":"Add to Library"}</button>`;
+// Smart defaults for new books
+const defaultStatus=!isEdit?(getReading().length===0?"reading":"want-to-read"):"";
+const lastCat=!isEdit?(data.books.length?data.books[data.books.length-1].category:"Self-Awareness"):"";
+const today=new Date().toISOString().slice(0,10);
+const defStart=!isEdit&&defaultStatus==="reading"?today:(book?.startDate||"");
+const defCat=book?.category||lastCat;
+const defStat=book?.status||defaultStatus;
+document.getElementById("formPanel").innerHTML=`<div class="modal-header"><h2>${isEdit?"Edit":"Add"} Book</h2><button class="modal-close" id="formClose">&times;</button></div><div class="form-stack">${!isEdit?`<div class="book-search-section"><p class="form-label">Search &amp; Auto-fill</p><div class="book-search-row"><input id="fSearchInput" placeholder="Search by title or author..."><button class="book-search-btn" id="fSearchBtn">Search</button></div><div id="fSearchResults"></div></div>`:""}<div><p class="form-label">Title *</p><input class="form-input" id="fTitle" placeholder="Book title" value="${esc(book?.title||"")}"></div><div><p class="form-label">Author</p><input class="form-input" id="fAuthor" placeholder="Author name" value="${esc(book?.author||"")}"></div><div class="form-row"><div><p class="form-label">Category</p><select class="form-input" id="fCategory">${CATEGORIES.map(c=>`<option value="${c}"${defCat===c?" selected":""}>${c}</option>`).join("")}</select></div><div><p class="form-label">Status</p><select class="form-input" id="fStatus"><option value="want-to-read"${defStat==="want-to-read"?" selected":""}>To Read</option><option value="reading"${defStat==="reading"?" selected":""}>Reading</option><option value="completed"${defStat==="completed"?" selected":""}>Completed</option><option value="abandoned"${defStat==="abandoned"?" selected":""}>Dropped</option></select></div></div><div class="form-row three"><div><p class="form-label">Pages</p><input class="form-input" type="number" id="fPages" value="${book?.pages||""}"></div><div><p class="form-label">Started</p><input class="form-input" type="date" id="fStart" value="${defStart}"></div><div><p class="form-label">Finished</p><input class="form-input" type="date" id="fEnd" value="${book?.endDate||""}"></div></div><div><p class="form-label">Notes</p><textarea class="form-input" id="fNotes">${esc(book?.notes||"")}</textarea></div></div><button class="form-submit" id="formSave">${isEdit?"Save":"Add to Library"}</button>`;
 document.getElementById("formModal").classList.add("open");document.getElementById("formClose").onclick=()=>document.getElementById("formModal").classList.remove("open");
+// Smart date auto-fill on status change
+document.getElementById("fStatus").onchange=function(){const td=new Date().toISOString().slice(0,10);const s=document.getElementById("fStart"),e=document.getElementById("fEnd");if(this.value==="reading"&&!s.value)s.value=td;if(this.value==="completed"){if(!s.value)s.value=td;if(!e.value)e.value=td}};
 // Book search
 if(!isEdit){let lastSR=[];const si=document.getElementById("fSearchInput"),sb=document.getElementById("fSearchBtn"),sr=document.getElementById("fSearchResults");
 const doSearch=async()=>{const q=si.value.trim();if(!q)return;sb.disabled=true;sr.innerHTML='<div class="book-search-loading">Searching\u2026</div>';try{lastSR=await searchBooks(q);if(!lastSR.length){sr.innerHTML='<p class="book-search-empty">No results.</p>';return}sr.innerHTML=lastSR.map((r,i)=>`<div class="book-search-item" data-idx="${i}"><span class="book-search-item-title">${esc(r.title)}</span><span class="book-search-item-author">${esc(r.author||"Unknown")}</span><div class="book-search-item-meta">${r.pages?`<span>${r.pages}p</span>`:""}<span>${esc(r.category)}</span><span class="book-search-source ${r.source}">${r.source==="google"?"Google":"OpenLib"}</span></div></div>`).join("")}catch(e){sr.innerHTML=`<p class="book-search-error">${esc(e.message)}</p>`}finally{sb.disabled=false}};
@@ -619,6 +776,7 @@ document.getElementById("fab").onclick=()=>openForm(null);document.getElementByI
 ["formModal","settingsModal"].forEach(id=>document.getElementById(id).onclick=function(e){if(e.target===this)this.classList.remove("open")});
 function renderAll(){updateHeader();renderShelf();if(currentTab==="timeline")renderTimeline();if(currentTab==="analytics")renderAnalytics();if(currentTab==="review")renderReview()}
 renderAll();
+checkOnboarding();
 </script>
 </body>
 </html>
