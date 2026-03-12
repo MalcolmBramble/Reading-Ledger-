@@ -85,15 +85,96 @@ requestAnimationFrame(()=>{
 function drawPie(cd,total){const c=document.getElementById("pieChart");if(!c)return;const dpr=window.devicePixelRatio||1;c.width=170*dpr;c.height=170*dpr;const ctx=c.getContext("2d");ctx.scale(dpr,dpr);let start=-Math.PI/2;cd.forEach(d=>{const sw=(d.value/total)*Math.PI*2;ctx.beginPath();ctx.arc(85,85,75,start,start+sw);ctx.arc(85,85,42,start+sw,start,true);ctx.closePath();ctx.fillStyle=CAT_COLORS[d.name]||"#7A7670";ctx.fill();start+=sw})}
 
 // ══════ YEAR IN REVIEW ══════
-function renderReview(){const comp=getCompleted();if(comp.length<3){document.getElementById("viewReview").innerHTML=`<div class="empty"><p class="title">Complete at least 3 books to unlock Year in Review.</p></div>`;return}
-const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0),pct=Math.min(100,Math.round(comp.length/getGoal()*100));const catCounts={};comp.forEach(b=>{catCounts[b.category]=(catCounts[b.category]||0)+1});const topCat=Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];const rated=comp.filter(b=>b.rating);const avgR=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
-const durs=comp.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:daysBetween(b.startDate,b.endDate)}));const fastest=durs.length?durs.reduce((a,b)=>a.days<b.days?a:b):null;const longest=comp.reduce((a,b)=>(b.pages||0)>(a.pages||0)?b:a,comp[0]);const topRated=[...comp].filter(b=>b.rating).sort((a,b)=>b.rating-a.rating)[0];
-const allThemes={};data.books.forEach(b=>(b.themes||[]).forEach(t=>{allThemes[t]=(allThemes[t]||0)+1}));const topThemes=Object.entries(allThemes).sort((a,b)=>b[1]-a[1]).slice(0,5);
-const totalQuotes=data.books.reduce((s,b)=>s+(b.quotes?.length||0),0);const ms=getMilestones();
-let html=`<div class="yr-hero"><div class="yr-hero-glow"></div><p class="yr-hero-label">Year in Review</p><p class="yr-hero-num">${comp.length}</p><p class="yr-hero-sub">books completed \u00B7 ${pct}% of goal</p>${totalPages?`<p class="yr-hero-pages">${totalPages.toLocaleString()} pages read</p>`:""}</div><div class="yr-grid">`;
-if(topCat)html+=`<div class="yr-card"><p class="yr-card-label">Top Category</p><p class="yr-card-value">${topCat[0]}</p><p class="yr-card-sub">${topCat[1]} books</p></div>`;if(avgR)html+=`<div class="yr-card"><p class="yr-card-label">Avg Rating</p><p class="yr-card-value">${avgR} / 5</p></div>`;if(fastest)html+=`<div class="yr-card"><p class="yr-card-label">Fastest Read</p><p class="yr-card-value sm">${esc(fastest.title)}</p><p class="yr-card-sub">${fastest.days} days</p></div>`;if(longest&&longest.pages)html+=`<div class="yr-card"><p class="yr-card-label">Longest Book</p><p class="yr-card-value sm">${esc(longest.title)}</p><p class="yr-card-sub">${longest.pages} pages</p></div>`;if(topRated)html+=`<div class="yr-card"><p class="yr-card-label">Highest Rated</p><p class="yr-card-value sm">${esc(topRated.title)}</p><p class="yr-card-sub">${topRated.rating}/5</p></div>`;html+=`</div>`;
-if(topThemes.length)html+=`<div class="panel"><div class="panel-title">Recurring Themes</div><div class="yr-themes">${topThemes.map(([t,c])=>`<div class="yr-theme">${esc(t)} <em>\u00D7${c}</em></div>`).join("")}</div></div>`;
-if(ms.length)html+=`<div class="panel"><div class="panel-title">Milestones</div><div class="yr-milestones">${ms.map(m=>`<div class="yr-milestone"><span class="yr-milestone-icon">${m.icon}</span><p class="yr-milestone-label">${m.label}</p></div>`).join("")}</div></div>`;
-if(totalQuotes)html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 24px;display:flex;align-items:center;gap:14px"><span style="color:var(--accentDim);font-size:20px">\u201C</span><p style="font-family:var(--ui);font-size:13px;color:var(--textM);margin:0">You saved <strong style="color:var(--text)">${totalQuotes}</strong> passage${totalQuotes!==1?"s":""} across your readings.</p></div>`;
+// ═══ SVG icons for milestones ═══
+const MS_ICONS={book:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',star:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',brick:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="9" x2="15" y2="15"/><line x1="9" y1="15" x2="9" y2="21"/></svg>',bolt:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',rainbow:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a10 10 0 00-20 0"/><path d="M19 17a7 7 0 00-14 0"/><path d="M16 17a4 4 0 00-8 0"/></svg>',flame:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>',ruler:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 010 3.4l-2.6 2.6a2.4 2.4 0 01-3.4 0L2.7 8.7a2.4 2.4 0 010-3.4l2.6-2.6a2.4 2.4 0 013.4 0z"/><line x1="14.5" y1="12.5" x2="16.5" y2="10.5"/><line x1="10.5" y1="16.5" x2="12.5" y2="14.5"/></svg>',target:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',openbook:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>'};
+
+// ═══ Auto-milestones ═══
+function autoMilestones(comp,allBooks){
+const ms=[];const sorted=[...comp].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
+if(sorted.length>=1)ms.push({icon:'book',color:'var(--accent)',label:'First Book',detail:sorted[0].title});
+[5,10,15,20,25,30,40,50].forEach(n=>{if(sorted.length>=n)ms.push({icon:n>=25?'star':'book',color:n>=25?'var(--gold)':'var(--accent)',label:`${n} Books`,detail:`Reached with ${sorted[n-1].title}`})});
+const first5=sorted.find(b=>b.rating===5);if(first5)ms.push({icon:'star',color:'var(--gold)',label:'First 5-Star',detail:first5.title});
+const longest=comp.reduce((a,b)=>(b.pages||0)>(a.pages||0)?b:a,comp[0]);if(longest.pages>=400)ms.push({icon:'brick',color:'var(--blue)',label:'Marathon Read',detail:`${longest.title} \u2014 ${longest.pages.toLocaleString()} pages`});
+const withDays=comp.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:daysBetween(b.startDate,b.endDate)}));const fastest=withDays.length?withDays.reduce((a,b)=>a.days<b.days?a:b):null;
+if(fastest&&fastest.days<=14)ms.push({icon:'bolt',color:'#C46B5B',label:'Speed Reader',detail:`${fastest.title} in ${fastest.days} days`});
+const cats=new Set(comp.map(b=>b.category));if(cats.size>=5)ms.push({icon:'rainbow',color:'var(--green)',label:`${cats.size} Categories`,detail:'Renaissance reader'});
+const mc={};sorted.forEach(b=>{if(b.endDate){const k=b.endDate.slice(0,7);mc[k]=(mc[k]||0)+1}});const bestMonth=Object.entries(mc).sort((a,b)=>b[1]-a[1])[0];
+if(bestMonth&&bestMonth[1]>=2){const[y,m]=bestMonth[0].split('-');ms.push({icon:'flame',color:'#C45B5B',label:`${bestMonth[1]} in One Month`,detail:new Date(+y,+m-1).toLocaleDateString('en-US',{month:'long'})})}
+const tp=comp.reduce((s,b)=>s+(b.pages||0),0);if(tp>=5000)ms.push({icon:'ruler',color:'#8B6AAC',label:'5,000 Pages',detail:`${tp.toLocaleString()} total`});else if(tp>=2000)ms.push({icon:'ruler',color:'#8B6AAC',label:'2,000 Pages',detail:`${tp.toLocaleString()} total`});
+const nextTarget=[5,10,15,20,25,30,40,50].find(n=>n>sorted.length);
+if(nextTarget){const rem=nextTarget-sorted.length;ms.push({icon:'target',color:'var(--textD)',label:`${rem} to ${nextTarget} Books`,detail:`${sorted.length} of ${nextTarget}`,next:true,pct:Math.round(sorted.length/nextTarget*100)})}
+return ms;
+}
+
+// ═══ Reader identity ═══
+const ID_LABELS={"Self-Awareness":"Seeker","Current America":"Citizen","Economics & Money":"Economist","Technology":"Technologist","American History":"Historian","Science":"Scientist","World History":"Historian","Philosophy & Ethics":"Philosopher","Religion":"Contemplative","Fiction":"Storyteller","Other":"Explorer"};
+function getReaderIdentity(slice){
+  const cc={};slice.forEach(b=>cc[b.category]=(cc[b.category]||0)+1);const s=Object.entries(cc).sort((a,b)=>b[1]-a[1]);
+  const w1=ID_LABELS[s[0][0]]||"Reader",w2=s[1]?ID_LABELS[s[1][0]]||"Reader":null;
+  return w2&&w2!==w1?`The ${w1}-${w2}`:`The ${w1}`;
+}
+function getIdentityEvolution(comp){
+  const steps=[];const checks=[2,4,comp.length].filter((v,i,a)=>v<=comp.length&&a.indexOf(v)===i);
+  const sorted=[...comp].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
+  checks.forEach(n=>{const id=getReaderIdentity(sorted.slice(0,n));const last=sorted[n-1];
+    const period=n===comp.length?'Now':fmtShort(sorted[0].endDate)+' \u2013 '+fmtShort(last.endDate);
+    if(!steps.length||steps[steps.length-1].id!==id)steps.push({id,period,current:n===comp.length})});
+  return steps;
+}
+
+// ══════ YEAR IN REVIEW ══════
+function renderReview(){
+const comp=getCompleted();if(comp.length<3){document.getElementById("viewReview").innerHTML=`<div class="empty"><p class="title">Complete at least 3 books to unlock Year in Review.</p></div>`;return}
+const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0),pct=Math.min(100,Math.round(comp.length/getGoal()*100));
+const rated=comp.filter(b=>b.rating),avgR=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
+const ratingCounts=[0,0,0,0,0];comp.forEach(b=>{if(b.rating>=1&&b.rating<=5)ratingCounts[b.rating-1]++});const maxRat=Math.max(...ratingCounts,1);
+const cats=new Set(comp.map(b=>b.category)),avgPages=Math.round(totalPages/comp.length);
+const fiveCount=ratingCounts[4];
+let html='';
+
+// 1. HERO
+html+=`<div class="yr-hero"><div class="yr-hero-glow"></div><p class="yr-hero-label">Year in Review</p><p class="yr-hero-num">${comp.length}</p><p class="yr-hero-sub">books completed \u00B7 ${pct}% of goal</p><p class="yr-hero-pages">${totalPages.toLocaleString()} pages read</p></div>`;
+
+// 2. MONTHLY TIMELINE
+const monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const monthBooks={};comp.forEach(b=>{if(b.endDate){const d=new Date(b.endDate);const k=d.getFullYear()+'-'+String(d.getMonth()).padStart(2,'0');if(!monthBooks[k])monthBooks[k]=[];monthBooks[k].push(b)}});
+html+=`<div class="yr-months">`;
+for(let m=0;m<12;m++){const yr=new Date().getFullYear();const k=yr+'-'+String(m).padStart(2,'0');const k2=(yr-1)+'-'+String(m).padStart(2,'0');const mb=monthBooks[k]||monthBooks[k2]||[];
+html+=`<div class="yr-month"><div class="yr-month-dots">`;if(mb.length)mb.forEach(b=>{const col=CAT_COLORS[b.category]||CAT_COLORS.Other;html+=`<div class="yr-month-dot" style="background:${col}"></div>`});else html+=`<div class="yr-month-empty"></div>`;
+html+=`</div><span class="yr-month-label">${monthNames[m]}</span></div>`}
+html+=`</div>`;
+
+// 3. NARRATIVE (from insight engine)
+const insightText=composeInsightText(data.books);
+if(insightText)html+=`<div class="panel"><div class="panel-title">Your Reading Journey</div><p class="yr-narrative">${insightText}</p></div>`;
+
+// 4. IDENTITY CARD
+const currentId=getReaderIdentity(comp);const evolution=getIdentityEvolution(comp);
+html+=`<div class="yr-identity"><div class="yr-id-bg"></div><div class="yr-id-accent-line"></div><div class="yr-id-content"><div class="yr-id-header"><div class="yr-id-icon">${MS_ICONS.openbook}</div><div class="yr-id-text"><p class="yr-id-label">Your reader identity</p><h2 class="yr-id-title">${currentId}</h2><p class="yr-id-desc">${cats.size} categories \u00B7 ${avgPages} avg pages \u00B7 ${fiveCount>=comp.length/2?'high standards':'wide-ranging taste'}</p></div></div>`;
+// Stats strip
+html+=`<div class="yr-id-stats"><div class="yr-id-stat"><p class="yr-id-stat-val">${comp.length}</p><p class="yr-id-stat-label">Books</p></div><div class="yr-id-stat"><p class="yr-id-stat-val">${avgPages}</p><p class="yr-id-stat-label">Avg pages</p></div><div class="yr-id-stat"><p class="yr-id-stat-val">${cats.size}</p><p class="yr-id-stat-label">Categories</p></div><div class="yr-id-stat"><p class="yr-id-stat-val yr-gold">${avgR||'\u2014'}</p><p class="yr-id-stat-label">Avg rating</p></div></div>`;
+// Rating bars
+html+=`<div class="yr-id-ratings"><div><div class="yr-id-rat-visual">`;
+for(let i=0;i<5;i++){const h=ratingCounts[i]>0?Math.max(4,Math.round(ratingCounts[i]/maxRat*18)):2;const col=i>=3?'var(--gold)':'var(--textDD)';html+=`<div class="yr-id-rat-bar" style="height:${h}px;background:${col}"></div>`}
+html+=`</div><div class="yr-id-rat-labels">`;for(let i=0;i<5;i++)html+=`<span class="yr-id-rat-lbl">${i+1}</span>`;
+html+=`</div></div><span class="yr-id-rat-text"><strong>${avgR||'\u2014'}</strong>/5 avg \u00B7 ${fiveCount} of ${comp.length} got 5\u2605</span></div>`;
+// Evolution
+if(evolution.length>1){html+=`<div class="yr-evo"><p class="yr-evo-title">How your identity shifted</p><div class="yr-evo-flow">`;
+evolution.forEach((s,i)=>{html+=`<div style="text-align:center"><span class="yr-evo-chip${s.current?' yr-evo-now':''}">${s.id}</span><span class="yr-evo-period">${s.period}</span></div>`;if(i<evolution.length-1)html+=`<span class="yr-evo-arrow">\u2192</span>`});
+html+=`</div></div>`}
+html+=`</div></div>`;
+
+// 5. FAVORITE PASSAGE
+const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.push({text:q.text,page:q.page,title:b.title,author:b.author,rating:b.rating||0})));
+const bestQuote=allQuotes.sort((a,b)=>b.rating-a.rating)[0];
+if(bestQuote)html+=`<div class="yr-quote"><p class="yr-quote-text">\u201C${esc(bestQuote.text)}\u201D</p><p class="yr-quote-src">\u2014 <strong>${esc(bestQuote.title)}</strong> by ${esc(bestQuote.author)}</p></div>`;
+
+// 6. MILESTONES
+const ms=autoMilestones(comp,data.books);
+html+=`<div class="panel"><div class="panel-title">Milestones</div><div class="yr-ms-list">`;
+ms.forEach(m=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
+html+=`<div class="yr-ms-item${m.next?' yr-ms-next':''}"><div class="yr-ms-icon-wrap" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${m.label}</p><p class="yr-ms-detail">${m.detail}</p>${m.next?`<div class="yr-ms-bar"><div class="yr-ms-fill" style="width:${m.pct}%"></div></div>`:''}</div></div>`});
+html+=`</div></div>`;
+
 document.getElementById("viewReview").innerHTML=html;
 }

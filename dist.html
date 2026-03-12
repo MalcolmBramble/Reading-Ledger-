@@ -104,7 +104,7 @@ canvas
 .goal-cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.goal-cat-item{display:flex;align-items:center;gap:8px;font-family:var(--ui);font-size:12px;color:var(--textM)}.goal-cat-item input{width:50px;padding:4px 6px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);font-family:var(--ui);font-size:12px;outline:none;text-align:center}
 
 /* Year in Review */
-.yr-hero{background:linear-gradient(135deg,var(--surface),#1A1510);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;position:relative;overflow:hidden;margin-bottom:20px}.yr-hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(196,149,106,0.25),transparent 65%);pointer-events:none;animation:heroGlow 4s ease-in-out infinite alternate}@keyframes heroGlow{from{opacity:0.7}to{opacity:1}}.yr-hero-label{font-family:var(--ui);font-size:11px;color:var(--textD);letter-spacing:0.12em;text-transform:uppercase;font-weight:500;position:relative}.yr-hero-num{font-size:64px;font-weight:700;color:var(--accent);line-height:1;position:relative;margin-top:8px}.yr-hero-sub{font-family:var(--ui);font-size:14px;color:var(--textM);margin-top:4px;position:relative}.yr-hero-pages{font-family:var(--ui);font-size:13px;color:var(--textD);margin-top:8px;position:relative}.yr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}.yr-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}.yr-card-label{font-family:var(--ui);font-size:10px;color:var(--textD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500}.yr-card-value{font-size:22px;font-weight:600;margin-top:6px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.yr-card-value.sm{font-size:16px}.yr-card-sub{font-family:var(--ui);font-size:12px;color:var(--textD);margin-top:3px}.yr-milestones{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}.yr-milestone{background:var(--bg);border-radius:10px;padding:14px 12px;text-align:center;border:1px solid var(--border)}.yr-milestone-icon{font-size:24px}.yr-milestone-label{font-family:var(--ui);font-size:12px;font-weight:600;margin-top:6px}.yr-themes{display:flex;gap:8px;flex-wrap:wrap}.yr-theme{font-family:var(--ui);font-size:13px;padding:6px 14px;border-radius:100px;background:var(--surface);border:1px solid var(--border);color:var(--textM)}.yr-theme em{color:var(--textD);font-size:11px;font-style:normal}
+.yr-hero{background:linear-gradient(135deg,var(--surface),#1A1510);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;position:relative;overflow:hidden;margin-bottom:20px}.yr-hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 80%,rgba(196,149,106,0.25),transparent 65%);pointer-events:none;animation:heroGlow 4s ease-in-out infinite alternate}@keyframes heroGlow{from{opacity:0.7}to{opacity:1}}.yr-hero-label{font-family:var(--ui);font-size:11px;color:var(--textD);letter-spacing:0.12em;text-transform:uppercase;font-weight:500;position:relative}.yr-hero-num{font-size:64px;font-weight:700;color:var(--accent);line-height:1;position:relative;margin-top:8px}.yr-hero-sub{font-family:var(--ui);font-size:14px;color:var(--textM);margin-top:4px;position:relative}.yr-hero-pages{font-family:var(--ui);font-size:13px;color:var(--textD);margin-top:8px;position:relative}
 
 /* Detail */
 .detail-view{display:none;min-height:100vh;background:var(--bg);opacity:0;transform:translateY(40px)}.detail-view.active{display:block;animation:detailIn 300ms cubic-bezier(0.23,1,0.32,1) forwards}@keyframes detailIn{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}.detail-banner{position:relative;min-height:180px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}.detail-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(14,12,10,0.7) 80%,var(--bg) 100%);pointer-events:none}.detail-banner-bg{position:absolute;inset:0;z-index:-1}.detail-banner-top{display:flex;justify-content:space-between;padding:16px 28px 0;position:relative;z-index:1}.detail-back{background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;padding:8px;border-radius:8px;display:flex;align-items:center;gap:6px;font-family:var(--ui);font-size:13px}.detail-back:hover{color:var(--text)}.detail-stars-inline{display:inline-flex;gap:1px}.detail-star-tap{font-size:16px;cursor:pointer;color:var(--textDD);transition:color 0.15s;padding:2px}.detail-star-tap.on{color:var(--gold)}.detail-star-tap:hover{color:var(--gold)}.detail-banner-content{position:relative;z-index:1;padding:20px 28px 24px}.detail-pills{display:flex;align-items:center;gap:10px;margin-bottom:8px}.cat-pill{font-family:var(--ui);font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;text-transform:uppercase}.status-badge{font-family:var(--ui);font-size:10px;padding:3px 10px;border-radius:100px;font-weight:500;text-transform:uppercase}.status-badge.completed{background:rgba(85,107,74,0.13);color:#7D8B6E}.status-badge.reading{background:rgba(46,68,96,0.13);color:#5B8AB0}.status-badge.want-to-read{background:rgba(122,118,112,0.13);color:#7A7670}.status-badge.abandoned{background:rgba(196,91,91,0.13);color:#C45B5B}.detail-title{font-size:28px;font-weight:600;line-height:1.15;margin:0 0 4px}.detail-author{font-family:var(--ui);font-size:15px;color:var(--textM);margin:0 0 12px}.detail-meta-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}.detail-meta-item{font-family:var(--ui);font-size:12px;color:var(--textD)}.detail-meta-item strong{color:var(--textM);font-weight:500}.detail-actions{display:flex;gap:8px;margin-top:14px}.dbtn{border-radius:8px;padding:9px 16px;font-family:var(--ui);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;border:none}.dbtn.green{background:#556B4A;color:#EDE6D8}.dbtn.blue{background:#2E4460;color:#EDE6D8}.dbtn.blue-o{background:none;border:1px solid var(--border);color:#5B8AB0}.dbtn.ghost{background:none;color:var(--textD)}.detail-body{max-width:var(--max);margin:0 auto;padding:0 28px 140px}.detail-section{border-bottom:1px solid var(--border);padding:28px 0}.detail-section:last-child{border-bottom:none}
@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .nudge-sub{font-family:var(--ui);font-size:12px;color:var(--textD)}
 .nudge-dismiss{background:none;border:none;color:var(--textDD);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0}
 
-@media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.yr-grid{grid-template-columns:1fr}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}.tl-row-label{width:80px;font-size:11px}.tl-row-dates{width:100px;font-size:9px}}
+@media(max-width:600px){nav.tabs{display:none}.hdr-title{font-size:30px}.mini-stats{grid-template-columns:repeat(2,1fr)}.form-row,.form-row.three{grid-template-columns:1fr}.pie-row{flex-direction:column}.detail-title{font-size:24px}.fab{bottom:72px;right:16px;width:50px;height:50px}.tl-row-label{width:80px;font-size:11px}.tl-row-dates{width:100px;font-size:9px}}
 
 /* Reading DNA */
 .dna{background:linear-gradient(135deg,var(--surface),rgba(196,149,106,0.06));border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:24px}
@@ -209,6 +209,66 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline
 .theme-book-title{font-family:var(--ui);font-size:13px;color:var(--textM);font-weight:500;flex:1}
 .theme-book-cat{font-family:var(--ui);font-size:10px;color:var(--textDD)}
 .theme-auto-note{font-family:var(--ui);font-size:10px;color:var(--textDD);margin-top:12px;font-style:italic}
+
+/* Year in Review — Monthly timeline */
+.yr-months{display:flex;gap:2px;padding:0 20px;margin-bottom:24px;overflow-x:auto}
+.yr-month{flex:1;min-width:50px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.yr-month-label{font-family:var(--ui);font-size:9px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.04em}
+.yr-month-dots{display:flex;flex-direction:column;gap:3px;align-items:center;min-height:20px;justify-content:center}
+.yr-month-dot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,0.3)}
+.yr-month-empty{width:10px;height:2px;border-radius:1px;background:var(--border)}
+/* Narrative */
+.yr-narrative{font-family:var(--ui);font-size:13px;color:var(--textM);line-height:1.7}
+.yr-narrative strong{color:var(--text);font-weight:500}
+.yr-narrative em{color:var(--accent);font-style:normal;font-weight:600}
+/* Identity card */
+.yr-identity{position:relative;overflow:hidden;margin:0 20px 20px;border-radius:14px;border:1px solid var(--borderL)}
+.yr-id-bg{position:absolute;inset:0;background:linear-gradient(145deg,#1a1610,#17140F 40%,rgba(196,149,106,0.05) 100%)}
+.yr-id-accent-line{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.yr-id-content{position:relative;padding:28px 24px 24px}
+.yr-id-header{display:flex;align-items:flex-start;gap:18px;margin-bottom:16px}
+.yr-id-icon{width:52px;height:52px;border-radius:12px;background:rgba(196,149,106,0.1);border:1px solid rgba(196,149,106,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.yr-id-icon svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:1.5}
+.yr-id-text{flex:1}
+.yr-id-label{font-family:var(--ui);font-size:9px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.08em;font-weight:500}
+.yr-id-title{font-size:22px;font-weight:700;color:var(--accent);margin:3px 0 4px;line-height:1.15}
+.yr-id-desc{font-family:var(--ui);font-size:11px;color:var(--textM);line-height:1.5}
+.yr-id-stats{display:flex;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.yr-id-stat{flex:1;background:var(--bg);padding:10px 8px;text-align:center}
+.yr-id-stat-val{font-family:var(--ui);font-size:16px;font-weight:700;color:var(--text);line-height:1}
+.yr-gold{color:var(--gold)}
+.yr-id-stat-label{font-family:var(--ui);font-size:8px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.04em;margin-top:3px}
+.yr-id-ratings{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg);border-radius:8px}
+.yr-id-rat-visual{display:flex;align-items:flex-end;gap:2px;height:20px}
+.yr-id-rat-bar{width:8px;border-radius:2px 2px 0 0;min-height:2px}
+.yr-id-rat-labels{display:flex;gap:2px}
+.yr-id-rat-lbl{width:8px;text-align:center;font-family:var(--ui);font-size:7px;color:var(--textDD)}
+.yr-id-rat-text{font-family:var(--ui);font-size:11px;color:var(--textD);flex:1}
+.yr-id-rat-text strong{color:var(--gold);font-weight:600}
+.yr-evo{padding-top:16px;border-top:1px solid var(--border)}
+.yr-evo-title{font-family:var(--ui);font-size:9px;color:var(--textDD);text-transform:uppercase;letter-spacing:0.06em;font-weight:500;margin-bottom:10px}
+.yr-evo-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.yr-evo-chip{font-family:var(--ui);font-size:11px;padding:5px 12px;border-radius:100px;border:1px solid var(--border);background:var(--bg);color:var(--textD);white-space:nowrap}
+.yr-evo-now{border-color:var(--accent);color:var(--accent);background:rgba(196,149,106,0.08);font-weight:600}
+.yr-evo-arrow{color:var(--textDD);padding:0 8px;font-family:var(--ui);font-size:10px}
+.yr-evo-period{font-family:var(--ui);font-size:8px;color:var(--textDD);display:block;text-align:center;margin-top:2px}
+/* Favorite passage */
+.yr-quote{position:relative;padding:20px 20px 20px 24px;margin:0 20px 20px;background:linear-gradient(135deg,var(--surface),rgba(196,149,106,0.04));border:1px solid var(--border);border-radius:14px;border-left:3px solid var(--accent)}
+.yr-quote-text{font-size:16px;font-style:italic;line-height:1.5;color:var(--text);margin-bottom:8px}
+.yr-quote-src{font-family:var(--ui);font-size:11px;color:var(--textD)}
+.yr-quote-src strong{color:var(--textM);font-weight:500}
+/* Milestones */
+.yr-ms-list{display:flex;flex-direction:column;gap:8px}
+.yr-ms-item{display:flex;align-items:center;gap:14px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px}
+.yr-ms-next{opacity:0.5;border-style:dashed}
+.yr-ms-icon-wrap{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.yr-ms-icon-wrap svg{width:18px;height:18px}
+.yr-ms-info{flex:1}
+.yr-ms-label{font-family:var(--ui);font-size:12px;color:var(--text);font-weight:500}
+.yr-ms-next .yr-ms-label{color:var(--textM)}
+.yr-ms-detail{font-family:var(--ui);font-size:10px;color:var(--textD);margin-top:1px}
+.yr-ms-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px;max-width:140px}
+.yr-ms-fill{height:100%;border-radius:2px;background:var(--accent)}
 </style>
 </head>
 <body>
@@ -615,6 +675,85 @@ function bindTimelineEvents(el){
   el.querySelectorAll('.tl-row[data-id]').forEach(row=>row.onclick=()=>openDetail(row.dataset.id));
 }
 
+/* ═══ INSIGHT ENGINE — 50 pattern detectors for Year in Review ═══ */
+function buildInsightEngine(){
+const pick=(...o)=>o[Math.floor(Math.random()*o.length)];
+return[
+// PACE & VOLUME (1-10)
+(c)=>{const tp=c.reduce((s,b)=>s+(b.pages||0),0);if(tp>=10000)return{id:1,cat:'pace',weight:9,text:`You've turned ${tp.toLocaleString()} pages this year \u2014 roughly ${Math.round(tp/250)} average books' worth.`};if(tp>=5000)return{id:1,cat:'pace',weight:7,text:`${tp.toLocaleString()} pages read. ${pick("That's a serious volume.","You're building something.")}`};if(tp>=2000)return{id:1,cat:'pace',weight:4,text:`${tp.toLocaleString()} pages and counting.`};return null},
+(c)=>{const l=c.reduce((a,b)=>(b.pages||0)>(a.pages||0)?b:a,c[0]);if(l.pages>=800)return{id:2,cat:'pace',weight:7,text:`${l.title} at ${l.pages.toLocaleString()} pages was a ${pick("marathon","beast","commitment")} \u2014 and you finished it.`};if(l.pages>=500)return{id:2,cat:'pace',weight:5,text:`Your longest read was ${l.title} at ${l.pages} pages.`};return null},
+(c)=>{const p=c.filter(b=>b.pages).map(b=>b.pages);if(p.length<3)return null;const r=Math.max(...p)/Math.min(...p);if(r>=4)return{id:3,cat:'pace',weight:6,text:`Your books ranged from ${Math.min(...p)} to ${Math.max(...p).toLocaleString()} pages \u2014 a ${Math.round(r)}x spread.`};return null},
+(c)=>{if(c.length<4)return null;const s=[...c].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));const h=Math.floor(s.length/2);const a1=s.slice(0,h).reduce((x,b)=>x+(b._days||30),0)/h;const a2=s.slice(h).reduce((x,b)=>x+(b._days||30),0)/(s.length-h);if(a1-a2>7)return{id:4,cat:'pace',weight:6,text:`You're reading faster as the year goes on \u2014 recent books took ${Math.round(a2)} days on average, down from ${Math.round(a1)}.`};if(a2-a1>7)return{id:4,cat:'pace',weight:5,text:`Your pace has slowed \u2014 earlier books averaged ${Math.round(a1)} days, recent ones ${Math.round(a2)}.`};return null},
+(c)=>{const w=c.filter(b=>b._days>0);if(!w.length)return null;const f=w.reduce((a,b)=>a._days<b._days?a:b);if(f._days<=3)return{id:5,cat:'pace',weight:8,text:`You devoured ${f.title} in just ${f._days} day${f._days!==1?'s':''}. ${pick("Couldn't put it down.","That's a page-turner.")}`};if(f._days<=10)return{id:5,cat:'pace',weight:6,text:`Your fastest finish was ${f.title} \u2014 ${f._days} days.`};return null},
+(c)=>{const w=c.filter(b=>b._days>0);if(w.length<3)return null;const s=w.reduce((a,b)=>a._days>b._days?a:b);if(s._days>=60)return{id:6,cat:'pace',weight:5,text:`${s.title} took ${s._days} days \u2014 ${pick("a slow burn","you took your time with that one")}.`};return null},
+(c)=>{if(c.length<3)return null;const d=c.map(b=>new Date(b.endDate));const mo=Math.max(1,(Math.max(...d)-Math.min(...d))/(30.44*86400000));const r=c.length/mo;if(r>=3)return{id:7,cat:'pace',weight:7,text:`You're averaging ${r.toFixed(1)} books per month \u2014 a serious clip.`};if(r>=1.5)return{id:7,cat:'pace',weight:4,text:`About ${r.toFixed(1)} books per month \u2014 a steady rhythm.`};return null},
+(c)=>{const mc={};c.forEach(b=>{if(b.endDate){const k=b.endDate.slice(0,7);mc[k]=(mc[k]||0)+1}});const best=Object.entries(mc).sort((a,b)=>b[1]-a[1])[0];if(!best||best[1]<2)return null;const[y,m]=best[0].split('-');const mn=new Date(+y,+m-1).toLocaleDateString('en-US',{month:'long'});if(best[1]>=4)return{id:8,cat:'pace',weight:8,text:`${mn} was your powerhouse \u2014 ${best[1]} books in a single month.`};return{id:8,cat:'pace',weight:5,text:`${mn} was your best month with ${best[1]} finishes.`}},
+(c)=>{if(c.length<3)return null;const d=c.map(b=>new Date(b.endDate)).sort((a,b)=>a-b);let mg=0,ga=null;for(let i=1;i<d.length;i++){const g=(d[i]-d[i-1])/86400000;if(g>mg){mg=g;ga=d[i-1]}}if(mg>=45){const mn=ga.toLocaleDateString('en-US',{month:'long'});return{id:9,cat:'pace',weight:6,text:`You had a ${Math.round(mg)}-day gap after ${mn} \u2014 ${pick("a reading drought","life got busy")}.`}}return null},
+(c)=>{const mc={};c.forEach(b=>{if(b.endDate)mc[b.endDate.slice(0,7)]=true});const mo=Object.keys(mc).sort();if(mo.length<3)return null;let st=1,mx=1;for(let i=1;i<mo.length;i++){const[py,pm]=mo[i-1].split('-').map(Number);const ex=pm===12?`${py+1}-01`:`${py}-${String(pm+1).padStart(2,'0')}`;if(mo[i]===ex){st++;if(st>mx)mx=st}else st=1}if(mx>=4)return{id:10,cat:'pace',weight:7,text:`You finished at least one book every month for ${mx} months straight. ${pick("That's consistency.","Steady hands.")}`};return null},
+// CATEGORIES (11-20)
+(c)=>{if(c.length<4)return null;const cc={};c.forEach(b=>cc[b.category]=(cc[b.category]||0)+1);const t=Object.entries(cc).sort((a,b)=>b[1]-a[1])[0];const p=Math.round(t[1]/c.length*100);if(p>=50)return{id:11,cat:'category',weight:6,text:`${t[0]} dominates at ${p}% of your reading. ${pick("You know what you like.","Deep in that lane.")}`};if(p>=40)return{id:11,cat:'category',weight:4,text:`${t[0]} is your gravitational center \u2014 ${t[1]} of ${c.length} books.`};return null},
+(c)=>{if(c.length<5)return null;const cc={};c.forEach(b=>cc[b.category]=(cc[b.category]||0)+1);const sg=Object.entries(cc).filter(([,v])=>v===1);if(sg.length===1){const bk=c.find(b=>b.category===sg[0][0]);return{id:12,cat:'category',weight:5,text:`${bk.title} was your only ${bk.category} book \u2014 ${pick("a one-off exploration","a detour from your usual path")}.`}}return null},
+(c)=>{if(c.length<4)return null;const s=[...c].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));const h=Math.floor(s.length/2);const t1={},t2={};s.slice(0,h).forEach(b=>t1[b.category]=(t1[b.category]||0)+1);s.slice(h).forEach(b=>t2[b.category]=(t2[b.category]||0)+1);const c1=Object.entries(t1).sort((a,b)=>b[1]-a[1])[0][0];const c2=Object.entries(t2).sort((a,b)=>b[1]-a[1])[0][0];if(c1!==c2)return{id:13,cat:'category',weight:7,text:`Your reading shifted from ${c1} early on to ${c2} more recently \u2014 ${pick("your interests are evolving","a clear pivot","you followed your curiosity")}.`};return null},
+(c)=>{const cats=new Set(c.map(b=>b.category)).size;if(c.length>=6&&cats/c.length>=0.7)return{id:14,cat:'category',weight:6,text:`${cats} categories across ${c.length} books \u2014 you rarely read the same genre twice in a row.`};return null},
+(c)=>{const cats=new Set(c.map(b=>b.category)).size;if(c.length>=6&&cats<=2)return{id:15,cat:'category',weight:5,text:`You've stayed in just ${cats} categor${cats===1?'y':'ies'} \u2014 ${pick("deep over wide","focused and intentional")}.`};return null},
+(c)=>{if(c.length<3)return null;const s=[...c].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));const seen=new Set();let nw=null;s.forEach(b=>{if(!seen.has(b.category))nw=b;seen.add(b.category)});if(nw&&seen.size>=3)return{id:16,cat:'category',weight:4,text:`${nw.title} was your first ${nw.category} book.`};return null},
+(c)=>{const s=[...c].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));let run=1,mx=1,rc=s[0]?.category;for(let i=1;i<s.length;i++){if(s[i].category===s[i-1].category){run++;if(run>mx){mx=run;rc=s[i].category}}else run=1}if(mx>=3)return{id:17,cat:'category',weight:7,text:`You read ${mx} ${rc} books in a row \u2014 ${pick("a deep dive","fully locked in")}.`};return null},
+(c)=>{if(c.length<4)return null;const f=c.filter(b=>b.category==='Fiction').length;if(f===0)return{id:18,cat:'category',weight:4,text:`All nonfiction this year. ${pick("You read to learn, not to escape.","Facts over fiction.")}`};if(Math.round(f/c.length*100)>=70)return{id:18,cat:'category',weight:4,text:`${Math.round(f/c.length*100)}% fiction \u2014 you're a storyteller at heart.`};return null},
+(c,all)=>{const ab=all.filter(b=>b.status==='abandoned');if(!ab.length)return null;const abC=new Set(ab.map(b=>b.category));const coC=new Set(c.map(b=>b.category));const only=[...abC].filter(x=>!coC.has(x));if(only.length){const bk=ab.find(b=>b.category===only[0]);return{id:19,cat:'category',weight:5,text:`You tried ${bk.category} with ${bk.title} but didn't finish \u2014 ${pick("not every experiment works","you know when to cut your losses")}.`}}return null},
+(c)=>{if(c.length<6)return null;const s=[...c].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));const h=Math.floor(s.length/2);const c1=new Set(s.slice(0,h).map(b=>b.category)).size;const c2=new Set(s.slice(h).map(b=>b.category)).size;if(c2>c1+1)return{id:20,cat:'category',weight:5,text:`You're broadening \u2014 recent reads span ${c2} categories versus ${c1} earlier.`};return null},
+// RATINGS (21-30)
+(c)=>{const r=c.filter(b=>b.rating);if(r.length<4)return null;const a=r.reduce((s,b)=>s+b.rating,0)/r.length;if(a>=4.5)return{id:21,cat:'rating',weight:5,text:`You averaged ${a.toFixed(1)}/5 \u2014 ${pick("you pick books well","high standards, well met")}.`};return null},
+(c)=>{const r=c.filter(b=>b.rating);if(r.length<4)return null;const a=r.reduce((s,b)=>s+b.rating,0)/r.length;if(a<=3.2)return{id:22,cat:'rating',weight:5,text:`Average rating ${a.toFixed(1)}/5 \u2014 ${pick("you don't give stars away easily","tough but fair")}.`};return null},
+(c)=>{const r=[...c].filter(b=>b.rating&&b.endDate).sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));if(r.length<5)return null;const h=Math.floor(r.length/2);const a1=r.slice(0,h).reduce((s,b)=>s+b.rating,0)/h;const a2=r.slice(h).reduce((s,b)=>s+b.rating,0)/(r.length-h);if(a2-a1>=0.8)return{id:23,cat:'rating',weight:6,text:`Your ratings are climbing \u2014 picking better books or growing more generous.`};if(a1-a2>=0.8)return{id:23,cat:'rating',weight:6,text:`Your ratings have dipped over time \u2014 your standards are rising.`};return null},
+(c)=>{const s=[...c].filter(b=>b.rating===5&&b.endDate).sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));if(!s.length||c.indexOf(s[0])===0)return null;return{id:24,cat:'rating',weight:4,text:`${s[0].title} earned your first 5 stars.`}},
+(c)=>{const r=c.filter(b=>b.rating);if(r.length<5)return null;const cr={};r.forEach(b=>{if(!cr[b.category])cr[b.category]=[];cr[b.category].push(b.rating)});const ca=Object.entries(cr).filter(([,v])=>v.length>=2).map(([k,v])=>[k,v.reduce((a,b)=>a+b,0)/v.length]);if(!ca.length)return null;const best=ca.sort((a,b)=>b[1]-a[1])[0];return{id:25,cat:'rating',weight:5,text:`${best[0]} books scored highest at ${best[1].toFixed(1)}/5 average.`}},
+(c)=>{const f=c.filter(b=>b.rating===5);if(f.length<2)return null;const cats=new Set(f.map(b=>b.category));if(cats.size===1)return{id:26,cat:'rating',weight:6,text:`All your 5-star books are ${[...cats][0]} \u2014 that's where your heart is.`};return null},
+(c)=>{const r=c.filter(b=>b.rating);if(r.length<4)return null;const mn=Math.min(...r.map(b=>b.rating));if(mn>=4)return{id:27,cat:'rating',weight:5,text:`Never below ${mn} stars \u2014 ${pick("you curate well","no regret reads")}.`};return null},
+(c)=>{const r=c.filter(b=>b.rating&&b.pages);if(r.length<5)return null;const lo=r.filter(b=>b.pages>=400),sh=r.filter(b=>b.pages<400);if(lo.length<2||sh.length<2)return null;const al=lo.reduce((s,b)=>s+b.rating,0)/lo.length,as=sh.reduce((s,b)=>s+b.rating,0)/sh.length;if(al-as>=0.5)return{id:28,cat:'rating',weight:5,text:`You rate longer books higher (${al.toFixed(1)} vs ${as.toFixed(1)}) \u2014 length earns your respect.`};if(as-al>=0.5)return{id:28,cat:'rating',weight:5,text:`Shorter books score better with you (${as.toFixed(1)} vs ${al.toFixed(1)}) \u2014 concise wins.`};return null},
+(c)=>{const s=[...c].filter(b=>b.endDate).sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));for(let i=1;i<s.length;i++){if(s[i].rating===5&&s[i-1].rating===5)return{id:29,cat:'rating',weight:7,text:`${s[i-1].title} and ${s[i].title} \u2014 back-to-back 5 stars. ${pick("A golden streak.","You were on a roll.")}`}}return null},
+(c)=>{const r=c.filter(b=>b.rating);if(r.length<5)return null;if(new Set(r.map(b=>b.rating)).size===1)return{id:30,cat:'rating',weight:5,text:`Every book got ${r[0].rating} stars \u2014 ${pick("consistent taste","remarkably uniform")}.`};return null},
+// THEMES (31-38)
+(c)=>{const th={};c.forEach(b=>(b.themes||[]).forEach(t=>th[t]=(th[t]||0)+1));const top=Object.entries(th).sort((a,b)=>b[1]-a[1])[0];if(!top||top[1]<3)return null;return{id:31,cat:'theme',weight:5,text:`"${top[0]}" runs through ${top[1]} of your books \u2014 a thread you keep pulling.`}},
+(c)=>{const th={};c.forEach(b=>(b.themes||[]).forEach(t=>{if(!th[t])th[t]=[];th[t].push(b.title)}));const cl=Object.entries(th).filter(([,v])=>v.length>=3);if(!cl.length)return null;const[theme,books]=cl.sort((a,b)=>b[1].length-a[1].length)[0];return{id:32,cat:'theme',weight:6,text:`${books.length} books touch on "${theme}" \u2014 ${pick("a pattern emerging","you're circling something")}.`}},
+(c)=>{const th={};c.forEach(b=>(b.themes||[]).forEach(t=>th[t]=(th[t]||0)+1));const sg=Object.entries(th).filter(([,v])=>v===1);if(sg.length>3&&Object.keys(th).length>5)return{id:33,cat:'theme',weight:3,text:`${sg.length} themes appeared in only one book \u2014 lots of one-off explorations.`};return null},
+(c)=>{if(c.length<6)return null;const s=[...c].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));const h=Math.floor(s.length/2);const t1={},t2={};s.slice(0,h).forEach(b=>(b.themes||[]).forEach(t=>t1[t]=(t1[t]||0)+1));s.slice(h).forEach(b=>(b.themes||[]).forEach(t=>t2[t]=(t2[t]||0)+1));const top1=Object.entries(t1).sort((a,b)=>b[1]-a[1])[0];const top2=Object.entries(t2).sort((a,b)=>b[1]-a[1])[0];if(top1&&top2&&top1[0]!==top2[0])return{id:34,cat:'theme',weight:6,text:`Early on you were drawn to "${top1[0]}" \u2014 lately it's "${top2[0]}."`};return null},
+(c)=>{const low=c.filter(b=>b.rating&&b.rating<=2&&(b.themes||[]).length);if(low.length<2)return null;const th={};low.forEach(b=>(b.themes||[]).forEach(t=>th[t]=(th[t]||0)+1));const top=Object.entries(th).sort((a,b)=>b[1]-a[1])[0];if(top&&top[1]>=2)return{id:35,cat:'theme',weight:5,text:`"${top[0]}" appears in your lowest-rated books \u2014 the topic interests you, the execution doesn't.`};return null},
+(c)=>{const mx=c.reduce((best,b)=>(b.quotes||[]).length>(best.quotes||[]).length?b:best,c[0]);const q=(mx.quotes||[]).length;if(q>=5)return{id:36,cat:'theme',weight:6,text:`You saved ${q} passages from ${mx.title} \u2014 ${pick("it clearly hit differently","heavily bookmarked")}.`};return null},
+(c)=>{const an=c.filter(b=>b.notes||b.coreArgument||b.impact||(b.quotes||[]).length);const p=Math.round(an.length/c.length*100);if(p>=80&&c.length>=4)return{id:37,cat:'theme',weight:5,text:`${p}% of your books have notes or quotes \u2014 ${pick("you read with a pen in hand","deeply engaged")}.`};if(p<=20&&c.length>=5)return{id:37,cat:'theme',weight:3,text:`Only ${an.length} of ${c.length} books have notes \u2014 you read clean.`};return null},
+(c)=>{const w=c.filter(b=>b.coreArgument||b.impact);if(w.length>=3&&w.length<c.length)return{id:38,cat:'theme',weight:3,text:`${w.length} books have takeaways recorded \u2014 the rest are still percolating.`};return null},
+// TEMPORAL (39-46)
+(c,all)=>{const ss=[];all.forEach(b=>(b.sessions||[]).forEach(s=>{if(s.date)ss.push(s)}));if(ss.length<10)return null;let we=0,wd=0;ss.forEach(s=>{const d=new Date(s.date).getDay();if(d===0||d===6)we++;else wd++});const p=Math.round(we/ss.length*100);if(p>=55)return{id:39,cat:'temporal',weight:5,text:`${p}% of your sessions are on weekends \u2014 ${pick("you read when you rest","a weekend ritual")}.`};if(p<=25)return{id:39,cat:'temporal',weight:5,text:`Most reading happens on weekdays \u2014 ${pick("reading is part of your routine","you make time during the grind")}.`};return null},
+(c)=>{if(c.length<6)return null;const q=[0,0,0,0];c.forEach(b=>{if(b.endDate){const m=new Date(b.endDate).getMonth();q[Math.floor(m/3)]++}});const lb=['winter','spring','summer','fall'];const mx=Math.max(...q),mi=q.indexOf(mx);if(mx>=3&&mx>c.length*0.4)return{id:40,cat:'temporal',weight:6,text:`You read the most in ${lb[mi]} \u2014 ${pick("seasonal momentum","that's your season")}.`};return null},
+(c)=>{if(c.length<3)return null;const s=[...c].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));const f=s[0],l=s[s.length-1];return{id:41,cat:'temporal',weight:3,text:`Your year went from ${f.title} to ${l.title} \u2014 ${f.category===l.category?"started and ended in the same lane":"a journey from "+f.category+" to "+l.category}.`}},
+(c,all)=>{const r=all.filter(b=>b.status==='reading');if(r.length>=3)return{id:42,cat:'temporal',weight:5,text:`You're juggling ${r.length} books at once right now \u2014 ${pick("a parallel reader","multiple threads running")}.`};return null},
+(c)=>{if(c.length<3)return null;const s=[...c].filter(b=>b.endDate&&b.startDate).sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));let q=Infinity,pr=null;for(let i=1;i<s.length;i++){const g=(new Date(s[i].startDate)-new Date(s[i-1].endDate))/86400000;if(g>=0&&g<q){q=g;pr=[s[i-1],s[i]]}}if(q<=1&&pr)return{id:43,cat:'temporal',weight:5,text:`You started ${pr[1].title} right after finishing ${pr[0].title} \u2014 ${pick("no downtime","always the next book ready")}.`};return null},
+(c,all)=>{let lg=null;all.forEach(b=>(b.sessions||[]).forEach(s=>{if(s.duration&&(!lg||s.duration>lg.dur))lg={dur:s.duration,title:b.title}}));if(lg&&lg.dur>=120)return{id:44,cat:'temporal',weight:5,text:`Your longest session was ${Math.round(lg.dur/60)} hours on ${lg.title} \u2014 ${pick("deep in the zone","a proper marathon session")}.`};return null},
+()=>null, // 45: abandoned-then-returned (needs history)
+(c)=>{const most=c.reduce((best,b)=>(b.sessions||[]).length>(best.sessions||[]).length?b:best,c[0]);const n=(most.sessions||[]).length;if(n>=8)return{id:46,cat:'temporal',weight:5,text:`${most.title} took ${n} sessions to finish \u2014 ${pick("a long relationship with that book","savored, not rushed")}.`};return null},
+// SOCIAL & META (47-50)
+(c,all)=>{const rc={};all.forEach(b=>{if(b.recommendedBy)rc[b.recommendedBy]=(rc[b.recommendedBy]||0)+1});const top=Object.entries(rc).sort((a,b)=>b[1]-a[1])[0];if(top&&top[1]>=2)return{id:47,cat:'social',weight:6,text:`${top[0]} has recommended ${top[1]} books to you \u2014 ${pick("your reading advisor","a trusted source")}.`};return null},
+(c,all)=>{const rc=all.filter(b=>b.recommendedBy).length;if(rc===0&&all.length>=5)return{id:48,cat:'social',weight:4,text:`Every book was self-discovered \u2014 ${pick("you chart your own path","independent taste")}.`};return null},
+(c,all)=>{const bl=all.filter(b=>b.status==='want-to-read').length;if(bl>=10)return{id:49,cat:'social',weight:5,text:`${bl} books in your want-to-read pile \u2014 ${pick("no shortage of what's next","the list grows faster than the shelf")}.`};if(bl>=5&&c.length<bl)return{id:49,cat:'social',weight:4,text:`Your backlog (${bl}) is growing faster than your completed list (${c.length}).`};return null},
+(c,all)=>{const ab=all.filter(b=>b.status==='abandoned').length;const total=c.length+ab;if(total<4)return null;if(ab===0)return{id:50,cat:'social',weight:4,text:`You've finished every book you've started \u2014 ${pick("100% completion rate","you see things through")}.`};if(c.length/(total)<=0.7)return{id:50,cat:'social',weight:5,text:`${ab} abandoned out of ${total} started \u2014 you're not afraid to quit a book that isn't working.`};return null}
+];}
+
+function generateInsights(allBooks){
+  const comp=allBooks.filter(b=>b.status==='completed');
+  if(comp.length<3)return[];
+  comp.forEach(b=>{if(b.startDate&&b.endDate)b._days=Math.max(1,Math.round((new Date(b.endDate)-new Date(b.startDate))/86400000))});
+  const detectors=buildInsightEngine();const results=[];
+  detectors.forEach(d=>{try{const r=d(comp,allBooks);if(r)results.push(r)}catch(e){}});
+  results.sort((a,b)=>b.weight-a.weight);
+  const seen=new Set(),deduped=[];
+  results.forEach(r=>{if(!seen.has(r.cat)){deduped.push(r);seen.add(r.cat)}});
+  return deduped.slice(0,3);
+}
+
+function composeInsightText(allBooks){
+  const insights=generateInsights(allBooks);
+  return insights.map(i=>i.text).join(' ');
+}
+
 /* ═══ ANALYTICS — DNA summary, stats, streak ring, categories, theme cloud, goals ═══ */
 // ══════ ANALYTICS ══════
 function renderAnalytics(){
@@ -702,16 +841,97 @@ requestAnimationFrame(()=>{
 function drawPie(cd,total){const c=document.getElementById("pieChart");if(!c)return;const dpr=window.devicePixelRatio||1;c.width=170*dpr;c.height=170*dpr;const ctx=c.getContext("2d");ctx.scale(dpr,dpr);let start=-Math.PI/2;cd.forEach(d=>{const sw=(d.value/total)*Math.PI*2;ctx.beginPath();ctx.arc(85,85,75,start,start+sw);ctx.arc(85,85,42,start+sw,start,true);ctx.closePath();ctx.fillStyle=CAT_COLORS[d.name]||"#7A7670";ctx.fill();start+=sw})}
 
 // ══════ YEAR IN REVIEW ══════
-function renderReview(){const comp=getCompleted();if(comp.length<3){document.getElementById("viewReview").innerHTML=`<div class="empty"><p class="title">Complete at least 3 books to unlock Year in Review.</p></div>`;return}
-const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0),pct=Math.min(100,Math.round(comp.length/getGoal()*100));const catCounts={};comp.forEach(b=>{catCounts[b.category]=(catCounts[b.category]||0)+1});const topCat=Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0];const rated=comp.filter(b=>b.rating);const avgR=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
-const durs=comp.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:daysBetween(b.startDate,b.endDate)}));const fastest=durs.length?durs.reduce((a,b)=>a.days<b.days?a:b):null;const longest=comp.reduce((a,b)=>(b.pages||0)>(a.pages||0)?b:a,comp[0]);const topRated=[...comp].filter(b=>b.rating).sort((a,b)=>b.rating-a.rating)[0];
-const allThemes={};data.books.forEach(b=>(b.themes||[]).forEach(t=>{allThemes[t]=(allThemes[t]||0)+1}));const topThemes=Object.entries(allThemes).sort((a,b)=>b[1]-a[1]).slice(0,5);
-const totalQuotes=data.books.reduce((s,b)=>s+(b.quotes?.length||0),0);const ms=getMilestones();
-let html=`<div class="yr-hero"><div class="yr-hero-glow"></div><p class="yr-hero-label">Year in Review</p><p class="yr-hero-num">${comp.length}</p><p class="yr-hero-sub">books completed \u00B7 ${pct}% of goal</p>${totalPages?`<p class="yr-hero-pages">${totalPages.toLocaleString()} pages read</p>`:""}</div><div class="yr-grid">`;
-if(topCat)html+=`<div class="yr-card"><p class="yr-card-label">Top Category</p><p class="yr-card-value">${topCat[0]}</p><p class="yr-card-sub">${topCat[1]} books</p></div>`;if(avgR)html+=`<div class="yr-card"><p class="yr-card-label">Avg Rating</p><p class="yr-card-value">${avgR} / 5</p></div>`;if(fastest)html+=`<div class="yr-card"><p class="yr-card-label">Fastest Read</p><p class="yr-card-value sm">${esc(fastest.title)}</p><p class="yr-card-sub">${fastest.days} days</p></div>`;if(longest&&longest.pages)html+=`<div class="yr-card"><p class="yr-card-label">Longest Book</p><p class="yr-card-value sm">${esc(longest.title)}</p><p class="yr-card-sub">${longest.pages} pages</p></div>`;if(topRated)html+=`<div class="yr-card"><p class="yr-card-label">Highest Rated</p><p class="yr-card-value sm">${esc(topRated.title)}</p><p class="yr-card-sub">${topRated.rating}/5</p></div>`;html+=`</div>`;
-if(topThemes.length)html+=`<div class="panel"><div class="panel-title">Recurring Themes</div><div class="yr-themes">${topThemes.map(([t,c])=>`<div class="yr-theme">${esc(t)} <em>\u00D7${c}</em></div>`).join("")}</div></div>`;
-if(ms.length)html+=`<div class="panel"><div class="panel-title">Milestones</div><div class="yr-milestones">${ms.map(m=>`<div class="yr-milestone"><span class="yr-milestone-icon">${m.icon}</span><p class="yr-milestone-label">${m.label}</p></div>`).join("")}</div></div>`;
-if(totalQuotes)html+=`<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 24px;display:flex;align-items:center;gap:14px"><span style="color:var(--accentDim);font-size:20px">\u201C</span><p style="font-family:var(--ui);font-size:13px;color:var(--textM);margin:0">You saved <strong style="color:var(--text)">${totalQuotes}</strong> passage${totalQuotes!==1?"s":""} across your readings.</p></div>`;
+// ═══ SVG icons for milestones ═══
+const MS_ICONS={book:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',star:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',brick:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="9"/><line x1="15" y1="9" x2="15" y2="15"/><line x1="9" y1="15" x2="9" y2="21"/></svg>',bolt:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',rainbow:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a10 10 0 00-20 0"/><path d="M19 17a7 7 0 00-14 0"/><path d="M16 17a4 4 0 00-8 0"/></svg>',flame:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>',ruler:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 010 3.4l-2.6 2.6a2.4 2.4 0 01-3.4 0L2.7 8.7a2.4 2.4 0 010-3.4l2.6-2.6a2.4 2.4 0 013.4 0z"/><line x1="14.5" y1="12.5" x2="16.5" y2="10.5"/><line x1="10.5" y1="16.5" x2="12.5" y2="14.5"/></svg>',target:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',openbook:'<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>'};
+
+// ═══ Auto-milestones ═══
+function autoMilestones(comp,allBooks){
+const ms=[];const sorted=[...comp].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
+if(sorted.length>=1)ms.push({icon:'book',color:'var(--accent)',label:'First Book',detail:sorted[0].title});
+[5,10,15,20,25,30,40,50].forEach(n=>{if(sorted.length>=n)ms.push({icon:n>=25?'star':'book',color:n>=25?'var(--gold)':'var(--accent)',label:`${n} Books`,detail:`Reached with ${sorted[n-1].title}`})});
+const first5=sorted.find(b=>b.rating===5);if(first5)ms.push({icon:'star',color:'var(--gold)',label:'First 5-Star',detail:first5.title});
+const longest=comp.reduce((a,b)=>(b.pages||0)>(a.pages||0)?b:a,comp[0]);if(longest.pages>=400)ms.push({icon:'brick',color:'var(--blue)',label:'Marathon Read',detail:`${longest.title} \u2014 ${longest.pages.toLocaleString()} pages`});
+const withDays=comp.filter(b=>b.startDate&&b.endDate).map(b=>({...b,days:daysBetween(b.startDate,b.endDate)}));const fastest=withDays.length?withDays.reduce((a,b)=>a.days<b.days?a:b):null;
+if(fastest&&fastest.days<=14)ms.push({icon:'bolt',color:'#C46B5B',label:'Speed Reader',detail:`${fastest.title} in ${fastest.days} days`});
+const cats=new Set(comp.map(b=>b.category));if(cats.size>=5)ms.push({icon:'rainbow',color:'var(--green)',label:`${cats.size} Categories`,detail:'Renaissance reader'});
+const mc={};sorted.forEach(b=>{if(b.endDate){const k=b.endDate.slice(0,7);mc[k]=(mc[k]||0)+1}});const bestMonth=Object.entries(mc).sort((a,b)=>b[1]-a[1])[0];
+if(bestMonth&&bestMonth[1]>=2){const[y,m]=bestMonth[0].split('-');ms.push({icon:'flame',color:'#C45B5B',label:`${bestMonth[1]} in One Month`,detail:new Date(+y,+m-1).toLocaleDateString('en-US',{month:'long'})})}
+const tp=comp.reduce((s,b)=>s+(b.pages||0),0);if(tp>=5000)ms.push({icon:'ruler',color:'#8B6AAC',label:'5,000 Pages',detail:`${tp.toLocaleString()} total`});else if(tp>=2000)ms.push({icon:'ruler',color:'#8B6AAC',label:'2,000 Pages',detail:`${tp.toLocaleString()} total`});
+const nextTarget=[5,10,15,20,25,30,40,50].find(n=>n>sorted.length);
+if(nextTarget){const rem=nextTarget-sorted.length;ms.push({icon:'target',color:'var(--textD)',label:`${rem} to ${nextTarget} Books`,detail:`${sorted.length} of ${nextTarget}`,next:true,pct:Math.round(sorted.length/nextTarget*100)})}
+return ms;
+}
+
+// ═══ Reader identity ═══
+const ID_LABELS={"Self-Awareness":"Seeker","Current America":"Citizen","Economics & Money":"Economist","Technology":"Technologist","American History":"Historian","Science":"Scientist","World History":"Historian","Philosophy & Ethics":"Philosopher","Religion":"Contemplative","Fiction":"Storyteller","Other":"Explorer"};
+function getReaderIdentity(slice){
+  const cc={};slice.forEach(b=>cc[b.category]=(cc[b.category]||0)+1);const s=Object.entries(cc).sort((a,b)=>b[1]-a[1]);
+  const w1=ID_LABELS[s[0][0]]||"Reader",w2=s[1]?ID_LABELS[s[1][0]]||"Reader":null;
+  return w2&&w2!==w1?`The ${w1}-${w2}`:`The ${w1}`;
+}
+function getIdentityEvolution(comp){
+  const steps=[];const checks=[2,4,comp.length].filter((v,i,a)=>v<=comp.length&&a.indexOf(v)===i);
+  const sorted=[...comp].sort((a,b)=>new Date(a.endDate)-new Date(b.endDate));
+  checks.forEach(n=>{const id=getReaderIdentity(sorted.slice(0,n));const last=sorted[n-1];
+    const period=n===comp.length?'Now':fmtShort(sorted[0].endDate)+' \u2013 '+fmtShort(last.endDate);
+    if(!steps.length||steps[steps.length-1].id!==id)steps.push({id,period,current:n===comp.length})});
+  return steps;
+}
+
+// ══════ YEAR IN REVIEW ══════
+function renderReview(){
+const comp=getCompleted();if(comp.length<3){document.getElementById("viewReview").innerHTML=`<div class="empty"><p class="title">Complete at least 3 books to unlock Year in Review.</p></div>`;return}
+const totalPages=comp.reduce((s,b)=>s+(b.pages||0),0),pct=Math.min(100,Math.round(comp.length/getGoal()*100));
+const rated=comp.filter(b=>b.rating),avgR=rated.length?(rated.reduce((s,b)=>s+b.rating,0)/rated.length).toFixed(1):null;
+const ratingCounts=[0,0,0,0,0];comp.forEach(b=>{if(b.rating>=1&&b.rating<=5)ratingCounts[b.rating-1]++});const maxRat=Math.max(...ratingCounts,1);
+const cats=new Set(comp.map(b=>b.category)),avgPages=Math.round(totalPages/comp.length);
+const fiveCount=ratingCounts[4];
+let html='';
+
+// 1. HERO
+html+=`<div class="yr-hero"><div class="yr-hero-glow"></div><p class="yr-hero-label">Year in Review</p><p class="yr-hero-num">${comp.length}</p><p class="yr-hero-sub">books completed \u00B7 ${pct}% of goal</p><p class="yr-hero-pages">${totalPages.toLocaleString()} pages read</p></div>`;
+
+// 2. MONTHLY TIMELINE
+const monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const monthBooks={};comp.forEach(b=>{if(b.endDate){const d=new Date(b.endDate);const k=d.getFullYear()+'-'+String(d.getMonth()).padStart(2,'0');if(!monthBooks[k])monthBooks[k]=[];monthBooks[k].push(b)}});
+html+=`<div class="yr-months">`;
+for(let m=0;m<12;m++){const yr=new Date().getFullYear();const k=yr+'-'+String(m).padStart(2,'0');const k2=(yr-1)+'-'+String(m).padStart(2,'0');const mb=monthBooks[k]||monthBooks[k2]||[];
+html+=`<div class="yr-month"><div class="yr-month-dots">`;if(mb.length)mb.forEach(b=>{const col=CAT_COLORS[b.category]||CAT_COLORS.Other;html+=`<div class="yr-month-dot" style="background:${col}"></div>`});else html+=`<div class="yr-month-empty"></div>`;
+html+=`</div><span class="yr-month-label">${monthNames[m]}</span></div>`}
+html+=`</div>`;
+
+// 3. NARRATIVE (from insight engine)
+const insightText=composeInsightText(data.books);
+if(insightText)html+=`<div class="panel"><div class="panel-title">Your Reading Journey</div><p class="yr-narrative">${insightText}</p></div>`;
+
+// 4. IDENTITY CARD
+const currentId=getReaderIdentity(comp);const evolution=getIdentityEvolution(comp);
+html+=`<div class="yr-identity"><div class="yr-id-bg"></div><div class="yr-id-accent-line"></div><div class="yr-id-content"><div class="yr-id-header"><div class="yr-id-icon">${MS_ICONS.openbook}</div><div class="yr-id-text"><p class="yr-id-label">Your reader identity</p><h2 class="yr-id-title">${currentId}</h2><p class="yr-id-desc">${cats.size} categories \u00B7 ${avgPages} avg pages \u00B7 ${fiveCount>=comp.length/2?'high standards':'wide-ranging taste'}</p></div></div>`;
+// Stats strip
+html+=`<div class="yr-id-stats"><div class="yr-id-stat"><p class="yr-id-stat-val">${comp.length}</p><p class="yr-id-stat-label">Books</p></div><div class="yr-id-stat"><p class="yr-id-stat-val">${avgPages}</p><p class="yr-id-stat-label">Avg pages</p></div><div class="yr-id-stat"><p class="yr-id-stat-val">${cats.size}</p><p class="yr-id-stat-label">Categories</p></div><div class="yr-id-stat"><p class="yr-id-stat-val yr-gold">${avgR||'\u2014'}</p><p class="yr-id-stat-label">Avg rating</p></div></div>`;
+// Rating bars
+html+=`<div class="yr-id-ratings"><div><div class="yr-id-rat-visual">`;
+for(let i=0;i<5;i++){const h=ratingCounts[i]>0?Math.max(4,Math.round(ratingCounts[i]/maxRat*18)):2;const col=i>=3?'var(--gold)':'var(--textDD)';html+=`<div class="yr-id-rat-bar" style="height:${h}px;background:${col}"></div>`}
+html+=`</div><div class="yr-id-rat-labels">`;for(let i=0;i<5;i++)html+=`<span class="yr-id-rat-lbl">${i+1}</span>`;
+html+=`</div></div><span class="yr-id-rat-text"><strong>${avgR||'\u2014'}</strong>/5 avg \u00B7 ${fiveCount} of ${comp.length} got 5\u2605</span></div>`;
+// Evolution
+if(evolution.length>1){html+=`<div class="yr-evo"><p class="yr-evo-title">How your identity shifted</p><div class="yr-evo-flow">`;
+evolution.forEach((s,i)=>{html+=`<div style="text-align:center"><span class="yr-evo-chip${s.current?' yr-evo-now':''}">${s.id}</span><span class="yr-evo-period">${s.period}</span></div>`;if(i<evolution.length-1)html+=`<span class="yr-evo-arrow">\u2192</span>`});
+html+=`</div></div>`}
+html+=`</div></div>`;
+
+// 5. FAVORITE PASSAGE
+const allQuotes=[];data.books.forEach(b=>(b.quotes||[]).forEach(q=>allQuotes.push({text:q.text,page:q.page,title:b.title,author:b.author,rating:b.rating||0})));
+const bestQuote=allQuotes.sort((a,b)=>b.rating-a.rating)[0];
+if(bestQuote)html+=`<div class="yr-quote"><p class="yr-quote-text">\u201C${esc(bestQuote.text)}\u201D</p><p class="yr-quote-src">\u2014 <strong>${esc(bestQuote.title)}</strong> by ${esc(bestQuote.author)}</p></div>`;
+
+// 6. MILESTONES
+const ms=autoMilestones(comp,data.books);
+html+=`<div class="panel"><div class="panel-title">Milestones</div><div class="yr-ms-list">`;
+ms.forEach(m=>{const icon=MS_ICONS[m.icon]||MS_ICONS.book;
+html+=`<div class="yr-ms-item${m.next?' yr-ms-next':''}"><div class="yr-ms-icon-wrap" style="background:${m.color}15;color:${m.color}">${icon}</div><div class="yr-ms-info"><p class="yr-ms-label">${m.label}</p><p class="yr-ms-detail">${m.detail}</p>${m.next?`<div class="yr-ms-bar"><div class="yr-ms-fill" style="width:${m.pct}%"></div></div>`:''}</div></div>`});
+html+=`</div></div>`;
+
 document.getElementById("viewReview").innerHTML=html;
 }
 

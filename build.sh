@@ -22,7 +22,7 @@ sed -n '/<\/head>/,/<script>/p' index.html | head -n -1 >> dist.html
 echo '<script>' >> dist.html
 echo 'window.onerror=function(m,s,l){const e=document.createElement("div");e.style.cssText="position:fixed;top:0;left:0;right:0;padding:12px;background:#C45B5B;color:#fff;font:12px Outfit;z-index:9999;white-space:pre-wrap";e.textContent="Error: "+m+" ("+s+":"+l+")";document.body.prepend(e)};' >> dist.html
 
-for f in js/data.js js/helpers.js js/shelf.js js/timeline.js js/analytics.js js/detail.js js/app.js; do
+for f in js/data.js js/helpers.js js/shelf.js js/timeline.js js/insights.js js/analytics.js js/detail.js js/app.js; do
   cat "$f" >> dist.html
   echo '' >> dist.html
 done
