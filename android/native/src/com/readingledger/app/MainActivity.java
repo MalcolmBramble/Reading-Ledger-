@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
         searchBtn.setTextSize(20);
         searchBtn.setTextColor(C.TEXT_M);
         searchBtn.setGravity(Gravity.CENTER);
-        searchBtn.setOnClickListener(v -> toggleSearch());
+        searchBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { toggleSearch(); } });
         RelativeLayout.LayoutParams sip = new RelativeLayout.LayoutParams(dp(36), dp(36));
         sip.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         sip.setMargins(0, -dp(6), dp(40), 0);
@@ -154,7 +154,7 @@ public class MainActivity extends Activity {
         settingsBtn.setTextSize(20);
         settingsBtn.setTextColor(C.TEXT_M);
         settingsBtn.setGravity(Gravity.CENTER);
-        settingsBtn.setOnClickListener(v -> openSettings());
+        settingsBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openSettings(); } });
         RelativeLayout.LayoutParams gp = new RelativeLayout.LayoutParams(dp(36), dp(36));
         gp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         gp.setMargins(0, -dp(6), 0, 0);
@@ -286,7 +286,7 @@ public class MainActivity extends Activity {
         lbl.setTag("tabLabel");
         btn.addView(lbl, new LinearLayout.LayoutParams(-2, -2));
 
-        btn.setOnClickListener(v -> switchTab(tab));
+        btn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { switchTab(tab); } });
         return btn;
     }
 
@@ -417,7 +417,7 @@ public class MainActivity extends Activity {
             contentInner.addView(emptySub, new LinearLayout.LayoutParams(-1, -2));
 
             Button addBtn = styledButton("+ Add a Book");
-            addBtn.setOnClickListener(v -> openAddForm());
+            addBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openAddForm(); } });
             LinearLayout.LayoutParams abp = new LinearLayout.LayoutParams(-2, -2);
             abp.gravity = Gravity.CENTER;
             contentInner.addView(addBtn, abp);
@@ -528,7 +528,7 @@ public class MainActivity extends Activity {
                 }
             };
             spine.setWillNotDraw(false);
-            spine.setOnClickListener(v -> openDetail(b.id));
+            spine.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openDetail(b.id); } });
             LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(dp(C.SPINE_W), dp(C.SPINE_H));
             sp.setMargins(dp(3), 0, dp(3), 0);
             spines.addView(spine, sp);
@@ -560,7 +560,7 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(-1, -2);
         clp.setMargins(0, dp(6), 0, dp(6));
         card.setLayoutParams(clp);
-        card.setOnClickListener(v -> openDetail(b.id));
+        card.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openDetail(b.id); } });
 
         int catColor = C.catColor(b.category);
 
@@ -660,7 +660,7 @@ public class MainActivity extends Activity {
                 btnBg.setCornerRadius(dp(6));
                 btn.setBackground(btnBg);
                 int delta = Integer.parseInt(inc);
-                btn.setOnClickListener(v -> {
+                btn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
                     b.currentPage = Math.max(0, Math.min(b.pages, b.currentPage + delta));
                     b.updatedAt = C.isoNow();
                     if (b.currentPage >= b.pages && "reading".equals(b.status)) {
@@ -670,7 +670,7 @@ public class MainActivity extends Activity {
                     }
                     ds.save();
                     renderShelf();
-                });
+                }});
                 LinearLayout.LayoutParams blp2 = new LinearLayout.LayoutParams(-2, dp(32));
                 blp2.setMargins(dp(3), 0, dp(3), 0);
                 stepper.addView(btn, blp2);
@@ -709,10 +709,10 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-2, -2);
         lp.setMargins(dp(3), 0, dp(3), 0);
         pill.setLayoutParams(lp);
-        pill.setOnClickListener(v -> {
+        pill.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
             currentSort = key;
             renderShelf();
-        });
+        }});
         return pill;
     }
 
@@ -740,7 +740,7 @@ public class MainActivity extends Activity {
                 }
             }
         }
-        Collections.sort(events, (a, b) -> b.date.compareTo(a.date));
+        Collections.sort(events, new java.util.Comparator<TimelineEvent>() { @Override public int compare(TimelineEvent a, TimelineEvent b) { return b.date.compareTo(a.date); } });
 
         if (events.isEmpty()) {
             addSpacer(40);
@@ -874,7 +874,7 @@ public class MainActivity extends Activity {
             catCounts.put(b.category, catCounts.getOrDefault(b.category, 0) + 1);
         }
         List<Map.Entry<String, Integer>> catList = new ArrayList<>(catCounts.entrySet());
-        Collections.sort(catList, (a, b) -> b.getValue() - a.getValue());
+        Collections.sort(catList, new java.util.Comparator<java.util.Map.Entry<String,Integer>>() { @Override public int compare(java.util.Map.Entry<String,Integer> a, java.util.Map.Entry<String,Integer> b) { return b.getValue() - a.getValue(); } });
 
         for (Map.Entry<String, Integer> entry : catList) {
             contentInner.addView(buildCatBar(entry.getKey(), entry.getValue(), completed.size()));
@@ -1056,7 +1056,7 @@ public class MainActivity extends Activity {
         addSpacer(8);
         contentInner.addView(sectionTitle("Highest Rated"));
         List<Book> byRating = new ArrayList<>(completed);
-        Collections.sort(byRating, (a, b) -> b.rating - a.rating);
+        Collections.sort(byRating, new java.util.Comparator<Book>() { @Override public int compare(Book a, Book b) { return b.rating - a.rating; } });
         int top = Math.min(3, byRating.size());
         for (int i = 0; i < top; i++) {
             Book b = byRating.get(i);
@@ -1146,7 +1146,7 @@ public class MainActivity extends Activity {
         item.setOrientation(LinearLayout.HORIZONTAL);
         item.setGravity(Gravity.CENTER_VERTICAL);
         item.setPadding(0, dp(8), 0, dp(8));
-        item.setOnClickListener(v -> openDetail(b.id));
+        item.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openDetail(b.id); } });
 
         TextView r = new TextView(this);
         r.setText(rank);
@@ -1248,11 +1248,11 @@ public class MainActivity extends Activity {
         AlertDialog.Builder b = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog);
         b.setTitle("Welcome to The Reading Ledger");
         b.setMessage("Track every book you read with beautiful shelves, detailed analytics, and a personal year in review.\n\nWould you like to start fresh or load a demo library?");
-        b.setPositiveButton("Start Fresh", (d, w) -> renderAll());
-        b.setNegativeButton("Load Demo (12 books)", (d, w) -> {
+        b.setPositiveButton("Start Fresh", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) { renderAll(); } });
+        b.setNegativeButton("Load Demo (12 books)", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) {
             ds.loadDemoData();
             renderAll();
-        });
+        }});
         b.setCancelable(false);
         b.show();
     }

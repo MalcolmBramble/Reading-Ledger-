@@ -62,7 +62,7 @@ public class BookDetailActivity extends Activity {
         back.setText("← Back");
         back.setTextColor(C.ACCENT);
         back.setTextSize(14);
-        back.setOnClickListener(v -> finish());
+        back.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { finish(); } });
         topRow.addView(back, new LinearLayout.LayoutParams(0, -2, 1));
 
         TextView editBtn = new TextView(this);
@@ -70,11 +70,11 @@ public class BookDetailActivity extends Activity {
         editBtn.setTextColor(C.ACCENT);
         editBtn.setTextSize(14);
         editBtn.setPadding(dp(12), dp(8), dp(12), dp(8));
-        editBtn.setOnClickListener(v -> {
-            android.content.Intent i = new android.content.Intent(this, BookFormActivity.class);
+        editBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
+            android.content.Intent i = new android.content.Intent(BookDetailActivity.this, BookFormActivity.class);
             i.putExtra("bookId", book.id);
             startActivity(i);
-        });
+        }});
         topRow.addView(editBtn);
 
         TextView deleteBtn = new TextView(this);
@@ -82,7 +82,7 @@ public class BookDetailActivity extends Activity {
         deleteBtn.setTextColor(C.RED);
         deleteBtn.setTextSize(14);
         deleteBtn.setPadding(dp(12), dp(8), 0, dp(8));
-        deleteBtn.setOnClickListener(v -> confirmDelete());
+        deleteBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { confirmDelete(); } });
         topRow.addView(deleteBtn);
 
         content.addView(topRow, new LinearLayout.LayoutParams(-1, -2));
@@ -126,12 +126,12 @@ public class BookDetailActivity extends Activity {
                 star.setTextColor(i <= book.rating ? C.GOLD : C.TEXT_D);
                 star.setTextSize(20);
                 final int rating = i;
-                star.setOnClickListener(v -> {
+                star.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
                     book.rating = rating;
                     book.updatedAt = C.isoNow();
                     ds.save();
                     rebuildUI();
-                });
+                }});
                 ratingRow.addView(star);
             }
             content.addView(ratingRow);
@@ -146,12 +146,12 @@ public class BookDetailActivity extends Activity {
                 star.setTextColor(C.TEXT_D);
                 star.setTextSize(20);
                 final int rating = i;
-                star.setOnClickListener(v -> {
+                star.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
                     book.rating = rating;
                     book.updatedAt = C.isoNow();
                     ds.save();
                     rebuildUI();
-                });
+                }});
                 ratingRow.addView(star);
             }
             content.addView(ratingRow);
@@ -251,7 +251,7 @@ public class BookDetailActivity extends Activity {
         // Add quote button
         addSpacer(8);
         Button addQuote = styledButtonSecondary("+ Add Quote");
-        addQuote.setOnClickListener(v -> showAddQuoteDialog());
+        addQuote.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { showAddQuoteDialog(); } });
         content.addView(addQuote);
 
         // Themes
@@ -329,7 +329,7 @@ public class BookDetailActivity extends Activity {
         btns.setPadding(0, dp(8), 0, 0);
 
         Button startBtn = styledButtonSecondary(timerRunning ? "Pause" : "Start");
-        startBtn.setOnClickListener(v -> {
+        startBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
             if (timerRunning) {
                 timerRunning = false;
                 timerElapsed += System.currentTimeMillis() - timerStart;
@@ -340,11 +340,11 @@ public class BookDetailActivity extends Activity {
                 startBtn.setText("Pause");
                 tickTimer();
             }
-        });
+        }});
         btns.addView(startBtn);
 
         Button saveBtn = styledButtonSecondary("Save Session");
-        saveBtn.setOnClickListener(v -> {
+        saveBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
             if (timerRunning) {
                 timerElapsed += System.currentTimeMillis() - timerStart;
                 timerRunning = false;
@@ -361,7 +361,7 @@ public class BookDetailActivity extends Activity {
             ds.save();
             timerElapsed = 0;
             rebuildUI();
-        });
+        }});
         LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(-2, -2);
         slp.setMargins(dp(8), 0, 0, 0);
         btns.addView(saveBtn, slp);
@@ -377,7 +377,7 @@ public class BookDetailActivity extends Activity {
         int min = sec / 60;
         sec = sec % 60;
         if (timerDisplay != null) timerDisplay.setText(min + ":" + String.format("%02d", sec));
-        timerHandler.postDelayed(this::tickTimer, 1000);
+        timerHandler.postDelayed(new Runnable() { @Override public void run() { tickTimer(); } }, 1000);
     }
 
     private View buildQuoteCard(Book.Quote q) {
@@ -445,7 +445,7 @@ public class BookDetailActivity extends Activity {
         new AlertDialog.Builder(this)
             .setTitle("Add Quote")
             .setView(form)
-            .setPositiveButton("Add", (d, w) -> {
+            .setPositiveButton("Add", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) {
                 String text = quoteInput.getText().toString().trim();
                 if (text.isEmpty()) return;
                 Book.Quote q = new Book.Quote();
@@ -456,7 +456,7 @@ public class BookDetailActivity extends Activity {
                 book.updatedAt = C.isoNow();
                 ds.save();
                 rebuildUI();
-            })
+            } })
             .setNegativeButton("Cancel", null)
             .show();
     }
@@ -465,10 +465,10 @@ public class BookDetailActivity extends Activity {
         new AlertDialog.Builder(this)
             .setTitle("Delete Book")
             .setMessage("Remove \"" + book.title + "\" from your library?")
-            .setPositiveButton("Delete", (d, w) -> {
+            .setPositiveButton("Delete", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) {
                 ds.deleteBook(book.id);
                 finish();
-            })
+            } })
             .setNegativeButton("Cancel", null)
             .show();
     }

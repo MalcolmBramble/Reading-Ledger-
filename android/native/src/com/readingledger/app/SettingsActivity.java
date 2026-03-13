@@ -54,7 +54,7 @@ public class SettingsActivity extends Activity {
         close.setTextColor(C.TEXT_M);
         close.setTextSize(20);
         close.setPadding(dp(12), dp(8), dp(4), dp(8));
-        close.setOnClickListener(v -> finish());
+        close.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { finish(); } });
         header.addView(close);
 
         content.addView(header);
@@ -74,10 +74,10 @@ public class SettingsActivity extends Activity {
         goalLabel.setTextSize(13);
         goalRow.addView(goalLabel);
         Button goalSave = secondaryButton("Set");
-        goalSave.setOnClickListener(v -> {
+        goalSave.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
             int g = parseInt(goalInput.getText().toString());
-            if (g > 0) { ds.setAnnualGoal(g); Toast.makeText(this, "Goal set to " + g, Toast.LENGTH_SHORT).show(); }
-        });
+            if (g > 0) { ds.setAnnualGoal(g); Toast.makeText(SettingsActivity.this, "Goal set to " + g, Toast.LENGTH_SHORT).show(); }
+        }});
         goalRow.addView(goalSave);
         content.addView(goalRow);
 
@@ -88,7 +88,7 @@ public class SettingsActivity extends Activity {
         LinearLayout expRow = new LinearLayout(this);
         expRow.setOrientation(LinearLayout.HORIZONTAL);
         Button expJson = secondaryButton("Export JSON");
-        expJson.setOnClickListener(v -> exportJson());
+        expJson.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { exportJson(); } });
         expRow.addView(expJson, new LinearLayout.LayoutParams(0, -2, 1));
         content.addView(expRow);
 
@@ -107,12 +107,12 @@ public class SettingsActivity extends Activity {
         // Import
         settingsItem("Import Library", null);
         Button impBtn = secondaryButton("Import JSON");
-        impBtn.setOnClickListener(v -> {
+        impBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
             Intent i = new Intent(Intent.ACTION_GET_CONTENT);
             i.setType("application/json");
             i.addCategory(Intent.CATEGORY_OPENABLE);
             startActivityForResult(Intent.createChooser(i, "Select backup file"), FILE_PICK);
-        });
+        }});
         content.addView(impBtn);
 
         addSpacer(20);
@@ -120,14 +120,14 @@ public class SettingsActivity extends Activity {
         // Reset demo
         settingsItem("Reset Demo", null);
         Button resetBtn = secondaryButton("Reload Sample Data");
-        resetBtn.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
+        resetBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
+            new AlertDialog.Builder(SettingsActivity.this)
                 .setTitle("Reset")
                 .setMessage("Replace your library with demo data?")
-                .setPositiveButton("Reset", (d, w) -> { ds.loadDemoData(); finish(); })
+                .setPositiveButton("Reset", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) { ds.loadDemoData(); finish(); } })
                 .setNegativeButton("Cancel", null)
                 .show();
-        });
+        }});
         content.addView(resetBtn);
 
         addSpacer(20);
@@ -145,14 +145,14 @@ public class SettingsActivity extends Activity {
         clearBtn.setBackground(clearBg);
         clearBtn.setPadding(dp(16), dp(8), dp(16), dp(8));
         clearBtn.setAllCaps(false);
-        clearBtn.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
+        clearBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
+            new AlertDialog.Builder(SettingsActivity.this)
                 .setTitle("Clear All")
                 .setMessage("Delete everything? This cannot be undone.")
-                .setPositiveButton("Clear", (d, w) -> { ds.clearAll(); finish(); })
+                .setPositiveButton("Clear", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) { ds.clearAll(); finish(); } })
                 .setNegativeButton("Cancel", null)
                 .show();
-        });
+        }});
         content.addView(clearBtn);
 
         addSpacer(20);
@@ -191,22 +191,22 @@ public class SettingsActivity extends Activity {
                 new AlertDialog.Builder(this)
                     .setTitle("Import")
                     .setMessage("How would you like to import?")
-                    .setPositiveButton("Replace", (d, w) -> {
+                    .setPositiveButton("Replace", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) {
                         if (ds.importJson(json, false)) {
-                            Toast.makeText(this, "Library replaced", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingsActivity.this, "Library replaced", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            Toast.makeText(this, "Invalid file", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingsActivity.this, "Invalid file", Toast.LENGTH_SHORT).show();
                         }
-                    })
-                    .setNegativeButton("Merge", (d, w) -> {
+                    } })
+                    .setNegativeButton("Merge", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) {
                         if (ds.importJson(json, true)) {
-                            Toast.makeText(this, "Library merged", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingsActivity.this, "Library merged", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            Toast.makeText(this, "Invalid file", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SettingsActivity.this, "Invalid file", Toast.LENGTH_SHORT).show();
                         }
-                    })
+                    } })
                     .setNeutralButton("Cancel", null)
                     .show();
             } catch (Exception e) {
