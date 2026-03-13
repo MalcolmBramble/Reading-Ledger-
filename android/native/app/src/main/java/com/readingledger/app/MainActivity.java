@@ -45,7 +45,6 @@ public class MainActivity extends Activity {
         w.setNavigationBarColor(C.BG);
 
         buildLayout();
-        setContentView(rootLayout);
 
         // Check if first run
         if (ds.getBooks().isEmpty()) {
@@ -65,10 +64,14 @@ public class MainActivity extends Activity {
     //  LAYOUT CONSTRUCTION
     // ═══════════════════════════════════════════
     private void buildLayout() {
+        // Use a FrameLayout as true root so we can overlay onboarding
+        FrameLayout trueRoot = new FrameLayout(this);
+        trueRoot.setBackgroundColor(C.BG);
+        trueRoot.setFitsSystemWindows(true);
+
         rootLayout = new LinearLayout(this);
         rootLayout.setOrientation(LinearLayout.VERTICAL);
         rootLayout.setBackgroundColor(C.BG);
-        rootLayout.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
 
         // Header
         LinearLayout header = buildHeader();
@@ -116,6 +119,9 @@ public class MainActivity extends Activity {
         // Bottom nav
         bottomNav = buildBottomNav();
         rootLayout.addView(bottomNav);
+
+        trueRoot.addView(rootLayout, new FrameLayout.LayoutParams(-1, -1));
+        setContentView(trueRoot);
     }
 
     private LinearLayout buildHeader() {
@@ -142,7 +148,7 @@ public class MainActivity extends Activity {
         searchBtn.setTextSize(20);
         searchBtn.setTextColor(C.TEXT_M);
         searchBtn.setGravity(Gravity.CENTER);
-        searchBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { toggleSearch(); } });
+        searchBtn.setOnClickListener(v -> toggleSearch());
         RelativeLayout.LayoutParams sip = new RelativeLayout.LayoutParams(dp(36), dp(36));
         sip.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         sip.setMargins(0, -dp(6), dp(40), 0);
@@ -154,7 +160,7 @@ public class MainActivity extends Activity {
         settingsBtn.setTextSize(20);
         settingsBtn.setTextColor(C.TEXT_M);
         settingsBtn.setGravity(Gravity.CENTER);
-        settingsBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openSettings(); } });
+        settingsBtn.setOnClickListener(v -> openSettings());
         RelativeLayout.LayoutParams gp = new RelativeLayout.LayoutParams(dp(36), dp(36));
         gp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         gp.setMargins(0, -dp(6), 0, 0);
@@ -286,7 +292,7 @@ public class MainActivity extends Activity {
         lbl.setTag("tabLabel");
         btn.addView(lbl, new LinearLayout.LayoutParams(-2, -2));
 
-        btn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { switchTab(tab); } });
+        btn.setOnClickListener(v -> switchTab(tab));
         return btn;
     }
 
@@ -417,7 +423,7 @@ public class MainActivity extends Activity {
             contentInner.addView(emptySub, new LinearLayout.LayoutParams(-1, -2));
 
             Button addBtn = styledButton("+ Add a Book");
-            addBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openAddForm(); } });
+            addBtn.setOnClickListener(v -> openAddForm());
             LinearLayout.LayoutParams abp = new LinearLayout.LayoutParams(-2, -2);
             abp.gravity = Gravity.CENTER;
             contentInner.addView(addBtn, abp);
@@ -528,7 +534,7 @@ public class MainActivity extends Activity {
                 }
             };
             spine.setWillNotDraw(false);
-            spine.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openDetail(b.id); } });
+            spine.setOnClickListener(v -> openDetail(b.id));
             LinearLayout.LayoutParams sp = new LinearLayout.LayoutParams(dp(C.SPINE_W), dp(C.SPINE_H));
             sp.setMargins(dp(3), 0, dp(3), 0);
             spines.addView(spine, sp);
@@ -560,7 +566,7 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(-1, -2);
         clp.setMargins(0, dp(6), 0, dp(6));
         card.setLayoutParams(clp);
-        card.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openDetail(b.id); } });
+        card.setOnClickListener(v -> openDetail(b.id));
 
         int catColor = C.catColor(b.category);
 
@@ -660,7 +666,7 @@ public class MainActivity extends Activity {
                 btnBg.setCornerRadius(dp(6));
                 btn.setBackground(btnBg);
                 int delta = Integer.parseInt(inc);
-                btn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
+                btn.setOnClickListener(v -> {
                     b.currentPage = Math.max(0, Math.min(b.pages, b.currentPage + delta));
                     b.updatedAt = C.isoNow();
                     if (b.currentPage >= b.pages && "reading".equals(b.status)) {
@@ -670,7 +676,7 @@ public class MainActivity extends Activity {
                     }
                     ds.save();
                     renderShelf();
-                }});
+                });
                 LinearLayout.LayoutParams blp2 = new LinearLayout.LayoutParams(-2, dp(32));
                 blp2.setMargins(dp(3), 0, dp(3), 0);
                 stepper.addView(btn, blp2);
@@ -709,10 +715,10 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-2, -2);
         lp.setMargins(dp(3), 0, dp(3), 0);
         pill.setLayoutParams(lp);
-        pill.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {
+        pill.setOnClickListener(v -> {
             currentSort = key;
             renderShelf();
-        }});
+        });
         return pill;
     }
 
@@ -740,7 +746,7 @@ public class MainActivity extends Activity {
                 }
             }
         }
-        Collections.sort(events, new java.util.Comparator<TimelineEvent>() { @Override public int compare(TimelineEvent a, TimelineEvent b) { return b.date.compareTo(a.date); } });
+        Collections.sort(events, (a, b) -> b.date.compareTo(a.date));
 
         if (events.isEmpty()) {
             addSpacer(40);
@@ -874,7 +880,7 @@ public class MainActivity extends Activity {
             catCounts.put(b.category, catCounts.getOrDefault(b.category, 0) + 1);
         }
         List<Map.Entry<String, Integer>> catList = new ArrayList<>(catCounts.entrySet());
-        Collections.sort(catList, new java.util.Comparator<java.util.Map.Entry<String,Integer>>() { @Override public int compare(java.util.Map.Entry<String,Integer> a, java.util.Map.Entry<String,Integer> b) { return b.getValue() - a.getValue(); } });
+        Collections.sort(catList, (a, b) -> b.getValue() - a.getValue());
 
         for (Map.Entry<String, Integer> entry : catList) {
             contentInner.addView(buildCatBar(entry.getKey(), entry.getValue(), completed.size()));
@@ -1056,7 +1062,7 @@ public class MainActivity extends Activity {
         addSpacer(8);
         contentInner.addView(sectionTitle("Highest Rated"));
         List<Book> byRating = new ArrayList<>(completed);
-        Collections.sort(byRating, new java.util.Comparator<Book>() { @Override public int compare(Book a, Book b) { return b.rating - a.rating; } });
+        Collections.sort(byRating, (a, b) -> b.rating - a.rating);
         int top = Math.min(3, byRating.size());
         for (int i = 0; i < top; i++) {
             Book b = byRating.get(i);
@@ -1146,7 +1152,7 @@ public class MainActivity extends Activity {
         item.setOrientation(LinearLayout.HORIZONTAL);
         item.setGravity(Gravity.CENTER_VERTICAL);
         item.setPadding(0, dp(8), 0, dp(8));
-        item.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { openDetail(b.id); } });
+        item.setOnClickListener(v -> openDetail(b.id));
 
         TextView r = new TextView(this);
         r.setText(rank);
@@ -1245,16 +1251,187 @@ public class MainActivity extends Activity {
     //  ONBOARDING
     // ═══════════════════════════════════════════
     private void showOnboarding() {
-        AlertDialog.Builder b = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog);
-        b.setTitle("Welcome to The Reading Ledger");
-        b.setMessage("Track every book you read with beautiful shelves, detailed analytics, and a personal year in review.\n\nWould you like to start fresh or load a demo library?");
-        b.setPositiveButton("Start Fresh", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) { renderAll(); } });
-        b.setNegativeButton("Load Demo (12 books)", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) {
+        final FrameLayout trueRoot = (FrameLayout) rootLayout.getParent();
+        final int[] currentSlide = {0};
+
+        // Full-screen overlay
+        final FrameLayout overlay = new FrameLayout(this);
+        overlay.setBackgroundColor(0xE0000000);
+        overlay.setClickable(true);
+
+        // Slide data
+        final String[] icons = {"\uD83D\uDCDA", "\u23F1", "\uD83C\uDF1F"};
+        final String[] titles = {"Your Personal Library", "Track Your Reading", "Review Your Year"};
+        final String[] descs = {
+            "Book spines on wooden shelves, color-coded by category. Tap any spine to explore. Gold edges mark your favorites.",
+            "Log sessions with a built-in timer. See your progress, pace, and streaks on the Timeline. Quick-update pages right from the shelf.",
+            "Analytics, category breakdowns, reading habits, and a Year in Review that celebrates your progress."
+        };
+
+        // Card container
+        final LinearLayout card = new LinearLayout(this);
+        card.setOrientation(LinearLayout.VERTICAL);
+        card.setGravity(Gravity.CENTER);
+        GradientDrawable cardBg = new GradientDrawable();
+        cardBg.setColor(C.SURFACE);
+        cardBg.setCornerRadius(dp(20));
+        card.setBackground(cardBg);
+        card.setPadding(dp(32), dp(40), dp(32), dp(28));
+        FrameLayout.LayoutParams cardLp = new FrameLayout.LayoutParams(dp(320), -2);
+        cardLp.gravity = Gravity.CENTER;
+        overlay.addView(card, cardLp);
+
+        // Icon
+        final TextView iconView = new TextView(this);
+        iconView.setTextSize(48);
+        iconView.setGravity(Gravity.CENTER);
+        card.addView(iconView, new LinearLayout.LayoutParams(-1, -2));
+
+        // Title
+        final TextView titleView = new TextView(this);
+        titleView.setTextColor(C.TEXT);
+        titleView.setTextSize(22);
+        titleView.setTypeface(Typeface.SERIF, Typeface.BOLD);
+        titleView.setGravity(Gravity.CENTER);
+        titleView.setPadding(0, dp(16), 0, dp(8));
+        card.addView(titleView, new LinearLayout.LayoutParams(-1, -2));
+
+        // Description
+        final TextView descView = new TextView(this);
+        descView.setTextColor(C.TEXT_M);
+        descView.setTextSize(14);
+        descView.setGravity(Gravity.CENTER);
+        descView.setLineSpacing(dp(3), 1);
+        descView.setPadding(0, 0, 0, dp(20));
+        card.addView(descView, new LinearLayout.LayoutParams(-1, -2));
+
+        // Dots
+        final LinearLayout dots = new LinearLayout(this);
+        dots.setGravity(Gravity.CENTER);
+        final TextView[] dotViews = new TextView[3];
+        for (int i = 0; i < 3; i++) {
+            dotViews[i] = new TextView(this);
+            dotViews[i].setText("●");
+            dotViews[i].setTextSize(10);
+            dotViews[i].setPadding(dp(4), 0, dp(4), 0);
+            dots.addView(dotViews[i]);
+        }
+        card.addView(dots, new LinearLayout.LayoutParams(-1, -2));
+
+        View spacer = new View(this);
+        card.addView(spacer, new LinearLayout.LayoutParams(-1, dp(16)));
+
+        // Buttons row
+        final LinearLayout btnRow = new LinearLayout(this);
+        btnRow.setGravity(Gravity.CENTER);
+
+        final Button primaryBtn = styledButton("Next");
+        final Button secondaryBtn = new Button(this);
+        secondaryBtn.setTextColor(C.TEXT_D);
+        secondaryBtn.setTextSize(13);
+        secondaryBtn.setBackgroundColor(0x00000000);
+        secondaryBtn.setAllCaps(false);
+        secondaryBtn.setPadding(dp(16), dp(10), dp(16), dp(10));
+
+        btnRow.addView(secondaryBtn, new LinearLayout.LayoutParams(-2, -2));
+        View btnSpacer = new View(this);
+        btnRow.addView(btnSpacer, new LinearLayout.LayoutParams(dp(12), -2));
+        btnRow.addView(primaryBtn, new LinearLayout.LayoutParams(-2, -2));
+        card.addView(btnRow, new LinearLayout.LayoutParams(-1, -2));
+
+        // Demo button (only on slide 3)
+        final Button demoBtn = new Button(this);
+        demoBtn.setText("Load Demo Library (12 books)");
+        demoBtn.setTextColor(C.ACCENT);
+        demoBtn.setTextSize(13);
+        GradientDrawable demoBg = new GradientDrawable();
+        demoBg.setColor(0x00000000);
+        demoBg.setCornerRadius(dp(8));
+        demoBg.setStroke(dp(1), C.BORDER);
+        demoBtn.setBackground(demoBg);
+        demoBtn.setAllCaps(false);
+        demoBtn.setPadding(dp(16), dp(10), dp(16), dp(10));
+        demoBtn.setVisibility(View.GONE);
+        LinearLayout.LayoutParams demoLp = new LinearLayout.LayoutParams(-1, -2);
+        demoLp.setMargins(0, dp(8), 0, 0);
+        card.addView(demoBtn, demoLp);
+
+        // Render slide function
+        Runnable updateSlide = () -> {
+            int s = currentSlide[0];
+            iconView.setText(icons[s]);
+            titleView.setText(titles[s]);
+            descView.setText(descs[s]);
+            for (int i = 0; i < 3; i++)
+                dotViews[i].setTextColor(i == s ? C.ACCENT : C.TEXT_D);
+
+            if (s < 2) {
+                primaryBtn.setText("Next");
+                secondaryBtn.setText(s == 0 ? "Skip intro" : "Back");
+                secondaryBtn.setVisibility(View.VISIBLE);
+                demoBtn.setVisibility(View.GONE);
+            } else {
+                primaryBtn.setText("Start Fresh");
+                secondaryBtn.setText("Back");
+                secondaryBtn.setVisibility(View.VISIBLE);
+                demoBtn.setVisibility(View.VISIBLE);
+            }
+        };
+
+        primaryBtn.setOnClickListener(v -> {
+            if (currentSlide[0] < 2) {
+                currentSlide[0]++;
+                updateSlide.run();
+            } else {
+                trueRoot.removeView(overlay);
+                renderAll();
+            }
+        });
+
+        secondaryBtn.setOnClickListener(v -> {
+            if (currentSlide[0] == 0) {
+                // Skip intro
+                trueRoot.removeView(overlay);
+                renderAll();
+            } else {
+                currentSlide[0]--;
+                updateSlide.run();
+            }
+        });
+
+        demoBtn.setOnClickListener(v -> {
             ds.loadDemoData();
+            trueRoot.removeView(overlay);
             renderAll();
-        }});
-        b.setCancelable(false);
-        b.show();
+        });
+
+        // Swipe gesture support
+        final float[] touchStart = new float[2];
+        overlay.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    touchStart[0] = event.getX();
+                    touchStart[1] = event.getY();
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    float dx = event.getX() - touchStart[0];
+                    float dy = event.getY() - touchStart[1];
+                    if (Math.abs(dx) > dp(50) && Math.abs(dx) > 1.5f * Math.abs(dy)) {
+                        if (dx < 0 && currentSlide[0] < 2) {
+                            currentSlide[0]++;
+                            updateSlide.run();
+                        } else if (dx > 0 && currentSlide[0] > 0) {
+                            currentSlide[0]--;
+                            updateSlide.run();
+                        }
+                    }
+                    return true;
+            }
+            return false;
+        });
+
+        updateSlide.run();
+        trueRoot.addView(overlay, new FrameLayout.LayoutParams(-1, -1));
     }
 
     // ═══════════════════════════════════════════

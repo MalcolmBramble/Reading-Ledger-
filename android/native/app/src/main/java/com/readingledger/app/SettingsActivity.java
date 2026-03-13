@@ -54,7 +54,7 @@ public class SettingsActivity extends Activity {
         close.setTextColor(C.TEXT_M);
         close.setTextSize(20);
         close.setPadding(dp(12), dp(8), dp(4), dp(8));
-        close.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { finish(); } });
+        close.setOnClickListener(v -> finish());
         header.addView(close);
 
         content.addView(header);
@@ -88,7 +88,7 @@ public class SettingsActivity extends Activity {
         LinearLayout expRow = new LinearLayout(this);
         expRow.setOrientation(LinearLayout.HORIZONTAL);
         Button expJson = secondaryButton("Export JSON");
-        expJson.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { exportJson(); } });
+        expJson.setOnClickListener(v -> exportJson());
         expRow.addView(expJson, new LinearLayout.LayoutParams(0, -2, 1));
         content.addView(expRow);
 
@@ -124,7 +124,7 @@ public class SettingsActivity extends Activity {
             new AlertDialog.Builder(SettingsActivity.this)
                 .setTitle("Reset")
                 .setMessage("Replace your library with demo data?")
-                .setPositiveButton("Reset", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) { ds.loadDemoData(); finish(); } })
+                .setPositiveButton("Reset", (d, w) -> { ds.loadDemoData(); finish(); })
                 .setNegativeButton("Cancel", null)
                 .show();
         }});
@@ -149,7 +149,7 @@ public class SettingsActivity extends Activity {
             new AlertDialog.Builder(SettingsActivity.this)
                 .setTitle("Clear All")
                 .setMessage("Delete everything? This cannot be undone.")
-                .setPositiveButton("Clear", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) { ds.clearAll(); finish(); } })
+                .setPositiveButton("Clear", (d, w) -> { ds.clearAll(); finish(); })
                 .setNegativeButton("Cancel", null)
                 .show();
         }});

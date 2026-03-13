@@ -168,22 +168,22 @@ public class DataStore {
         List<Book> r = new ArrayList<>(list);
         switch (sortBy) {
             case "date":
-                Collections.sort(r, new Comparator<Book>() { public int compare(Book a, Book b) { return cmpStr(b.addedAt, a.addedAt); } });
+                Collections.sort(r, (a, b) -> cmpStr(b.addedAt, a.addedAt));
                 break;
             case "category":
-                Collections.sort(r, new Comparator<Book>() { public int compare(Book a, Book b) { return cmpStr(a.category, b.category); } });
+                Collections.sort(r, (a, b) -> cmpStr(a.category, b.category));
                 break;
             case "rating":
-                Collections.sort(r, new Comparator<Book>() { public int compare(Book a, Book b) { return b.rating - a.rating; } });
+                Collections.sort(r, (a, b) -> b.rating - a.rating);
                 break;
             case "length":
-                Collections.sort(r, new Comparator<Book>() { public int compare(Book a, Book b) { return b.pages - a.pages; } });
+                Collections.sort(r, (a, b) -> b.pages - a.pages);
                 break;
             case "status":
-                Collections.sort(r, new Comparator<Book>() { public int compare(Book a, Book b) { return statusOrd(a.status) - statusOrd(b.status); } });
+                Collections.sort(r, (a, b) -> statusOrd(a.status) - statusOrd(b.status));
                 break;
             case "title":
-                Collections.sort(r, new Comparator<Book>() { public int compare(Book a, Book b) { return cmpStr(a.title, b.title); } });
+                Collections.sort(r, (a, b) -> cmpStr(a.title, b.title));
                 break;
         }
         return r;

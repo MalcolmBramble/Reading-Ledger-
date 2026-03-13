@@ -71,7 +71,7 @@ public class BookFormActivity extends Activity {
         close.setTextColor(C.TEXT_M);
         close.setTextSize(20);
         close.setPadding(dp(12), dp(8), dp(4), dp(8));
-        close.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { finish(); } });
+        close.setOnClickListener(v -> finish());
         header.addView(close);
 
         content.addView(header);
@@ -153,7 +153,7 @@ public class BookFormActivity extends Activity {
         startCol.addView(fieldLabel("Started"));
         startDate = isEdit && book.startDate != null ? book.startDate : "";
         fStart = dateField(startDate);
-        fStart.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { pickDate(true); } });
+        fStart.setOnClickListener(v -> pickDate(true));
         startCol.addView(fStart);
         dateRow.addView(startCol, new LinearLayout.LayoutParams(0, -2, 1));
 
@@ -163,7 +163,7 @@ public class BookFormActivity extends Activity {
         endCol.addView(fieldLabel("Finished"));
         endDate = isEdit && book.endDate != null ? book.endDate : "";
         fEnd = dateField(endDate);
-        fEnd.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { pickDate(false); } });
+        fEnd.setOnClickListener(v -> pickDate(false));
         endCol.addView(fEnd);
         dateRow.addView(endCol, new LinearLayout.LayoutParams(0, -2, 1));
 
@@ -216,7 +216,7 @@ public class BookFormActivity extends Activity {
         save.setBackground(saveBg);
         save.setPadding(dp(24), dp(14), dp(24), dp(14));
         save.setAllCaps(false);
-        save.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { saveBook(); } });
+        save.setOnClickListener(v -> saveBook());
         content.addView(save, new LinearLayout.LayoutParams(-1, -2));
     }
 
@@ -273,11 +273,11 @@ public class BookFormActivity extends Activity {
                 cal.set(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]) - 1, Integer.parseInt(parts[2]));
             } catch (Exception e) {}
         }
-        new DatePickerDialog(this, new android.app.DatePickerDialog.OnDateSetListener() { @Override public void onDateSet(android.widget.DatePicker view, int y, int m, int d) {
+        new DatePickerDialog(this, (view, y, m, d) -> {
             String date = String.format("%04d-%02d-%02d", y, m + 1, d);
             if (isStart) { startDate = date; fStart.setText(C.fmtDate(date)); }
             else { endDate = date; fEnd.setText(C.fmtDate(date)); }
-        } }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private int parseInt(String s) {

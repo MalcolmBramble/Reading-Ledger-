@@ -62,7 +62,7 @@ public class BookDetailActivity extends Activity {
         back.setText("← Back");
         back.setTextColor(C.ACCENT);
         back.setTextSize(14);
-        back.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { finish(); } });
+        back.setOnClickListener(v -> finish());
         topRow.addView(back, new LinearLayout.LayoutParams(0, -2, 1));
 
         TextView editBtn = new TextView(this);
@@ -82,7 +82,7 @@ public class BookDetailActivity extends Activity {
         deleteBtn.setTextColor(C.RED);
         deleteBtn.setTextSize(14);
         deleteBtn.setPadding(dp(12), dp(8), 0, dp(8));
-        deleteBtn.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { confirmDelete(); } });
+        deleteBtn.setOnClickListener(v -> confirmDelete());
         topRow.addView(deleteBtn);
 
         content.addView(topRow, new LinearLayout.LayoutParams(-1, -2));
@@ -251,7 +251,7 @@ public class BookDetailActivity extends Activity {
         // Add quote button
         addSpacer(8);
         Button addQuote = styledButtonSecondary("+ Add Quote");
-        addQuote.setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) { showAddQuoteDialog(); } });
+        addQuote.setOnClickListener(v -> showAddQuoteDialog());
         content.addView(addQuote);
 
         // Themes
@@ -377,7 +377,7 @@ public class BookDetailActivity extends Activity {
         int min = sec / 60;
         sec = sec % 60;
         if (timerDisplay != null) timerDisplay.setText(min + ":" + String.format("%02d", sec));
-        timerHandler.postDelayed(new Runnable() { @Override public void run() { tickTimer(); } }, 1000);
+        timerHandler.postDelayed(() -> tickTimer(), 1000);
     }
 
     private View buildQuoteCard(Book.Quote q) {
@@ -445,7 +445,7 @@ public class BookDetailActivity extends Activity {
         new AlertDialog.Builder(this)
             .setTitle("Add Quote")
             .setView(form)
-            .setPositiveButton("Add", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) {
+            .setPositiveButton("Add", (d, w) -> {
                 String text = quoteInput.getText().toString().trim();
                 if (text.isEmpty()) return;
                 Book.Quote q = new Book.Quote();
@@ -456,7 +456,7 @@ public class BookDetailActivity extends Activity {
                 book.updatedAt = C.isoNow();
                 ds.save();
                 rebuildUI();
-            } })
+            })
             .setNegativeButton("Cancel", null)
             .show();
     }
@@ -465,10 +465,10 @@ public class BookDetailActivity extends Activity {
         new AlertDialog.Builder(this)
             .setTitle("Delete Book")
             .setMessage("Remove \"" + book.title + "\" from your library?")
-            .setPositiveButton("Delete", new android.content.DialogInterface.OnClickListener() { @Override public void onClick(android.content.DialogInterface d, int w) {
+            .setPositiveButton("Delete", (d, w) -> {
                 ds.deleteBook(book.id);
                 finish();
-            } })
+            })
             .setNegativeButton("Cancel", null)
             .show();
     }
