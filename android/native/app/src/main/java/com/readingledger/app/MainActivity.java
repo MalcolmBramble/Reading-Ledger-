@@ -39,10 +39,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         ds = DataStore.get(this);
 
-        // Edge-to-edge
+        // Edge-to-edge — draw behind system bars
         Window w = getWindow();
         w.setStatusBarColor(C.BG);
-        w.setNavigationBarColor(C.BG);
+        w.setNavigationBarColor(0x00000000); // transparent so our nav spacer shows
+        w.getDecorView().setSystemUiVisibility(
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        );
 
         buildLayout();
 
@@ -67,7 +71,6 @@ public class MainActivity extends Activity {
         // Use a FrameLayout as true root so we can overlay onboarding
         FrameLayout trueRoot = new FrameLayout(this);
         trueRoot.setBackgroundColor(C.BG);
-        trueRoot.setFitsSystemWindows(true);
 
         rootLayout = new LinearLayout(this);
         rootLayout.setOrientation(LinearLayout.VERTICAL);
@@ -237,7 +240,6 @@ public class MainActivity extends Activity {
         nav.setGravity(Gravity.CENTER);
         nav.setPadding(0, dp(8), 0, dp(8));
 
-        // Top border
         GradientDrawable navBg = new GradientDrawable();
         navBg.setColor(C.NAV_BG);
         nav.setBackground(navBg);
@@ -246,10 +248,26 @@ public class MainActivity extends Activity {
         View divider = new View(this);
         divider.setBackgroundColor(C.BORDER);
 
+        // Spacer that fills the system gesture bar area
+        final View navBarSpacer = new View(this);
+        navBarSpacer.setBackgroundColor(C.NAV_BG);
+
         LinearLayout navWrap = new LinearLayout(this);
         navWrap.setOrientation(LinearLayout.VERTICAL);
         navWrap.addView(divider, new LinearLayout.LayoutParams(-1, dp(1)));
         navWrap.addView(nav, new LinearLayout.LayoutParams(-1, dp(C.NAV_H)));
+        navWrap.addView(navBarSpacer, new LinearLayout.LayoutParams(-1, 0));
+
+        // Dynamically measure the system nav bar and size the spacer
+        navWrap.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override
+            public android.view.WindowInsets onApplyWindowInsets(View v, android.view.WindowInsets insets) {
+                int bottomInset = insets.getSystemWindowInsetBottom();
+                navBarSpacer.getLayoutParams().height = bottomInset;
+                navBarSpacer.requestLayout();
+                return insets;
+            }
+        });
 
         // Create tab buttons
         tabShelf = makeNavBtn("Shelf", "\u229E", "shelf");
