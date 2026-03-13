@@ -131,13 +131,13 @@ fun TimelineItem(ev: TimelineEvent, onBookClick: (String) -> Unit) {
 private fun fmtMonth(yearMonth: String): String {
     return try {
         val date = SimpleDateFormat("yyyy-MM", Locale.US).parse(yearMonth)
-        SimpleDateFormat("MMMM yyyy", Locale.US).format(date)
+        if (date != null) SimpleDateFormat("MMMM yyyy", Locale.US).format(date) else yearMonth
     } catch (e: Exception) { yearMonth }
 }
 
 private fun fmtShortDate(iso: String): String {
     return try {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(iso)
-        SimpleDateFormat("MMM d", Locale.US).format(date)
+        if (date != null) SimpleDateFormat("MMM d", Locale.US).format(date) else iso
     } catch (e: Exception) { iso }
 }

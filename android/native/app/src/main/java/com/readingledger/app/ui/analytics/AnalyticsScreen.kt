@@ -56,7 +56,6 @@ fun AnalyticsScreen() {
         } else {
             Spacer(Modifier.height(24.dp))
             
-            // Stats Grid
             val totalPages = completed.sumOf { it.pages }
             val ratedBooks = completed.filter { it.rating > 0 }
             val avgRating = if (ratedBooks.isNotEmpty()) ratedBooks.map { it.rating }.average() else 0.0
@@ -64,12 +63,11 @@ fun AnalyticsScreen() {
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 StatCard("Books Read", completed.size.toString(), Modifier.weight(1f))
-                StatCard("Pages", String.format("%,d", totalPages), Modifier.weight(1f))
-                StatCard("Avg Rating", if (avgRating > 0) String.format("%.1f★", avgRating) else "—", Modifier.weight(1f))
+                StatCard("Pages", String.format(Locale.US, "%,d", totalPages), Modifier.weight(1f))
+                StatCard("Avg Rating", if (avgRating > 0) String.format(Locale.US, "%.1f★", avgRating) else "—", Modifier.weight(1f))
                 StatCard("Hours", (totalMinutes / 60).toString(), Modifier.weight(1f))
             }
 
-            // Category breakdown
             Spacer(Modifier.height(32.dp))
             SectionHeader("By Category")
             val catCounts = completed.groupBy { it.category }.mapValues { it.value.size }.toList().sortedByDescending { it.second }
@@ -77,7 +75,6 @@ fun AnalyticsScreen() {
                 CatBar(cat, count, completed.size)
             }
 
-            // Rating distribution
             Spacer(Modifier.height(32.dp))
             SectionHeader("Ratings")
             val ratingDist = completed.groupBy { it.rating }.mapValues { it.value.size }
@@ -85,7 +82,6 @@ fun AnalyticsScreen() {
                 RatingBar(r, ratingDist.getOrDefault(r, 0), completed.size)
             }
 
-            // Reading Pace
             Spacer(Modifier.height(32.dp))
             SectionHeader("Reading Pace")
             val monthlyBooks = completed
@@ -185,6 +181,6 @@ fun RatingBar(rating: Int, count: Int, total: Int) {
 private fun fmtMonth(yearMonth: String): String {
     return try {
         val date = SimpleDateFormat("yyyy-MM", Locale.US).parse(yearMonth)
-        SimpleDateFormat("MMM", Locale.US).format(date)
+        if (date != null) SimpleDateFormat("MMM", Locale.US).format(date) else yearMonth
     } catch (e: Exception) { yearMonth }
 }

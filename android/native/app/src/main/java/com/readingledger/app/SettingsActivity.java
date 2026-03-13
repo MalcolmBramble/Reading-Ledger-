@@ -3,12 +3,17 @@ package com.readingledger.app;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.graphics.*;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import com.readingledger.app.db.DataStore;
 import com.readingledger.app.util.C;
 import java.io.*;
@@ -23,9 +28,25 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ds = DataStore.get(this);
-        getWindow().setStatusBarColor(C.BG);
-        getWindow().setNavigationBarColor(C.BG);
+
+        Window w = getWindow();
+        w.setStatusBarColor(Color.TRANSPARENT);
+        w.setNavigationBarColor(C.BG);
+
+        // Edge-to-edge
+        w.getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+        );
+
         buildUI();
+
+        // Handle Insets
+        ViewCompat.setOnApplyWindowInsetsListener(scrollView, (v, insets) -> {
+            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            content.setPadding(dp(20), dp(16) + bars.top, dp(20), dp(40) + bars.bottom);
+            return insets;
+        });
     }
 
     private void buildUI() {

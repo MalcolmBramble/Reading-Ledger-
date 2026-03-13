@@ -2,13 +2,10 @@ package com.readingledger.app.ui.detail
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,7 +26,6 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BookDetailScreen(
     bookId: String,
@@ -42,91 +38,9 @@ fun BookDetailScreen(
     val book = library.books.find { it.id == bookId }
     val scope = rememberCoroutineScope()
 
-    var showDeleteDialog by remember { mutableStateOf(false) }
-    var showAddQuoteDialog by remember { mutableStateOf(false) }
-
     if (book == null) {
         LaunchedEffect(Unit) { onBack() }
         return
-    }
-
-    // Delete confirmation dialog
-    if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
-            containerColor = Surface,
-            title = { Text("Remove Book", color = TextPrimary) },
-            text = { Text("Remove \"${book.title}\" from your library?", color = TextMedium) },
-            confirmButton = {
-                TextButton(onClick = {
-                    showDeleteDialog = false
-                    scope.launch {
-                        dataStore.deleteBook(bookId)
-                        onBack()
-                    }
-                }) { Text("Remove", color = Red) }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel", color = TextMedium) }
-            }
-        )
-    }
-
-    // Add Quote dialog
-    if (showAddQuoteDialog) {
-        var quoteText by remember { mutableStateOf("") }
-        var quotePage by remember { mutableStateOf("") }
-        AlertDialog(
-            onDismissRequest = { showAddQuoteDialog = false },
-            containerColor = Surface,
-            title = { Text("Add Quote", color = TextPrimary) },
-            text = {
-                Column {
-                    OutlinedTextField(
-                        value = quoteText,
-                        onValueChange = { quoteText = it },
-                        label = { Text("Quote text", color = TextDim) },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = TextPrimary,
-                            unfocusedTextColor = TextPrimary,
-                            focusedBorderColor = Accent,
-                            unfocusedBorderColor = Border
-                        ),
-                        minLines = 3
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(
-                        value = quotePage,
-                        onValueChange = { quotePage = it },
-                        label = { Text("Page (optional)", color = TextDim) },
-                        modifier = Modifier.width(120.dp),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = TextPrimary,
-                            unfocusedTextColor = TextPrimary,
-                            focusedBorderColor = Accent,
-                            unfocusedBorderColor = Border
-                        )
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        if (quoteText.isNotBlank()) {
-                            scope.launch {
-                                val newQuote = com.readingledger.app.data.Quote(text = quoteText.trim(), page = quotePage.trim())
-                                dataStore.updateBook(book.copy(quotes = book.quotes + newQuote, updatedAt = isoNow()))
-                            }
-                            showAddQuoteDialog = false
-                        }
-                    }
-                ) { Text("Save", color = Accent) }
-            },
-            dismissButton = {
-                TextButton(onClick = { showAddQuoteDialog = false }) { Text("Cancel", color = TextMedium) }
-            }
-        )
     }
 
     Scaffold(
@@ -148,7 +62,12 @@ fun BookDetailScreen(
                     IconButton(onClick = onEdit) {
                         Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Accent)
                     }
-                    IconButton(onClick = { showDeleteDialog = true }) {
+                    IconButton(onClick = {
+                        scope.launch {
+                            dataStore.deleteBook(bookId)
+                            onBack()
+                        }
+                    }) {
                         Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Red)
                     }
                 }
@@ -164,15 +83,13 @@ fun BookDetailScreen(
         ) {
             val catColor = CatColors.color(book.category)
 
-            // Category & Status Badges
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Badge(book.category, catColor)
-                Badge(book.status.replace("-", " ").capitalize(), statusColor(book.status))
+                Badge(book.status.replace("-", " ").replaceFirstChar { it.uppercase() }, statusColor(book.status))
             }
 
             Spacer(Modifier.height(12.dp))
 
-            // Title & Author
             Text(
                 text = book.title,
                 color = TextPrimary,
@@ -193,7 +110,6 @@ fun BookDetailScreen(
 
             Spacer(Modifier.height(16.dp))
 
-            // Rating Stars
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 for (i in 1..5) {
                     Text(
@@ -211,13 +127,11 @@ fun BookDetailScreen(
 
             Spacer(Modifier.height(20.dp))
 
-            // Meta Info
             if (book.pages > 0) MetaItem("Pages", book.pages.toString())
             book.startDate?.let { MetaItem("Started", fmtDate(it)) }
             book.endDate?.let { MetaItem("Finished", fmtDate(it)) }
             if (book.recommendedBy.isNotEmpty()) MetaItem("Recommended by", book.recommendedBy)
 
-            // Progress Section
             if (book.status == "reading" && book.pages > 0) {
                 Spacer(Modifier.height(24.dp))
                 SectionTitle("Progress")
@@ -247,7 +161,6 @@ fun BookDetailScreen(
                 })
             }
 
-            // Notes / Core Argument / Impact
             if (book.notes.isNotEmpty()) {
                 DetailSection("Notes", book.notes)
             }
@@ -258,32 +171,15 @@ fun BookDetailScreen(
                 DetailSection("Impact", book.impact)
             }
 
-            // Quotes
-            Spacer(Modifier.height(24.dp))
-            SectionTitle("Quotes (${book.quotes.size})")
-            book.quotes.forEach { quote ->
-                QuoteCard(quote)
-                Spacer(Modifier.height(8.dp))
-            }
-            TextButton(onClick = { showAddQuoteDialog = true }) {
-                Text("+ Add Quote", color = Accent, fontSize = 13.sp)
-            }
-
-            // Themes
-            if (book.themes.isNotEmpty()) {
+            if (book.quotes.isNotEmpty()) {
                 Spacer(Modifier.height(24.dp))
-                SectionTitle("Themes")
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    book.themes.forEach { theme ->
-                        Badge(theme, Accent)
-                    }
+                SectionTitle("Quotes (${book.quotes.size})")
+                book.quotes.forEach { quote ->
+                    QuoteCard(quote)
+                    Spacer(Modifier.height(8.dp))
                 }
             }
 
-            // Sessions
             if (book.sessions.isNotEmpty()) {
                 Spacer(Modifier.height(24.dp))
                 SectionTitle("Reading Sessions")
@@ -442,7 +338,6 @@ fun ReadingTimer(book: Book, onSaveSession: (Session) -> Unit) {
     }
 }
 
-// Helpers
 fun statusColor(status: String) = when(status) {
     "completed" -> Green
     "reading" -> Blue

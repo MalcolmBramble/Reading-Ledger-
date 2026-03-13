@@ -36,7 +36,6 @@ fun BookFormScreen(bookId: String?, onDone: () -> Unit) {
     val scope = rememberCoroutineScope()
     val library by dataStore.libraryFlow.collectAsState(initial = LibraryData())
 
-    // Form State
     var title by remember { mutableStateOf("") }
     var author by remember { mutableStateOf("") }
     var category by remember { mutableStateOf(CATEGORIES.first()) }
@@ -51,7 +50,6 @@ fun BookFormScreen(bookId: String?, onDone: () -> Unit) {
 
     var isLoaded by remember { mutableStateOf(false) }
 
-    // Load existing data
     if (bookId != null && !isLoaded && library.books.isNotEmpty()) {
         library.books.find { it.id == bookId }?.let { book ->
             title = book.title
@@ -113,11 +111,7 @@ fun BookFormScreen(bookId: String?, onDone: () -> Unit) {
                     colors = CardDefaults.outlinedCardColors(containerColor = Surface),
                     border = BorderStroke(1.dp, Border)
                 ) {
-                    Text(
-                        category,
-                        color = TextPrimary,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Text(category, color = TextPrimary, modifier = Modifier.padding(16.dp))
                 }
                 DropdownMenu(
                     expanded = expanded,
@@ -146,11 +140,8 @@ fun BookFormScreen(bookId: String?, onDone: () -> Unit) {
                     colors = CardDefaults.outlinedCardColors(containerColor = Surface),
                     border = BorderStroke(1.dp, Border)
                 ) {
-                    Text(
-                        STATUS_OPTIONS.find { it.first == status }?.second ?: status,
-                        color = TextPrimary,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    val label = STATUS_OPTIONS.find { it.first == status }?.second ?: status
+                    Text(label, color = TextPrimary, modifier = Modifier.padding(16.dp))
                 }
                 DropdownMenu(
                     expanded = expanded,
@@ -211,10 +202,7 @@ fun BookFormScreen(bookId: String?, onDone: () -> Unit) {
                         var finalEndDate = endDate.ifBlank { null }
                         var finalCurrentPage = 0
 
-                        // Smart logic
-                        if (status == "reading" && finalStartDate == null) {
-                            finalStartDate = today()
-                        }
+                        if (status == "reading" && finalStartDate == null) finalStartDate = today()
                         if (status == "completed") {
                             if (finalStartDate == null) finalStartDate = today()
                             if (finalEndDate == null) finalEndDate = today()
@@ -277,14 +265,7 @@ fun FormLabel(text: String) {
 }
 
 @Composable
-fun FormField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    hint: String,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    multiline: Boolean = false
-) {
+fun FormField(label: String, value: String, onValueChange: (String) -> Unit, hint: String, keyboardType: KeyboardType = KeyboardType.Text, multiline: Boolean = false) {
     Column {
         FormLabel(label)
         OutlinedTextField(
@@ -311,23 +292,15 @@ fun FormField(
 fun DatePickerField(value: String, onDateSelected: (String) -> Unit) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
-    
     if (value.isNotEmpty()) {
         try {
             val parts = value.split("-")
             calendar.set(parts[0].toInt(), parts[1].toInt() - 1, parts[2].toInt())
         } catch (e: Exception) {}
     }
-
-    val datePickerDialog = DatePickerDialog(
-        context,
-        { _, year, month, dayOfMonth ->
-            onDateSelected(String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth))
-        },
-        calendar.get(Calendar.YEAR),
-        calendar.get(Calendar.MONTH),
-        calendar.get(Calendar.DAY_OF_MONTH)
-    )
+    val datePickerDialog = DatePickerDialog(context, { _, year, month, dayOfMonth ->
+        onDateSelected(String.format(Locale.US, "%04d-%02d-%02d", year, month + 1, dayOfMonth))
+    }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
 
     OutlinedCard(
         onClick = { datePickerDialog.show() },
@@ -335,21 +308,15 @@ fun DatePickerField(value: String, onDateSelected: (String) -> Unit) {
         colors = CardDefaults.outlinedCardColors(containerColor = Surface),
         border = BorderStroke(1.dp, Border)
     ) {
-        Text(
-            if (value.isEmpty()) "Pick date" else fmtDate(value),
-            color = if (value.isEmpty()) TextDim else TextPrimary,
-            fontSize = 14.sp,
-            modifier = Modifier.padding(16.dp)
-        )
+        Text(if (value.isEmpty()) "Pick date" else fmtDate(value), color = if (value.isEmpty()) TextDim else TextPrimary, fontSize = 14.sp, modifier = Modifier.padding(16.dp))
     }
 }
 
-// Reuse from DetailScreen
 private fun today(): String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
 private fun isoNow(): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).format(Date())
 private fun fmtDate(iso: String): String {
     return try {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(iso)
-        SimpleDateFormat("MMM d, yyyy", Locale.US).format(date)
+        if (date != null) SimpleDateFormat("MMM d, yyyy", Locale.US).format(date) else iso
     } catch (e: Exception) { iso }
 }

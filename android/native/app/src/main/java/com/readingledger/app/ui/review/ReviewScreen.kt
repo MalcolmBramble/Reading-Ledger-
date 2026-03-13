@@ -20,6 +20,7 @@ import com.readingledger.app.data.Book
 import com.readingledger.app.data.DataStore
 import com.readingledger.app.data.LibraryData
 import com.readingledger.app.ui.theme.*
+import java.util.Locale
 
 @Composable
 fun ReviewScreen(onBookClick: (String) -> Unit) {
@@ -52,7 +53,6 @@ fun ReviewScreen(onBookClick: (String) -> Unit) {
         } else {
             Spacer(Modifier.height(24.dp))
 
-            // Highest Rated
             ReviewHeader("Highest Rated")
             val topRated = completed.sortedByDescending { it.rating }.take(3)
             topRated.forEachIndexed { index, book ->
@@ -61,10 +61,8 @@ fun ReviewScreen(onBookClick: (String) -> Unit) {
 
             Spacer(Modifier.height(32.dp))
 
-            // Milestones
             ReviewHeader("Milestones")
             
-            // Simple logic for milestones
             val milestones = mutableListOf<Triple<String, String, String>>()
             if (completed.isNotEmpty()) 
                 milestones.add(Triple("📖", "First Book", completed.first().title))
@@ -75,7 +73,7 @@ fun ReviewScreen(onBookClick: (String) -> Unit) {
             
             val totalPages = completed.sumOf { it.pages }
             if (totalPages >= 2000)
-                milestones.add(Triple("📏", String.format("%,d Pages", totalPages), "and counting"))
+                milestones.add(Triple("📏", String.format(Locale.US, "%,d Pages", totalPages), "and counting"))
             
             if (completed.any { it.rating == 5 })
                 milestones.add(Triple("🌟", "First 5-Star", "Discerning taste"))
@@ -87,7 +85,6 @@ fun ReviewScreen(onBookClick: (String) -> Unit) {
 
             Spacer(Modifier.height(32.dp))
 
-            // Category Diversity
             val uniqueCats = completed.map { it.category }.distinct().size
             Text(
                 "Categories explored: $uniqueCats of ${com.readingledger.app.data.CATEGORIES.size}",
