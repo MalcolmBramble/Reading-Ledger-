@@ -39,14 +39,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         ds = DataStore.get(this);
 
-        // Edge-to-edge — draw behind system bars
+        // Dark status bar, let system handle navigation bar
         Window w = getWindow();
         w.setStatusBarColor(C.BG);
-        w.setNavigationBarColor(0x00000000); // transparent so our nav spacer shows
-        w.getDecorView().setSystemUiVisibility(
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        );
+        w.setNavigationBarColor(C.NAV_BG);
 
         buildLayout();
 
@@ -236,10 +232,8 @@ public class MainActivity extends Activity {
     private LinearLayout buildBottomNav() {
         LinearLayout nav = new LinearLayout(this);
         nav.setOrientation(LinearLayout.HORIZONTAL);
-        nav.setBackgroundColor(C.NAV_BG);
         nav.setGravity(Gravity.CENTER);
-        nav.setPadding(0, dp(8), 0, dp(8));
-
+        nav.setPadding(0, dp(6), 0, dp(6));
         GradientDrawable navBg = new GradientDrawable();
         navBg.setColor(C.NAV_BG);
         nav.setBackground(navBg);
@@ -248,26 +242,11 @@ public class MainActivity extends Activity {
         View divider = new View(this);
         divider.setBackgroundColor(C.BORDER);
 
-        // Spacer that fills the system gesture bar area
-        final View navBarSpacer = new View(this);
-        navBarSpacer.setBackgroundColor(C.NAV_BG);
-
         LinearLayout navWrap = new LinearLayout(this);
         navWrap.setOrientation(LinearLayout.VERTICAL);
+        navWrap.setBackgroundColor(C.NAV_BG);
         navWrap.addView(divider, new LinearLayout.LayoutParams(-1, dp(1)));
         navWrap.addView(nav, new LinearLayout.LayoutParams(-1, dp(C.NAV_H)));
-        navWrap.addView(navBarSpacer, new LinearLayout.LayoutParams(-1, 0));
-
-        // Dynamically measure the system nav bar and size the spacer
-        navWrap.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public android.view.WindowInsets onApplyWindowInsets(View v, android.view.WindowInsets insets) {
-                int bottomInset = insets.getSystemWindowInsetBottom();
-                navBarSpacer.getLayoutParams().height = bottomInset;
-                navBarSpacer.requestLayout();
-                return insets;
-            }
-        });
 
         // Create tab buttons
         tabShelf = makeNavBtn("Shelf", "\u229E", "shelf");
@@ -1286,32 +1265,34 @@ public class MainActivity extends Activity {
             "Analytics, category breakdowns, reading habits, and a Year in Review that celebrates your progress."
         };
 
-        // Card container
+        // Card container — wide, compact, vertically centered
         final LinearLayout card = new LinearLayout(this);
         card.setOrientation(LinearLayout.VERTICAL);
-        card.setGravity(Gravity.CENTER);
+        card.setGravity(Gravity.CENTER_HORIZONTAL);
         GradientDrawable cardBg = new GradientDrawable();
         cardBg.setColor(C.SURFACE);
         cardBg.setCornerRadius(dp(20));
         card.setBackground(cardBg);
-        card.setPadding(dp(32), dp(40), dp(32), dp(28));
-        FrameLayout.LayoutParams cardLp = new FrameLayout.LayoutParams(dp(320), -2);
+        card.setPadding(dp(28), dp(32), dp(28), dp(24));
+        FrameLayout.LayoutParams cardLp = new FrameLayout.LayoutParams(-1, -2);
         cardLp.gravity = Gravity.CENTER;
+        cardLp.leftMargin = dp(24);
+        cardLp.rightMargin = dp(24);
         overlay.addView(card, cardLp);
 
         // Icon
         final TextView iconView = new TextView(this);
-        iconView.setTextSize(48);
+        iconView.setTextSize(56);
         iconView.setGravity(Gravity.CENTER);
         card.addView(iconView, new LinearLayout.LayoutParams(-1, -2));
 
         // Title
         final TextView titleView = new TextView(this);
         titleView.setTextColor(C.TEXT);
-        titleView.setTextSize(22);
+        titleView.setTextSize(24);
         titleView.setTypeface(Typeface.SERIF, Typeface.BOLD);
         titleView.setGravity(Gravity.CENTER);
-        titleView.setPadding(0, dp(16), 0, dp(8));
+        titleView.setPadding(0, dp(12), 0, dp(6));
         card.addView(titleView, new LinearLayout.LayoutParams(-1, -2));
 
         // Description
@@ -1320,7 +1301,7 @@ public class MainActivity extends Activity {
         descView.setTextSize(14);
         descView.setGravity(Gravity.CENTER);
         descView.setLineSpacing(dp(3), 1);
-        descView.setPadding(0, 0, 0, dp(20));
+        descView.setPadding(dp(8), 0, dp(8), dp(16));
         card.addView(descView, new LinearLayout.LayoutParams(-1, -2));
 
         // Dots
@@ -1337,24 +1318,23 @@ public class MainActivity extends Activity {
         card.addView(dots, new LinearLayout.LayoutParams(-1, -2));
 
         View spacer = new View(this);
-        card.addView(spacer, new LinearLayout.LayoutParams(-1, dp(16)));
+        card.addView(spacer, new LinearLayout.LayoutParams(-1, dp(12)));
 
         // Buttons row
         final LinearLayout btnRow = new LinearLayout(this);
         btnRow.setGravity(Gravity.CENTER);
+        btnRow.setOrientation(LinearLayout.HORIZONTAL);
 
         final Button primaryBtn = styledButton("Next");
         final Button secondaryBtn = new Button(this);
         secondaryBtn.setTextColor(C.TEXT_D);
-        secondaryBtn.setTextSize(13);
+        secondaryBtn.setTextSize(14);
         secondaryBtn.setBackgroundColor(0x00000000);
         secondaryBtn.setAllCaps(false);
-        secondaryBtn.setPadding(dp(16), dp(10), dp(16), dp(10));
+        secondaryBtn.setPadding(dp(20), dp(12), dp(20), dp(12));
 
-        btnRow.addView(secondaryBtn, new LinearLayout.LayoutParams(-2, -2));
-        View btnSpacer = new View(this);
-        btnRow.addView(btnSpacer, new LinearLayout.LayoutParams(dp(12), -2));
-        btnRow.addView(primaryBtn, new LinearLayout.LayoutParams(-2, -2));
+        btnRow.addView(secondaryBtn, new LinearLayout.LayoutParams(0, -2, 1));
+        btnRow.addView(primaryBtn, new LinearLayout.LayoutParams(0, -2, 1));
         card.addView(btnRow, new LinearLayout.LayoutParams(-1, -2));
 
         // Demo button (only on slide 3)
